@@ -40,6 +40,9 @@ def brain(name, speech_text):
 
    elif check_message((['what','day','is','it']) or check_message(['what', 'day', 'of', 'the', 'week', 'is','it'])):
       tell_time.what_is_day()
+
+   elif check_message((['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date'])):
+      tell_time.what_is_date()
    
    else:
       #if not, then call the function 'i don't understand
