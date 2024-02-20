@@ -1,4 +1,4 @@
-from GreyMatter import general_conversations
+from GreyMatter import tell_time, general_conversations
 
 def brain(name, speech_text):
    """
