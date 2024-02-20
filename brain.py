@@ -20,6 +20,9 @@ def brain(name, speech_text):
    elif check_message(['tell', 'joke']):
       general_conversations.tell_me_a_joke()
 
+   elif check_message(['when','my', 'birthday']):
+      general_conversations.when_birthday()
+
    elif check_message(['when', 'created']):
       general_conversations.when_were_you_created()
 
