@@ -43,7 +43,20 @@ def brain(name, speech_text):
 
    elif check_message((['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date'])):
       tell_time.what_is_date()
-   
+
+   elif check_message((['how', 'many', 'days', 'remaining', 'until']:
+      #find the index of the word "until"
+      until_index = words.index('until')
+
+   #extract the date provided by the speaker
+      date_words = words[until_index + 1:]
+
+   #convert the date words into numbers (assuming the sdate is proveddided i the format "MM-DD-YYYY"   
+         month = int(date_words[0])
+         day = int(date_words[1])   
+         year = int(date_words[2])
+         tell_time.days_from_now(year, month, day)
+      
    else:
       #if not, then call the function 'i don't understand
       general_conversations.undefined()
