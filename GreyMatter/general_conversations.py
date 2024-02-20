@@ -19,7 +19,6 @@ def tell_me_a_joke():
    'What did the pirate say when he turned 80? Aye matey.']
    tts(random.choice(jokes))
 
-
 def when_birthday():
    tts('Your birthday is July 15.  You were born in 1978.')
        
