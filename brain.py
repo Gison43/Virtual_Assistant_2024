@@ -44,7 +44,7 @@ def brain(name, speech_text):
    elif check_message((['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date'])):
       tell_time.what_is_date()
 
-   elif check_message((['how', 'many', 'days', 'remaining', 'until']:
+   elif check_message(['how', 'many', 'days', 'remaining', 'until']):
       #find the index of the word "until"
       #note that the speaker must ask for the date in the format of MM:DD:YYYY, in that order
       until_index = words.index('until')
