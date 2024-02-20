@@ -34,7 +34,10 @@ def brain(name, speech_text):
 
    elif check_message(['who am', 'i', 'what is my name', 'what\'s my name']):
       general_conversations.who_am_i()
-
+   
+   elif check_message(['time']):
+      tell_time.what_is_time()
+   
    else:
       #if not, then call the function 'i don't understand
       general_conversations.undefined()
