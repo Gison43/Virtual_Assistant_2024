@@ -22,6 +22,13 @@ def current_year():
    current_year = dt.now().date()
    tts("It is the year " + (f"{current_year:%Y}))
 
+def how_old():
+   now = dt.datetime.now()
+   birthdatetime = dt.datetime(1978, 7, 15)
+   age_days = (now - birthdatetime).days
+   years_old = age_days // 365
+   tts("You are " + (f"{years_old} + " years old."))
+
 def new_years_eve():
    new_years = dt.datetime(%Y, 12, 31, 23, 59)
    tts("It is at twenty-three fifty nine o'clock in the year " + (f"{new_years: %Y}))
