@@ -22,12 +22,16 @@ def current_year():
    current_year = dt.now().date()
    tts("It is the year " + (f"{current_year:%Y}))
 
+def new_years_eve():
+   new_years = dt.datetime(%Y, 12, 31, 23, 59)
+   tts("It is at twenty-three fifty nine o'clock in the year " + (f"{new_years: %Y}))
+
 def what_is_date():
-  current_date = dt.now()date()
+  current_date = dt.now().date()
   tts("It is " + (f"{current_date: %B %d %Y}))
 
 def what_month():
-   current_month = dt.now()date()
+   current_month = dt.now().date()
    tts("It is " + (f"{current_month: %B}))
 
 def days_from_now(year, month, day):
