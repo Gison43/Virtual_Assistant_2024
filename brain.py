@@ -35,7 +35,7 @@ def brain(name, speech_text):
    elif check_message(['i am', 'doing', 'well', 'fine', 'good']):
       general_conversations.i_am_doing_well_thank_you()
 
-   elif check_message(['who am', 'i']) or check_message([('what','is','my', 'name']) or check_message(['what\'s my name']):
+   elif check_message(['who am', 'i']) or check_message(['what','is','my', 'name']) or check_message(['what\'s my name']):
       general_conversations.who_am_i()
     
    elif check_message(['time']) or check_message(['what', 'time', 'is', 'it']):
@@ -44,23 +44,25 @@ def brain(name, speech_text):
    elif check_message(['what','day','is','it']) or check_message(['what', 'day', 'of', 'the', 'week', 'is','it']):
       tell_time.what_is_day()
 
-   elif check_message(['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date']))
+   elif check_message(['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date']):
       tell_time.what_is_date()
 
    elif check_message(['how', 'many', 'days', 'remaining', 'until']):
       #find the index of the word "until"
       #note that the speaker must ask for the date in the format of MM:DD:YYYY, in that order
-      until_index = words.index('until')
+      if all(word in words for word in ['how', 'many', 'days', 'remaining', 'until']):
+         until_index = words.index('until')
 
    #extract the date provided by the speaker
-      date_words = words[until_index + 1:]
+         date_words = words[until_index + 1:]
 
    #convert the date words into numbers (assuming the date is provided in the format "MM-DD-YYYY"   
          month = int(date_words[0])
-         day = int(date_words[1])   
+         day = int(date_words[1])
          year = int(date_words[2])
-         tell_time.days_from_now(year, month, day)
-      
+
+      tell_time.days_from_now(year, month, day)
+
    else:
       #if not, then call the function 'i don't understand
       general_conversations.undefined()
