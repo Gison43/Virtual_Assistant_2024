@@ -15,7 +15,11 @@ def what_is_day():
 
 def day_number():
    day_number = dt.now().date()
-   tts("It is day number " + (f"{day_number:%j}))
+   tts("It is day number " + (f"{day_number:%j}) + "of the year " + (f"{day_number:%Y}))
+
+def current_year():
+   current_year = dt.now().date()
+   tts("It is the year " + (f"{current_year:%Y}))
 
 def what_is_date():
   current_date = dt.now()date()
