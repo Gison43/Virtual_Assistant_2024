@@ -7,7 +7,8 @@ from  SenseCells.tts_engine import tts
 today=dt.now()
 
 def what_is_time():
-  tts("The time is " + (f"{today:%H:%M:%S}))
+  tts("The time is " + (f"{today:%H:%M:%S})) 
+ # I think you'll need to change this, test it. 
 
 def what_is_day():
   current_day = dt.now().date()
