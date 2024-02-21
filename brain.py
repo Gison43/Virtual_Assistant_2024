@@ -19,6 +19,9 @@ def brain(name, speech_text):
 
    elif check_message(['tell', 'joke']):
       general_conversations.tell_me_a_joke()
+   
+   elif check_message(['what', 'year', 'is it']) or check_message(['what', 'current', 'year']):
+      tell_time.current_year()
 
    elif check_message(['when','my', 'birthday']):
       general_conversations.when_birthday()
