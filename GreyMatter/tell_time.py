@@ -43,4 +43,4 @@ def days_from_now(year, month, day):
 
 #calculate the difference in days between the furtre date and the curent date
    difference = (future_date - current_date).days
-   tts("There are " + str(difference) + " days remaining")
+   tts("There are " + str(difference) + " days remaining until " + (f"{future_date: %M %D %Y}))
