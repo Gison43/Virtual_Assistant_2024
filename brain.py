@@ -26,6 +26,9 @@ def brain(name, speech_text):
    elif check_message(['when','my', 'birthday']):
       general_conversations.when_birthday()
 
+   elif check_message(['when', 'new years']):
+      tell_time.new_years_eve()
+
    elif check_message(['when', 'created']):
       general_conversations.when_were_you_created()
 
