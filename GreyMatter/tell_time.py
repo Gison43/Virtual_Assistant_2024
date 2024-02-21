@@ -13,6 +13,7 @@ def what_is_time():
 def what_is_day():
   current_day = dt.now().date()
   tts("It is " + (f"{current_day:%A}))
+  #try changing line 15 to tts(f"It is {current_day:%A}")
 
 def day_number():
    day_number = dt.now().date()
