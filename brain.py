@@ -44,6 +44,9 @@ def brain(name, speech_text):
    elif check_message(['what','day','is','it']) or check_message(['what', 'day', 'of', 'the', 'week', 'is','it']):
       tell_time.what_is_day()
 
+   elif check_message(['what','month']):
+      tell.time.what_month()
+
    elif check_message(['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date']))
       tell_time.what_is_date()
 
