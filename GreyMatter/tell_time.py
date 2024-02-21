@@ -4,16 +4,22 @@ from datetime import datetime as dt, date
 
 from  SenseCells.tts_engine import tts
 
+today=dt.now()
+
 def what_is_time():
-  tts("The time is " + dt.strftime(dt.now(), '%H:%M:%S'))
+  tts("The time is " + (f"{today:%H:%M:%S}))
 
 def what_is_day():
   current_day = dt.now().date()
-  tts("It is " + current_day.strftime('%A'))
+  tts("It is " + (f"{current_day:%A}))
 
 def what_is_date():
   current_date = dt.now()date()
-  tts("It is " + current_date.strftime('%B %d %Y'))
+  tts("It is " + (f"{current_date: %B %d %Y}))
+
+def what_is_month():
+   current_month = dt.now()date()
+   tts("It is " + (f"{current_month: %B}))
 
 def days_from_now(year, month, day):
  #get the current date
