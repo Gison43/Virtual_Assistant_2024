@@ -17,7 +17,7 @@ def what_is_date():
   current_date = dt.now()date()
   tts("It is " + (f"{current_date: %B %d %Y}))
 
-def what_is_month():
+def what_month():
    current_month = dt.now()date()
    tts("It is " + (f"{current_month: %B}))
 
