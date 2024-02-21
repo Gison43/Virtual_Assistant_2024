@@ -18,6 +18,17 @@ def day_number():
    day_number = dt.now().date()
    tts("It is day number " + (f"{day_number:%j}) + "of the year " + (f"{day_number:%Y}))
 
+def when_birthday():
+   today = dt.date.today()
+   birthdate = dt.date(today.year, 7, 15)  # Assuming birthday is July 15th
+   if today > birthdate:
+      next_birthday = dt.date(today.year + 1, 7, 15)  # Next year's birthday
+   else:
+      next_birthday = birthdate  # This year's birthday
+
+   days_until_birthday = (next_birthday - today).days
+   tts("Your birthday is in " + (f"{days_until_birthday}) + " days.")
+
 def current_year():
    current_year = dt.now().date()
    tts("It is the year " + (f"{current_year:%Y}))
