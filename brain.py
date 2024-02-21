@@ -35,11 +35,14 @@ def brain(name, speech_text):
    elif check_message(['i am', 'doing', 'well', 'fine', 'good']):
       general_conversations.i_am_doing_well_thank_you()
 
-   elif check_message(['who am', 'i']) or check_message([('what','is','my', 'name']) or check_message(['what\'s my name']):
+   elif check_message(['who', 'am', 'i']) or check_message([('what','is','my', 'name']) or check_message(['what\'s my name']):
       general_conversations.who_am_i()
     
    elif check_message(['time']) or check_message(['what', 'time', 'is', 'it']):
       tell_time.what_is_time()
+
+   elif check_message(['what', 'day', 'number']):
+      tell_time.day_number()
 
    elif check_message(['what','day','is','it']) or check_message(['what', 'day', 'of', 'the', 'week', 'is','it']):
       tell_time.what_is_day()
