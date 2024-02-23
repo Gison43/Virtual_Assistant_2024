@@ -15,6 +15,7 @@ lang_abbr = {"english":"en",
           "french": "fr"}
 
 tts("What language do you want to use? You can choose english, spanish or french.")
+#specify the input/output languages
    if check_message(['spanish']):
       translator = Translator(from_lang="en", to_lang="es")
       spanish_translator.spanish()
@@ -27,19 +28,18 @@ tts("What language do you want to use? You can choose english, spanish or french
           tts("Ok, we'll practice french.")
 
 tts("Say something in english")
+
 #capture the spoken english
-
 with sr.Microphone() as source:
-          speech.adjust_for_ambien_noise(source)
-          try:
-                    audio = speech.listen(source)
-                    my_input = speech.recognize_google(audio, language="en")
-                    print(f"You said {my_input}")
-          except sr.UnknownValueError:
-                    pass
-
+   speech.adjust_for_ambien_noise(source)
+      try:
+         audio = speech.listen(source)
+         my_input = speech.recognize_google(audio, language="en")
+         print(f"You said {my_input}")
+      except sr.UnknownValueError:
+         pass
 #do the actual translation
-translation = translaor.translate(my_input)
+translation = translator.translate(my_input)
 print(translation)
 #convert text to speech in Spanish
 tts = gTTS(text=translation, lang='es')
