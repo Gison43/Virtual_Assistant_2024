@@ -21,23 +21,19 @@ lang_abbr = {"english":"en",
           "french": "fr"}
 
 tts("What language do you want to practice? You can choose english, spanish or french.")
-#specify the input/output languages
-   if check_message(['spanish']):
-      translator = Translator(from_lang="en", to_lang="es")
-      spanish_translator.spanish()
-      tts("Ok, we'll practice spanish.")
-      spanish_practice()
-         #if the message is true then call the function
 
-   elif check_message(['french']):
-      translator = Translator(from_lang="en", to_lang="fr")
-      spanish_translator.french()
-      tts("Ok, we'll practice french.")
-      french_practice()
-
-
+def language_selection(language):
+          translator = Translator(from_lang='en', to_lang=lang.abbr[language])
+          tts(f"Ok, we'll practice {language}.")
+          if language == 'spanish':
+	   spanish.practice(translator)
+	elif language == 'french':
+   	   french_practice(translator)
+	else:
+	   tts("Sorry, only spanish and french are currently supported.")
+		
 #capture the spoken english
-def(spanish_practice):
+def spanish_practice(translator):
    tts("Say something in english")          
 
    with sr.Microphone() as source:
@@ -49,7 +45,6 @@ def(spanish_practice):
          except sr.UnknownValueError:
             print("Could not understand audio.")
 #do the actual translation
-   Translator = Translator(from_lang='en', to_lang='es')
    translation = translator.translate(my_input)
    print(translation)
 #convert text to speech in Spanish
@@ -73,15 +68,14 @@ def(spanish_practice):
             print(f"You said {my_input}")
          except sr.UnknownValueError:
             pass
-Translator = Translator(from_lang='es', to_lang='en')
-translation = translator.translate(my_input)
-print(translation)
+   translation = translator.translate(my_input)
+   print(translation)
 #convert text to speech in Spanish
-tts_english = tts(text=translation, lang='en')
+   tts_english = tts(text=translation, lang='en')
 #create temp file
-voice = BytesIO()
+   voice = BytesIO()
 #save voice output as an audio file
-tts_english.write_to_fp(voice)
+   tts_english.write_to_fp(voice)
 #play audio file
-voice.seek(0)
-play(AudioSegment.from_mp3(voice))
+   voice.seek(0)
+   play(AudioSegment.from_mp3(voice))
