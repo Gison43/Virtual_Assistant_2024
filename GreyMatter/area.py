@@ -24,7 +24,7 @@ tts('What is the length of the rectangle in centimeters')
 #convert the voice input to a variable inp1
 inp1 = voice_to_text()
 length = extract_numerical_value(inp1)
-tts(f"You just said {inp1}.")
+tts(f"You just said {inp1}centimeters.")
 
 #ask the width of the rectangle
 tts('What is the width of the rectangle')
@@ -32,7 +32,7 @@ tts('What is the width of the rectangle')
 #convert the voice input to a variable inp2
 inp2 = voice_to_text()
 width = extract_numerical_value(inp2)
-tts(f"You just said {inp2}")
+tts(f"You just said {inp2}centimeters")
 
 #Calculate the area
 area = length * width
