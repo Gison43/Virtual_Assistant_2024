@@ -12,28 +12,32 @@ from pydub.playback import play
 speech = sr.Recognizer()
 
 #Specify the input and output languages
-translator = Translator(from_lang="en", to_lang="es")
+#translator = Translator(from_lang="en", to_lang="es")
 
 lang_abbr = {"english":"en",
           "spanish": "es",
           "french": "fr"}
 
-tts("What language do you want to use? You can choose english, spanish or french.")
+tts("What language do you want to practice? You can choose english, spanish or french.")
 #specify the input/output languages
    if check_message(['spanish']):
       translator = Translator(from_lang="en", to_lang="es")
       spanish_translator.spanish()
       tts("Ok, we'll practice spanish.")
+      spanish_practice()
          #if the message is true then call the function
 
    elif check_message(['french']):
       translator = Translator(from_lang="en", to_lang="fr")
       spanish_translator.french()
       tts("Ok, we'll practice french.")
+      french_practice()
 
-tts("Say something in english")
 
 #capture the spoken english
+def(spanish_practice):
+   tts("Say something in english")          
+
 with sr.Microphone() as source:
    speech.adjust_for_ambien_noise(source)
       try:
