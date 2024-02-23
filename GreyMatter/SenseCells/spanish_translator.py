@@ -2,10 +2,14 @@
 
 from io import BytesIO
 
+import speech_recognition as sr
 from tts_engine import tts
 from translate import Translator
 from pydub import AudioSegment #need to download with sudo install pydub
 from pydub.playback import play
+
+#Initiate speech recognition
+speech = sr.Recognizer()
 
 #Specify the input and output languages
 translator = Translator(from_lang="en", to_lang="es")
@@ -23,9 +27,9 @@ tts("What language do you want to use? You can choose english, spanish or french
          #if the message is true then call the function
 
    elif check_message(['french']):
-          translator = Translator(from_lang="en", to_lang="fr")
-          spanish_translator.french()
-          tts("Ok, we'll practice french.")
+      translator = Translator(from_lang="en", to_lang="fr")
+      spanish_translator.french()
+      tts("Ok, we'll practice french.")
 
 tts("Say something in english")
 
@@ -37,7 +41,7 @@ with sr.Microphone() as source:
          my_input = speech.recognize_google(audio, language="en")
          print(f"You said {my_input}")
       except sr.UnknownValueError:
-         pass
+         print("Could not understand audio.")
 #do the actual translation
 translation = translator.translate(my_input)
 print(translation)
