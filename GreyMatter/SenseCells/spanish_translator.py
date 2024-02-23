@@ -3,7 +3,7 @@
 from io import BytesIO
 
 from tts_engine import tts
-from pydub import AudioSegment
+from pydub import AudioSegment #need to download with sudo install pydub
 from pydub.playback import play
 
 lang_abbre = {"english":"en",
