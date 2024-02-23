@@ -10,5 +10,5 @@ lang_abbre = {"english":"en",
           "spanish": "es",
           "french": "fr"}
 
-lang = tts("What language do you want to use?")
-check_message
+lang = tts("What language do you want to use? You can choose english, spanish or french.")
+
