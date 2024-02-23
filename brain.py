@@ -35,6 +35,9 @@ def brain(name, speech_text):
    elif check_message(['when','my', 'birthday']):
       general_conversations.when_birthday()
 
+   elif check_message({'want','practice', 'spanish']):
+      spanish_translator()
+
    elif check_message(['when', 'new years']):
       tell_time.new_years_eve()
 
