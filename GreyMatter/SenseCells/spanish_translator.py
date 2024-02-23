@@ -11,4 +11,12 @@ lang_abbre = {"english":"en",
           "french": "fr"}
 
 lang = tts("What language do you want to use? You can choose english, spanish or french.")
+   if check_message(['spanish']):
+      spanish_translator.spanish()
+          tts("Ok, we'll practice spanish.")
+         #if the message is true then call the function
+
+   elif check_message(['french']):
+      spanish_translator.french()
+          tts("Ok, we'll practice french.")
 
