@@ -29,6 +29,9 @@ def brain(name, speech_text):
    elif check_message(['how', 'old', 'am', 'i']):
       tell_time.how_old()
 
+   elif check_message(['calculate', 'area', 'rectangle']):
+      area()
+
    elif check_message(['when','my', 'birthday']):
       general_conversations.when_birthday()
 
