@@ -10,7 +10,7 @@ from pydub.playback import play
 #Specify the input and output languages
 translator = Translator(from_lang="en", to_lang="es")
 
-lang_abbre = {"english":"en",
+lang_abbr = {"english":"en",
           "spanish": "es",
           "french": "fr"}
 
