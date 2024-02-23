@@ -27,7 +27,7 @@ def brain(name, speech_text):
       tell_time.current_year()
 
    elif check_message(['how', 'old', 'am', 'i']):
-      tell.time.how_old()
+      tell_time.how_old()
 
    elif check_message(['when','my', 'birthday']):
       general_conversations.when_birthday()
@@ -47,7 +47,7 @@ def brain(name, speech_text):
    elif check_message(['i am', 'doing', 'well', 'fine', 'good']):
       general_conversations.i_am_doing_well_thank_you()
 
-   elif check_message(['who', 'am', 'i']) or check_message([('what','is','my', 'name']) or check_message(['what\'s my name']):
+   elif check_message(['who', 'am', 'i']) or check_message(['what','is','my', 'name']) or check_message(['what\'s my name']):
       general_conversations.who_am_i()
     
    elif check_message(['time']) or check_message(['what', 'time', 'is', 'it']):
@@ -60,9 +60,9 @@ def brain(name, speech_text):
       tell_time.what_is_day()
 
    elif check_message(['what','month']):
-      tell.time.what_month()
+      tell_time.what_month()
 
-   elif check_message(['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date']))
+   elif check_message(['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date']):
      tell_time.what_is_date()
 
    elif check_message(['how', 'many', 'days', 'remaining', 'until']):
