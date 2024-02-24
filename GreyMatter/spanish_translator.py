@@ -40,6 +40,7 @@ def spanish_practice(translator):
 
    with sr.Microphone() as source:
       speech.adjust_for_ambient_noise(source)
+
       try:
          audio = speech.listen(source)
          my_input = speech.recognize_google(audio, language="en")
