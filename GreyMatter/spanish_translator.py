@@ -5,8 +5,9 @@
 from io import BytesIO
 
 import speech_recognition as sr
-from tts_engine import tts #instead of from gtts import gTTS
+import translate
 from translate import Translator
+from GreyMatter.SenseCells.tts_engine import tts #instead of from gtts import gTTS
 from pydub import AudioSegment #need to download with sudo install pydub
 from pydub.playback import play
 
@@ -18,37 +19,38 @@ speech = sr.Recognizer()
 
 lang_abbr = {"english":"en",
           "spanish": "es",
-          "french": "fr"}
+          "french": "fr"
+}
 
-tts("What language do you want to practice? You can choose english, spanish or french.")
+#tts("What language do you want to practice? You can choose spanish or french.")
 
 def language_selection(language):
-          translator = Translator(from_lang='en', to_lang=lang.abbr[language])
-          tts(f"Ok, we'll practice {language}.")
-          if language == 'spanish':
-	   spanish.practice(translator)
-	elif language == 'french':
-   	   french_practice(translator)
-	else:
-	   tts("Sorry, only spanish and french are currently supported.")
-		
+   translator = Translator(from_lang='en', to_lang=lang_abbr[language])
+   tts(f"Ok, we'll practice {language}.")
+   if language == 'spanish':
+      spanish_practice(translator)
+   elif language == 'french':
+       french_practice(translator)
+   else:
+      tts("Sorry, only spanish and french are currently supported.")
+
 #capture the spoken english
 def spanish_practice(translator):
    tts("Say something in english")          
 
    with sr.Microphone() as source:
-      speech.adjust_for_ambien_noise(source)
-         try:
-            audio = speech.listen(source)
-            my_input = speech.recognize_google(audio, language="en")
-            print(f"You said {my_input}")
-         except sr.UnknownValueError:
+      speech.adjust_for_ambient_noise(source)
+      try:
+         audio = speech.listen(source)
+         my_input = speech.recognize_google(audio, language="en")
+         print(f"You said {my_input}")
+      except sr.UnknownValueError:
             print("Could not understand audio.")
 #do the actual translation
    translation = translator.translate(my_input)
-   print(translation)
+   print(f"The translation is: {translation}")
 #convert text to speech in Spanish
-   tts_spanish = tts(text=translation, lang='es')
+   tts_spanish = tts(translation, lang='es')
 #create a temporary file
    voice = BytesIO()
 #save the voice output as an audio file
@@ -62,12 +64,12 @@ def spanish_practice(translator):
 #capture spoken spanish
    with sr.Microphone() as source:
       speech.adjust_for_ambient_noise(source)
-         try:
-            audio = speech.listen(source)
-            my_input = speech.recognize_google(audio, language='es')
-            print(f"You said {my_input}")
-         except sr.UnknownValueError:
-            pass
+      try:
+         audio = speech.listen(source)
+         my_input = speech.recognize_google(audio, language='es')
+         print(f"You said {my_input}")
+      except sr.UnknownValueError:
+         pass
    translation = translator.translate(my_input)
    print(translation)
 #convert text to speech in Spanish

@@ -1,4 +1,8 @@
+from user_input import get_user_input
 from GreyMatter import tell_time, general_conversations, spanish_translator
+from GreyMatter.SenseCells.tts_engine import tts
+from GreyMatter.spanish_translator import language_selection
+#from GreyMatter import french_translator
 
 def brain(name, speech_text):
    """
@@ -35,8 +39,20 @@ def brain(name, speech_text):
    elif check_message(['when','my', 'birthday']):
       general_conversations.when_birthday()
 
-   elif check_message({'want','practice', 'spanish']):
-      spanish_translator()
+   elif check_message(['want','practice', 'language']):
+      tts("What language would you like to practice? Spanish or French?")
+      #listen for the user's response
+      user_response = get_user_input()
+
+      #check if the user wants to practic Spanish
+      if 'spanish' in user_response:
+         tts("Ok, we will practice Spanish.")
+         language_selection('spanish')
+      elif 'french' in user_response:
+         tts("Ok, we will practice french.")
+         language_selection('french')
+      else:
+         tts("Sorry, only spanish and french are currently supported.")
 
    elif check_message(['when', 'new years']):
       tell_time.new_years_eve()
