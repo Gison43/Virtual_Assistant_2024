@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #This is Google Speech Recognition python file from 
 #the book Building a Virtual Assistant  with RPi" year 2016
 

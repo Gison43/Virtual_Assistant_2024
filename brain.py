@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from user_input import get_user_input
 from GreyMatter import tell_time, general_conversations, spanish_translator
 from GreyMatter.SenseCells.tts_engine import tts

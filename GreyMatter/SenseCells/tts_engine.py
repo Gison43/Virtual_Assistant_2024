@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import sys
 
@@ -15,6 +17,6 @@ def tts(message, lang=None):
          tts_engine = 'espeak -v es'
       else:
          tts_engine = 'espeak'
-   return os.system(tts_engine + ' "' + message + '"')
+         return os.system(tts_engine + ' "' + message + '"')
 
 #tts("Hi handsome, this is computer.")
