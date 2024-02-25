@@ -85,10 +85,11 @@ def spanish_practice(translator):
             pass
 
     if my_input:
+        translator = Translator(from_lang = 'es', to_lang = 'en')
         translation = translator.translate(my_input)
         print(f"The translation is {translation}")
         tts_english = tts(translation, lang = 'en')
-        tts(translation, lang = 'es')
+        tts(translation, lang = 'en')
     else:
         tts("Please try again.")
         return
