@@ -6,17 +6,17 @@ from GreyMatter.SenseCells.tts_engine import tts
 
 #function to preprocess the input and extract numerical value
 def extract_numerical_value(input_text):
-   #split the input text by space
-  words = input_text.split()
-  #initialize the numerical value as none
-  numerical_value = None
+    #split the input text by space
+    words = input_text.split()
+    #initialize the numerical value as none
+    numerical_value = None
 #Iterate over the words in the input
-  for word in words:  #attempt to convert to word to a float
-    try:
-      numerical_value = float(word)
-      break  #exit the loop if a numerical value is found
-    except ValueError:
-      continue  #continue to the next word if the conversion fails
+    for word in words:  #attempt to convert to word to a float
+        try:
+            numerical_value = float(word)
+            break  #exit the loop if a numerical value is found
+        except ValueError:
+            continue  #continue to the next word if the conversion fails
 
   return numerical_value
 
