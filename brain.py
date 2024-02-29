@@ -18,30 +18,29 @@ def check_message(check):
         return True
     else:
         return False
-    match check:
-        case_check_message(['who' , 'are','you']):
-            general_conversations.who_are_you()
+match True:
+    case check_message(['who' , 'are','you']):
+        general_conversations.who_are_you()
             #if the message is true then call the function
-
-    case _ if check_message(['tell','joke']):
+    case check_message(['tell','joke']):
         general_conversations.tell_me_a_joke()
 
-    case _ if check_message(['how','long','until','my','birthday'] | check_message(['how', 'many', 'days', 'until', 'my', 'birthday']):
+    case check_message(['how','long','until','my','birthday'] | check_message(['how', 'many', 'days', 'until', 'my', 'birthday']):
         tell_time.when_birthday()
    
-    case _ if check_message(['what'| 'year','is it'] | check_message(['what', 'current', 'year']):
+    case check_message(['what'| 'year','is it'] | check_message(['what', 'current', 'year']):
         tell_time.current_year()
 
-    case _ if check_message(['how'| 'old'| 'am'| 'i']):
+    case check_message(['how'| 'old'| 'am'| 'i']):
         tell_time.how_old()
 
-    case _ if check_message(['calculate','area'| 'rectangle']):
+    case check_message(['calculate','area'| 'rectangle']):
         area()
 
-    case _ if check_message(['when','my'| 'birthday']):
+    case check_message(['when','my'| 'birthday']):
         general_conversations.when_birthday()
 
-    case _ if check_message(['want','practice', 'language']):
+    case check_message(['want','practice', 'language']):
         tts("What language would you like to practice? Spanish or French?")
       #listen for the user's response
         user_response = get_user_input()
@@ -56,40 +55,40 @@ def check_message(check):
         else:
             tts("Sorry, only spanish and french are currently supported.")
 
-    case _ if check_message(['when'| 'new years']):
-        tell_time.new_years_eve()
+    case check_message(['when'| 'new years']):
+         tell_time.new_years_eve()
 
-    case _ if check_message(['when'| 'created']):
-        general_conversations.when_were_you_created()
+    case check_message(['when'| 'created']):
+         general_conversations.when_were_you_created()
 
-    case _ if check_message(['when','born']):
-        general_conversations.when_where_you_born()
+    case check_message(['when','born']):
+         general_conversations.when_where_you_born()
 
-    case _ if check_message(['how','are','you','doing']):
-        general_conversations.how_are_you()
+    case check_message(['how','are','you','doing']):
+         general_conversations.how_are_you()
 
-    case _ if check_message(['i am', 'doing', 'well', 'fine', 'good']):
-        general_conversations.i_am_doing_well_thank_you()
+    case check_message(['i am', 'doing', 'well', 'fine', 'good']):
+         general_conversations.i_am_doing_well_thank_you()
 
-    case _ if check_message(['who', 'am', 'i'] | check_message(['what','is','my', 'name']) | check_message(['what\'s my name']):
-        general_conversations.who_am_i()
+    case check_message(['who', 'am', 'i'] | check_message(['what','is','my', 'name']) | check_message(['what\'s my name']):
+         general_conversations.who_am_i()
 
-    case _ if check_message(['time'] | check_message(['what', 'time', 'is', 'it']):
-        tell_time.what_is_time()
+    case check_message(['time'] | check_message(['what', 'time', 'is', 'it']):
+         tell_time.what_is_time()
 
-    case _ if check_message(['what','day','number']):
-        tell_time.day_number()
+    case check_message(['what','day','number']):
+         tell_time.day_number()
 
-    case _ if check_message(['what','day','is','it'] | check_message(['what', 'day', 'of', 'the', 'week', 'is','it']):
-        tell_time.what_is_day()
+    case check_message(['what','day','is','it'] | check_message(['what', 'day', 'of', 'the', 'week', 'is','it']):
+         tell_time.what_is_day()
 
-    case _ if check_message(['what','month']):
+    case check_message(['what','month']):
         tell_time.what_month()
 
-    case _ if check_message(['what', 'is', 'the', 'date','today'] | check_message(['current', 'date']):
-        tell_time.what_is_date()
+    case check_message(['what', 'is', 'the', 'date','today'] | check_message(['current', 'date']):
+         tell_time.what_is_date()
 
-    case _ if check_message(['how', 'many', 'days', 'remaining', 'until']):
+    case check_message(['how', 'many', 'days', 'remaining', 'until']):
        #find the index of the word "until"
        #note that the speaker must ask for the date in the format of MM:DD:YYYY, in that order
         if all(word in words for word in ['how', 'many', 'days', 'remaining', 'until']):
@@ -105,6 +104,6 @@ def check_message(check):
 
             tell_time.days_from_now(year, month, day)
 
-    case _:
-      #if not, then call the function 'i don't understand
-        general_conversations.undefined()
+     case _:
+      #if not, then call the function 'i don't understand'
+         general_conversations.undefined()
