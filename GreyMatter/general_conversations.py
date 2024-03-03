@@ -23,7 +23,7 @@ def tell_me_a_joke():
 
 def when_birthday():
    tts('Your birthday is July 15.  You were born in 1978.')
-       
+
 def when_were_you_created():
    tts('I was created on February 12 2024')
 

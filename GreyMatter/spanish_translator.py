@@ -48,7 +48,7 @@ def spanish_practice(translator):
         speech.adjust_for_ambient_noise(source)
 
         try:
-            audio = speech.listen(source)
+            audio = speech.listen(source, phrase_time_limit = 3.5)
             my_input = speech.recognize_google(audio, language="en")
             print(f"You said {my_input}")
         except sr.UnknownValueError:
@@ -78,7 +78,7 @@ def spanish_practice(translator):
     with sr.Microphone() as source:
         speech.adjust_for_ambient_noise(source)
         try:
-            audio = speech.listen(source)
+            audio = speech.listen(source, phrase_time_limit = 3.5)
             my_input = speech.recognize_google(audio, language='es')
             print(f"You said {my_input}")
         except sr.UnknownValueError:

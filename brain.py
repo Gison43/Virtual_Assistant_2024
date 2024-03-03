@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 from user_input import get_user_input
-from GreyMatter import tell_time, general_conversations, spanish_translator
+from GreyMatter import tell_time, general_conversations, spanish_translator, weather
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.spanish_translator import language_selection
 #from GreyMatter import french_translator
 
-def brain(name, speech_text):
+def brain(name, speech_text, city_name, city_code):
    """
    this function compares check vs speech_text to see if they are equal.  Also
    checks if the items in the list (specificed in the argument are present in 
@@ -42,7 +42,7 @@ def brain(name, speech_text):
    elif check_message(['when','my', 'birthday']):
       general_conversations.when_birthday()
 
-   elif check_message(['want','practice', 'language']):
+   elif check_message(['want','to','practice', 'language']):
       tts("What language would you like to practice? Spanish or French?")
 
       #listen for the user's response
@@ -89,7 +89,10 @@ def brain(name, speech_text):
       tell_time.what_month()
 
    elif check_message(['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date']):
-     tell_time.what_is_date()
+      tell_time.what_is_date()
+
+   elif check_message(['how', 'weather']) or check_message(['what', 'is','the', 'weather','forecast']):
+      weather.weather(city_name = city_name, city_code = city_code)
 
    elif check_message(['how', 'many', 'days', 'remaining', 'until']):
       #find the index of the word "until"

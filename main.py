@@ -20,25 +20,30 @@ profile.close()
 #Functioning Variables
 name = profile_data['name']
 city_name = profile_data['city_name']
+city_code = profile_data['city_code']
 
 tts('Welcome ' + name + ', systems are now ready to run.  How can I help you?')
 
 def main():
    r = sr.Recognizer()
-   with sr.Microphone() as source:
-      print("Listening...")
-      r.pause_threshold = 1
-      audio = r.listen(source)
+   m = sr.Microphone()
+   with m as source:
+       print("Adjusting...")
+       r.adjust_for_ambient_noise(source)
+       print("Set minimum energy threshold to {}".format(r.energy_threshold))
+       print("Listening...")
+       r.pause_threshold = 1
+       audio = r.listen(source, phrase_time_limit = 5.0)
 
    try:
-      speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
-      print("Recognizing and transcribing what you said...")
-      print('Computer thinks you said: ' + speech_text + "'")
+       speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
+       print("Recognizing and transcribing what you said...")
+       print('Computer thinks you said: ' + speech_text + "'")
    except sr.UnknownValueError:
-     print("Computer didn't understand.")
+        print("Computer didn't understand.")
    except sr.RequestError as e:
-      print("Could not request results from Google Speech Recognition service; {0}".format(e))
+        print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
-   brain(name,speech_text)
+   brain(name,speech_text, city_name, city_code)
 
 main()
