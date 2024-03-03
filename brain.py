@@ -106,7 +106,7 @@ def brain(name, speech_text):
    #extract the date provided by the speaker
          date_words = words[until_index + 1:]
 
-   #convert the date words into numbers (assuming the date is provided in the format "MM-DD-YYYY"   
+   #convert the date words into numbers (assuming the date is provided in the format "MM-DD-YYYY"
          month = int(date_words[0])
          day = int(date_words[1])
          year = int(date_words[2])
