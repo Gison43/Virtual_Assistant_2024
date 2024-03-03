@@ -21,8 +21,13 @@ def weather():
 
             # create the weather_resulst string
             weather_result = f"Weather condition in Ottawa today is {condition_en}"
+            tts(weather_result)
             return weather_result
     else:
+        tts("Failed to retrieve weather data.")
         return("Failed to retrieve weather data.")
 
     tts(weather_result)
+
+if __name__ == "__main__":
+    weather()
