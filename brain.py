@@ -61,6 +61,9 @@ def brain(name, speech_text):
    elif check_message(['when', 'new', 'years']) or check_message(['how', 'long', 'until', 'new', 'years', 'eve']):
       tell_time.new_years_eve()
 
+   elif check_message(['how', 'weather']) or check_message(['how', 'is', 'weather']):
+      weather.weather()
+
    elif check_message(['when', 'created']):
       general_conversations.when_were_you_created()
 
