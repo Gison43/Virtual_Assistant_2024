@@ -47,7 +47,6 @@ def scrape_weather_data(url):
         print("Failed to retrieve weather data.")
 
 # URL provided by ECCC for Ottawa weather data
-url = "https://geo.weather.gc.ca/geomet?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetFeature&TYPENAME=CURRENT_CONDITIONS&FILTER=%3CFilter%20xmlns=%22http://www.opengis.net/ogc%22%20xmlns:gml=%22http://www.opengis.net/gml%22%20xmlns:ogc=%22http://www.opengis.net/ogc%22%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3ElocationName_en%3C/PropertyName%3E%3CLiteral%3EOttawa%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Filter%3E"
-
+url = "https://geo.weather.gc.ca/geomet?service=WFS&version=1.1.0&request=GetFeature&typename=CURRENT_CONDITIONS&filter=<Filter><PropertyIsEqualTo><PropertyName>name</PropertyName><Literal>Ottawa%20%28Richmond%20-%20Metcalfe%29</Literal></PropertyIsEqualTo></Filter>"
 # Call the function to scrape weather data
 scrape_weather_data(url)
