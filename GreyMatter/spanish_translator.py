@@ -42,54 +42,55 @@ def language_selection(language):
 
 
 def spanish_practice(translator):
-    tts("Say something in english")
+    while True:
+        tts("Say something in english")
+        print("Listening....")
 
-    with sr.Microphone() as source:
-        speech.adjust_for_ambient_noise(source)
+        with sr.Microphone() as source:
+            speech.adjust_for_ambient_noise(source)
 
-        try:
-            audio = speech.listen(source, phrase_time_limit = 3.5)
-            my_input = speech.recognize_google(audio, language="en")
-            print(f"You said {my_input}")
-        except sr.UnknownValueError:
-             print("Could not understand audio.")
-             my_input = "" #Set default value if audio not understood
-    #do the actual translation
-    if my_input:
-        translation = translator.translate(my_input)
-        print(f"The translation is: {translation}")
-        tts(translation)
-    else:
-        tts("Please try again.")
-        return
-    tts("Say something in spanish")
+            try:
+                audio = speech.listen(source, phrase_time_limit = 3.5)
+                my_input = speech.recognize_google(audio, language="en")
+                print(f"You said {my_input}")
+            except sr.UnknownValueError:
+                print("Could not understand audio.")
+                my_input = "" #Set default value if audio not understood
+            #check if the user wants to stop
+            if my_input.lower() == "stop":
+                break  #break out of the loop
 
-    """#convert text to speech in Spanish
-    tts_spanish = tts(translation, lang='es')
-    #create a temporary file
-    voice = BytesIO()
-    #save the voice output as an audio file
-    tts_spanish.write_to_fp(voice)
-    #play the audio file
-    voice.seek(0)
-    play(AudioSegment.from_mp3(voice))
-    """
+#do the actual translation
+            if my_input:
+                translator = Translator(from_lang = 'en', to_lang = 'es')
+                translation = translator.translate(my_input)
+                print(f"The translation is: {translation}")
+                tts(translation)
+            else:
+                tts("Please try again.")
+
+        tts("Say something in spanish")
+        print("Listening...")
+
 #capture spoken spanish
-    with sr.Microphone() as source:
-        speech.adjust_for_ambient_noise(source)
-        try:
-            audio = speech.listen(source, phrase_time_limit = 3.5)
-            my_input = speech.recognize_google(audio, language='es')
-            print(f"You said {my_input}")
-        except sr.UnknownValueError:
-            pass
+        with sr.Microphone() as source:
+            speech.adjust_for_ambient_noise(source)
+            try:
+                audio = speech.listen(source, phrase_time_limit = 3.5)
+                my_input = speech.recognize_google(audio, language='es')
+                print(f"You said {my_input}")
+            except sr.UnknownValueError:
+                pass
 
-    if my_input:
-        translator = Translator(from_lang = 'es', to_lang = 'en')
-        translation = translator.translate(my_input)
-        print(f"The translation is {translation}")
-        tts_english = tts(translation, lang = 'en')
-        tts(translation, lang = 'en')
-    else:
-        tts("Please try again.")
-        return
+        #check if user wants to stop
+            if my_input.lower() == "stop":
+                break
+
+            if my_input:
+                translator = Translator(from_lang = 'es', to_lang = 'en')
+                translation = translator.translate(my_input)
+                print(f"The translation is {translation}")
+                tts_english = tts(translation, lang = 'en')
+                tts(translation, lang = 'en')
+            else:
+                tts("Please try again.")
