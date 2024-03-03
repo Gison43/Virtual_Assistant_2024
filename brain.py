@@ -6,7 +6,7 @@ from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.spanish_translator import language_selection
 #from GreyMatter import french_translator
 
-def brain(name, speech_text, city_name, city_code):
+def brain(name, speech_text):
    """
    this function compares check vs speech_text to see if they are equal.  Also
    checks if the items in the list (specificed in the argument are present in 

@@ -11,11 +11,11 @@ response = requests.get(url)
 if response.status_code == 200:
     # Parse the XML content
     root = ET.fromstring(response.content)
-    
+
     # Find and print weather condition for Ottawa
     for member in root.findall('.//{http://www.opengis.net/gml}featureMember'):
         condition_en = member.find('.//{urn:x-msc-smc:md:weather-meteo}cond_en').text
-        
+
         # Print weather condition
         print("Weather Condition (English):", condition_en)
         break  # Only print the first condition found
