@@ -41,7 +41,7 @@ def language_selection(language):
 #capture the spoken english
 
 
-def spanish_practice():
+def spanish_practice(translator):
     while True:
         tts("Say something in english")
         print("Listening....")
