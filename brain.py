@@ -50,10 +50,8 @@ def brain(name, speech_text, city_name, city_code):
 
       #check if the user wants to practic Spanish
       if 'spanish' in user_response:
-         tts("Ok, we will practice Spanish.")
          language_selection('spanish')
       elif 'french' in user_response:
-         tts("Ok, we will practice french.")
          language_selection('french')
       else:
          tts("Sorry, only spanish and french are currently supported.")
