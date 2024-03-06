@@ -30,7 +30,7 @@ lang_abbr = {"english":"en",
 
 def language_selection(language):
     translator = Translator(from_lang='en', to_lang=lang_abbr[language])
-    tts(f"Ok, we'll practice {language}.")
+    #tts(f"Ok, we'll practice {language}.")
     if language == 'spanish':
         spanish_practice(translator)
     elif language == 'french':
