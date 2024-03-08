@@ -54,6 +54,8 @@ except NoAudioOutputError:
 except Exception as e:
     print("f"An unexpected error occurred: {e}")
         #modify line 5 with new pitch number
+else:
+    print("No errors occurred. Script executed successfully.")
 
 #lines[5] = "pitch 100 150 \n"
 print (lines[5])
