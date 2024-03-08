@@ -50,6 +50,7 @@ except PermissionError:
     print("Permission denied.  You do not have sufficient permissions to access this file.")
 except NoAudioOutputError:
     print("No audio output detected. Please check your audio settings.")
+#the next one prints the actual exception error if it doesn't match the other 3.
 except Exception as e:
     print("f"An unexpected error occurred: {e}")
         #modify line 5 with new pitch number
