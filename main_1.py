@@ -48,6 +48,8 @@ except FileNotFoundError:
     print("File not found.  Unable to access the specified file.")
 except PermissionError:
     print("Permission denied.  You do not have sufficient permissions to access this file.")
+except NoAudioOutputError:
+    print("No audio output detected. Please check your audio settings.")
 except Exception as e:
     print("f"An unexpected error occurred: {e}")
         #modify line 5 with new pitch number
