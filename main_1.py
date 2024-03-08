@@ -20,26 +20,36 @@ filename = "/usr/lib/arm-linux-gnueabihf/espeak-ng-data/voices/default"
 #instantiate the filesClass class with filename and address
 fc = filesClass(filename)
 
-lines = fc.readFile()
-for pitch in range(100, 400, 25):
+try:
     lines = fc.readFile()
-    print (lines[5])
+    for pitch in range(100, 400, 25):
+        lines = fc.readFile()
+        print (lines[5])
 
-    #modify lines[5] here with new pitch numbers
-    lines[5] = "pitch " + str(pitch) + " " + str(pitch + 25) + "\n" 
-    print (lines[5])
+        #modify lines[5] here with new pitch numbers
+        lines[5] = "pitch " + str(pitch) + " " + str(pitch + 25) + "\n" 
+        print (lines[5])
 
-    fc.writeFile(lines)
+        fc.writeFile(lines)
 
-    voice1 = "default"
-    esng = ESpeakNG(voice1)
-    speech = "the pitch has been set to " + str(pitch)
-    esng.say(speech)
+        voice1 = "default"
+        esng = ESpeakNG(voice1)
+        speech = "the pitch has been set to " + str(pitch)
+        esng.say(speech)
 
-    cmdLine.run("clear")
+        cmdLine.run("clear")
 
+        #check if espeak voice output occured
+        if esng.last_exit_code !=0:
+            print("No audio output from espeak.")
 
-#modify line 5 with new pitch number
+except FileNotFoundError:
+    print("File not found.  Unable to access the specified file.")
+except PermissionError:
+    print("Permission denied.  You do not have sufficient permissions to access this file.")
+except Exception as e:
+    print("f"An unexpected error occurred: {e}")
+        #modify line 5 with new pitch number
 
 #lines[5] = "pitch 100 150 \n"
 print (lines[5])
