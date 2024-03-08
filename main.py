@@ -6,6 +6,7 @@ import sys
 
 import yaml
 import speech_recognition as sr
+import datetime
 
 from os import path
 from speech_recognition.recognizers import google
@@ -21,8 +22,14 @@ profile.close()
 name = profile_data['name']
 city_name = profile_data['city_name']
 city_code = profile_data['city_code']
+current_hour = datetime.datetime.now().hour
 
-tts('Welcome ' + name + ', systems are now ready to run.  How can I help you?')
+if 5 <= current_hour > 12:
+    tts('Good morning ' + name + ' systems are now ready to run.  what is your command.')
+elif 12 <= current_hour > 18:
+    tts('Good afternoon ' + name + 'systems are now ready to run.  what is your command.')
+else:
+    tts('Good evening ' + name + 'systems are now ready to run.  what is your command.')
 
 def main():
    r = sr.Recognizer()
