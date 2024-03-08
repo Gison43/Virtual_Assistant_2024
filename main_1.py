@@ -14,7 +14,8 @@ from filesClass import filesClass
 #programmatically edit the default voice file for pitch
 #pitch num1 num2 : num1 = from 100 to 425 num2 = 150 to 475
 
-filename = "/usr/lib/arm-linux-gnueabihf/espeak-data/voices/default"
+#voices in espeak-ng are found in the espeak-ng-data folder
+filename = "/usr/lib/arm-linux-gnueabihf/espeak-ng-data/voices/default"
 
 #instantiate the filesClass class with filename and address
 fc = filesClass(filename)
