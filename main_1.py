@@ -10,6 +10,7 @@ cmdLine.call("clear")
 #import the espeak class from espeak.py
 from espeakng import ESpeakNG
 from filesClass import filesClass
+#from GreyMatter.SenseCells.tts_engine import tts
 
 #programmatically edit the default voice file for pitch
 #pitch num1 num2 : num1 = from 100 to 425 num2 = 150 to 475
