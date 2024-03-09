@@ -27,6 +27,15 @@ def brain(name, speech_text, city_name, city_code):
    elif check_message(['tell', 'joke']):
       general_conversations.tell_me_a_joke()
 
+   elif check_message(['start', 'stopwatch']):
+      timer.stopwatch.start()
+
+   elif check_message(['stop', 'stopwatch']):
+      timer.stopwatch.stop()
+
+   elif check_message(['time', 'elapsed','stopwatch']):
+      timer.stopwatch.reset()
+
    elif check_message(['how', 'long', 'until', 'my', 'birthday']) or check_message(['how', 'many', 'days', 'until', 'my', 'birthday']):
       tell_time.when_birthday()
 
