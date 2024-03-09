@@ -20,6 +20,8 @@ def brain(name, speech_text, city_name, city_code):
       else:
          return False
 
+   stopwatch_started = False
+
    if check_message(['who',' are', 'you']):
       general_conversations.who_are_you()
          #if the message is true then call the function
@@ -28,25 +30,52 @@ def brain(name, speech_text, city_name, city_code):
       general_conversations.tell_me_a_joke()
 
    elif check_message(['start', 'stopwatch']):
-      timer.stopwatch.start()
+      if not stopwatch_started:
+         timer.start()
+         stopwatch_started = True
+         tts("We are starting the stopwatch. Let's go.")
+      else:
+         tts("The stopwatch is already runnning.")
 
    elif check_message(['stop', 'stopwatch']):
-      timer.stopwatch.stop()
+      if stopwatch_started:
+         timer.stop()
+         stopwatch_started = False
+      else:
+         tts("The stopwatch is not running.")
 
-   elif check_message(['time', 'elapsed','stopwatch']):
-      timer.stopwatch.reset()
+   elif check_message(['time', 'elapsed', 'stopwatch']):
+      if stopwatch_started:
+         timer.elapsed()
+      else:
+         tts("The stopwatch is not running.  Start it first.")
+
+   elif check_message(['split']):
+      if stopwatch_started:
+         timer.split()
+      else:
+         tts("The stopwatch is not running.  Start it first.")
+
+   elif check_message(['exit']):
+       if stopwatch_started:
+          total_time = timer.stop()
+          tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.  Exiting the stopwatch program.")
+          stopwatch_started = False
+       else:
+          tts("The stopwatch is not running.  Start it first.")
+       tts("Exiting stopwatch program.")
 
    elif check_message(['how', 'long', 'until', 'my', 'birthday']) or check_message(['how', 'many', 'days', 'until', 'my', 'birthday']):
-      tell_time.when_birthday()
+       tell_time.when_birthday()
 
    elif check_message(['what', 'year', 'is','it']) or check_message(['what', 'current', 'year']):
-      tell_time.current_year()
+       tell_time.current_year()
 
    elif check_message(['how', 'old', 'am', 'i']):
-      tell_time.how_old()
+       tell_time.how_old()
 
    elif check_message(['calculate', 'area', 'rectangle']):  #not currenlty working right now
-      area()
+       area()
 
    elif check_message(['when','my', 'birthday']):
       general_conversations.when_birthday()
