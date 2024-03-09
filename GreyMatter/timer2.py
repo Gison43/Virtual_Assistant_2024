@@ -1,6 +1,11 @@
 import timer
 from SenseCells.tts_engine import tts
+import sys
+sys.path.append(/home/pi/Virtual_Assistant_2024)
+from brain import check_message
 import speech_recognition as sr
+
+
 
 stopwatch_started = False  # Track if the stopwatch is currently running
 
@@ -57,3 +62,5 @@ while True:
 
     else:
         tts("Command not recognized. Please try again.")  # Inform the user of unrecognized commands
+
+get_user_input()
