@@ -1,7 +1,26 @@
 import timer
 from SenseCells.tts_engine import tts
+import speech_recognition as sr
 
 stopwatch_started = False  # Track if the stopwatch is currently running
+
+def get_user_input():
+    # Implement your code to get user input here
+    speech = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        speech.adjust_for_ambient_noise(source)
+        try:
+            audio = speech.listen(source, phrase_time_limit = 3.5)
+            my_input = speech.recognize_google(audio, language='en')
+            print(f"You said {my_input}")
+            return my_input
+        except sr.UnknownValueError:
+            print("Sorry, I couldn't understand what you said.")
+            return ""
+        except sr.RequestError:
+            print("Sorry, there was an error in retrieving speech recognition results.")
+            return ""
 
 while True:
     speech_text = get_user_input()  # Get user input
