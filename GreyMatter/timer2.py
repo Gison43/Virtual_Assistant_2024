@@ -1,13 +1,12 @@
 import timer
 from SenseCells.tts_engine import tts
 import sys
-sys.path.append("/home/pi/Virtual_Assistant_2024")
-from brain import check_message
 import speech_recognition as sr
 
 
 
 stopwatch_started = False  # Track if the stopwatch is currently running
+start_time = None
 
 def check_message(check):
       words_of_message = speech_text.split()
@@ -39,7 +38,7 @@ while True:
 
     if check_message(['start', 'stopwatch']):
         if not stopwatch_started:
-            timer.start()  # Start the stopwatch if it's not already running
+            start_time = timer.start()  # Start the stopwatch if it's not already running
             stopwatch_started = True
             tts("Let's go.")  # Inform the user that the stopwatch has started
         else:
@@ -47,7 +46,7 @@ while True:
 
     elif check_message(['stop', 'stopwatch']):
         if stopwatch_started:
-            total_time = timer.stop()  # Stop the stopwatch and get the total time elapsed
+            total_time = timer.stop(start_time)  # Stop the stopwatch and get the total time elapsed
             tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.")
             stopwatch_started = False
         else:
