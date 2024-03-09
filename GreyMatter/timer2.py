@@ -9,6 +9,13 @@ import speech_recognition as sr
 
 stopwatch_started = False  # Track if the stopwatch is currently running
 
+def check_message(check):
+      words_of_message = speech_text.split()
+      if set(check).issubset(set(words_of_message)):
+         return True
+      else:
+         return False
+
 def get_user_input():
     # Implement your code to get user input here
     speech = sr.Recognizer()
