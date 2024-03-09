@@ -1,5 +1,5 @@
 import timer
-from GreyMatter.SenseCells.tts_engine import tts
+from SenseCells.tts_engine import tts
 
 stopwatch_started = False  # Track if the stopwatch is currently running
 
