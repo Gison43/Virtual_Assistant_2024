@@ -9,13 +9,13 @@ import re
 
 import wikipedia
 
-from SenseCells.tts_engine import tts
+from GreyMatter.SenseCells.tts_engine import tts
 
 def define_subject(speech_text):
-    words_of_message = speech.text.split()
+    words_of_message = speech_text.split()
     words_of_message.remove('define')
     cleaned_message = ''.join(words_of_message)
-    
+
     try:
         wiki_data = wikipedia.summary(cleaned_message, sentences = 5)
         

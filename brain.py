@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from user_input import get_user_input
-from GreyMatter import tell_time, general_conversations, spanish_translator, weather
+from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.spanish_translator import language_selection
 #from GreyMatter import french_translator
@@ -92,8 +92,8 @@ def brain(name, speech_text, city_name, city_code):
    elif check_message(['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date']):
       tell_time.what_is_date()
 
-    elif check_message(['define']):
-        define_subject.define_subject(speech_text)
+   elif check_message(['define']):
+       define_subject.define_subject(speech_text)
 
    elif check_message(['how', 'weather']) or check_message(['what', 'is','the', 'weather','forecast']):
       weather.weather(city_name = city_name, city_code = city_code)
