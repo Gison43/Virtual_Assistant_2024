@@ -1,7 +1,7 @@
 import timer
 from SenseCells.tts_engine import tts
 import sys
-sys.path.append(/home/pi/Virtual_Assistant_2024)
+sys.path.append("/home/pi/Virtual_Assistant_2024")
 from brain import check_message
 import speech_recognition as sr
 
