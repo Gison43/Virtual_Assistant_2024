@@ -39,11 +39,14 @@ def start():
 
 def stop(start_time):
     """Stops the timer.  Returns the time elapsed"""
+    if start_time is None:
+        return "Error: Stopwatch not started."
     stop_time = datetime.datetime.now()
     total_time = (stop_time - start_time)
     time_string = format_time(total_time)
-    tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.")
-    return stop_time
+    #tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.")
+    print("Type of total_time:", type(total_time))
+    return total_time
 
 
 def now():
@@ -77,13 +80,15 @@ def unsplit():
 
 def format_time(time_delta):
     """Formats the time delta into hours, minutes, and seconds"""
+    print("Time delta:", time_delta)
     hours, remainder = divmod(time_delta.total_seconds(), 3600)
     minutes, seconds = divmod(remainder, 60)
     time_string = ""
+
     if hours > 0:
         time_string += f"{int(hours)} {'hour' if hours == 1 else 'hours'} "
     if minutes > 0:
         time_string += f"{int(minutes)} {'minute' if minutes == 1 else 'minutes'} "
     if seconds > 0 or time_string == "":
         time_string += f"{int(seconds)} {'second' if seconds == 1 else 'seconds'}"
-    return time_string
+    return time_string.strip()

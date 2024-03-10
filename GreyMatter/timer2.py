@@ -1,8 +1,8 @@
 import timer
+from timer import format_time
 from SenseCells.tts_engine import tts
 import sys
 import speech_recognition as sr
-
 
 
 stopwatch_started = False  # Track if the stopwatch is currently running
@@ -46,8 +46,8 @@ while True:
 
     elif check_message(['stop', 'stopwatch']):
         if stopwatch_started:
-            total_time = timer.stop(start_time)  # Stop the stopwatch and get the total time elapsed
-            tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.")
+            total_time = timer.stop(start_time)  #Pass the start_time to stop() and stop the stopwatch and get the total time elapsed
+            tts(f"The stopwatch has been stopped and the total time is {format_time(total_time)}.")
             stopwatch_started = False
         else:
             tts("The stopwatch is not running.")
