@@ -23,14 +23,7 @@ def brain(name, speech_text, city_name, city_code):
    stopwatch_started = False
    start_time = None
 
-   if check_message(['who',' are', 'you']):
-      general_conversations.who_are_you()
-         #if the message is true then call the function
-
-   elif check_message(['tell', 'joke']):
-      general_conversations.tell_me_a_joke()
-
-   while True:
+  while True:
       if check_message(['start', 'stopwatch']):
          if not stopwatch_started:
             start_time = Stopwatch.start() #start the stopwatich if it's not started
@@ -68,6 +61,13 @@ def brain(name, speech_text, city_name, city_code):
             stopwatch_started = False
          else:
             tts("Command not recognized.  Please try again.")
+
+   if check_message(['who',' are', 'you']):
+      general_conversations.who_are_you()
+         #if the message is true then call the function
+
+   elif check_message(['tell', 'joke']):
+      general_conversations.tell_me_a_joke()
 
    elif check_message(['how', 'long', 'until', 'my', 'birthday']) or check_message(['how', 'many', 'days', 'until', 'my', 'birthday']):
        tell_time.when_birthday()
