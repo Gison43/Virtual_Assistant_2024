@@ -17,6 +17,7 @@ def brain(name, speech_text, city_name, city_code):
    def check_message(check):
       words_of_message = speech_text.split()
       if set(check).issubset(set(words_of_message)):
+         print(f"Detected command: {check}")
          return True
       else:
          return False
@@ -28,9 +29,10 @@ def brain(name, speech_text, city_name, city_code):
    while True:
       if check_message(['start', 'stopwatch']):
          if not stopwatch_started:
-            start_time = stopwatch_instance.start() #start the stopwatich if it's not started
+            start_time = stopwatch_instance.start() #start the stopwatch if it's not started
             stopwatch_started = True
             tts("We are starting the stopwatch. Let's go.")
+            print("The stopwatch is running.",stopwatch_started)
          else:
             tts("The stopwatch is already runnning.")
 
@@ -41,6 +43,7 @@ def brain(name, speech_text, city_name, city_code):
             stopwatch_started = False
          else:
             tts("The stopwatch is not running.")
+            print("The stopwatch is not running.", stopwatch_started)
 
       elif check_message(['time', 'elapsed', 'stopwatch']):
          if stopwatch_started:
@@ -66,6 +69,7 @@ def brain(name, speech_text, city_name, city_code):
 
    if check_message(['who',' are', 'you']):
       general_conversations.who_are_you()
+      print("The conditin of the stopwatch is: ", stopwatch_started)
          #if the message is true then call the function
 
    elif check_message(['tell', 'joke']):

@@ -7,46 +7,26 @@ Created on Sat Mar  9 10:46:43 2024
 import datetime
 
 class Stopwatch:
-  def __init__(self):
+   def __init__(self):
       self.start_time = None
       self.is_running = False
       self.split_start_time = None
 
-"""Controls the stopwatch based on the action provided
-   if action == "start":
-       start_time = start()
-       tts("Let's go.")
-   elif action == "stop":
-       stop(start_time)
-   elif action == "now":
-        now()
-   elif action == "elapsed":
-       elapsed(start_time)
-   elif action == "split":
-       split()
-   elif action == "unsplit":
-       unsplit()
-   else:
-       tts("I'm sorry, I didn't understand that command.")
-"""
-
    def start(self):
-       """Starts the timer"""
+      """Starts the timer"""
       self.start_time = datetime.datetime.now()
-      self.is_running = True
       return self.start_time
 
    def stop(self, start_time):
-       """Stops the timer.  Returns the time elapsed"""
-       if self.start_time is None:
-          raise RuntimeError("Stopwatch not started.")
-       stop_time = datetime.datetime.now()
-       self.is_running = False
-       total_time = (stop_time - self.start_time)
-       time_string = format_time(total_time)
-       #tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.")
-       print("Type of total_time:", type(total_time))
-       return total_time
+      """Stops the timer.  Returns the time elapsed"""
+      if self.start_time is None:
+         raise RuntimeError("Stopwatch not started.")
+      stop_time = datetime.datetime.now()
+      total_time = (stop_time - self.start_time)
+      time_string = format_time(total_time)
+      #tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.")
+      print("Type of total_time:", type(total_time))
+      return total_time
 
 
    def now(self):
