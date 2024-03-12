@@ -54,21 +54,21 @@ def brain(name, speech_text, city_name, city_code):
          else:
             tts("The stopwatch is not running.")
 
-       elif check_message(['split']):
-          if stopwatch_started:
-             Stopwatch.split()
-             tts("The stopwatch has been split.")
-          else:
-             tts("The stopwatch is not running.  Start it first.")
+      elif check_message(['split']):
+         if stopwatch_started:
+            Stopwatch.split()
+            tts("The stopwatch has been split.")
+         else:
+            tts("The stopwatch is not running.  Start it first.")
 
-       elif check_message(['exit']):
-          if stopwatch_started:
-             total_time = Stopwatch.stop()
-             tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.  Exiting the stopwatch program.")
-             stopwatch_started = False
-          else:
-             tts("Command not recognized.  Please try again.")
-       
+      elif check_message(['exit']):
+         if stopwatch_started:
+            total_time = Stopwatch.stop()
+            tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.  Exiting the stopwatch program.")
+            stopwatch_started = False
+         else:
+            tts("Command not recognized.  Please try again.")
+
    elif check_message(['how', 'long', 'until', 'my', 'birthday']) or check_message(['how', 'many', 'days', 'until', 'my', 'birthday']):
        tell_time.when_birthday()
 
