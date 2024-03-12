@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from user_input import get_user_input
-from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer
+from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, stopwatch
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.spanish_translator import language_selection
 #from GreyMatter import french_translator
@@ -21,6 +21,7 @@ def brain(name, speech_text, city_name, city_code):
          return False
 
    stopwatch_started = False
+   start_time = None
 
    if check_message(['who',' are', 'you']):
       general_conversations.who_are_you()
@@ -29,42 +30,45 @@ def brain(name, speech_text, city_name, city_code):
    elif check_message(['tell', 'joke']):
       general_conversations.tell_me_a_joke()
 
-   elif check_message(['start', 'stopwatch']):
-      if not stopwatch_started:
-         timer.start()
-         stopwatch_started = True
-         tts("We are starting the stopwatch. Let's go.")
-      else:
-         tts("The stopwatch is already runnning.")
+   while True:
+      if check_message(['start', 'stopwatch']):
+         if not stopwatch_started:
+            start_time = Stopwatch.start() #start the stopwatich if it's not started
+            stopwatch_started = True
+            tts("We are starting the stopwatch. Let's go.")
+         else:
+            tts("The stopwatch is already runnning.")
 
-   elif check_message(['stop', 'stopwatch']):
-      if stopwatch_started:
-         timer.stop()
-         stopwatch_started = False
-      else:
-         tts("The stopwatch is not running.")
+      elif check_message(['stop', 'stopwatch']):
+         if stopwatch_started:
+            total_time = Stopwatch.stop(start_time)#Pass the start_time to stop() and stop the stopwatch and get the total time elapsed
+            tts(f"The stopwatch has been stopped and the total time is {format_time(total_time)}.")
+            stopwatch_started = False
+         else:
+            tts("The stopwatch is not running.")
 
-   elif check_message(['time', 'elapsed', 'stopwatch']):
-      if stopwatch_started:
-         timer.elapsed()
-      else:
-         tts("The stopwatch is not running.  Start it first.")
+      elif check_message(['time', 'elapsed', 'stopwatch']):
+         if stopwatch_started:
+            current_time = Stopwatch.elapsed()  # Get the current elapsed time on the stopwatch
+            tts(f"The current time elapsed on the stopwatch is {current_time} minutes.")
+         else:
+            tts("The stopwatch is not running.")
 
-   elif check_message(['split']):
-      if stopwatch_started:
-         timer.split()
-      else:
-         tts("The stopwatch is not running.  Start it first.")
+       elif check_message(['split']):
+          if stopwatch_started:
+             Stopwatch.split()
+             tts("The stopwatch has been split.")
+          else:
+             tts("The stopwatch is not running.  Start it first.")
 
-   elif check_message(['exit']):
-       if stopwatch_started:
-          total_time = timer.stop()
-          tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.  Exiting the stopwatch program.")
-          stopwatch_started = False
-       else:
-          tts("The stopwatch is not running.  Start it first.")
-       tts("Exiting stopwatch program.")
-
+       elif check_message(['exit']):
+          if stopwatch_started:
+             total_time = Stopwatch.stop()
+             tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.  Exiting the stopwatch program.")
+             stopwatch_started = False
+          else:
+             tts("Command not recognized.  Please try again.")
+       
    elif check_message(['how', 'long', 'until', 'my', 'birthday']) or check_message(['how', 'many', 'days', 'until', 'my', 'birthday']):
        tell_time.when_birthday()
 
