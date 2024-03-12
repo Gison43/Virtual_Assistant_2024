@@ -30,72 +30,68 @@ class Stopwatch:
        tts("I'm sorry, I didn't understand that command.")
 """
 
-def start(self):
-    """Starts the timer"""
-    self.start_time = datetime.datetime.now()
-    self.is_running = True
-    return self.start_time
+   def start(self):
+       """Starts the timer"""
+      self.start_time = datetime.datetime.now()
+      self.is_running = True
+      return self.start_time
+
+   def stop(self, start_time):
+       """Stops the timer.  Returns the time elapsed"""
+       if self.start_time is None:
+          raise RuntimeError("Stopwatch not started.")
+       stop_time = datetime.datetime.now()
+       self.is_running = False
+       total_time = (stop_time - self.start_time)
+       time_string = format_time(total_time)
+       #tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.")
+       print("Type of total_time:", type(total_time))
+       return total_time
 
 
-def stop(self, start_time):
-    """Stops the timer.  Returns the time elapsed"""
-    if self.start_time is None:
-        raise RuntimeError("Stopwatch not started.")
-    stop_time = datetime.datetime.now()
-    self.is_running = False
-    total_time = (stop_time - self.start_time)
-    time_string = format_time(total_time)
-    #tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.")
-    print("Type of total_time:", type(total_time))
-    return total_time
+   def now(self):
+      """Returns the current time with a message"""
+      current_time = (datetime.datetime.now())
+      tts("The stopwatch is at {current_time}")
+      return current_time
+
+   def elapsed(self, start_time):
+      """Time elapsed since start was called"""
+      if self.start_time is None:
+         raise RuntimeError("Stopwatch not started.")
+         tts("The stopwatch has not started")
+      time_elapsed = (datetime.datetime.now() - self.start_time)
+      time_string = format_time(time_elapsed)
+      tts("Time elapsed since the start is {time_string}")
+      return time_elapsed
 
 
-def now(self):
-    """Returns the current time with a message"""
-    current_time = (datetime.datetime.now())
-    tts("The stopwatch is at {current_time}")
-    return current_time
+   def split(self):
+      self.split_start_time = datetime.datetime.now()
+      tts(f"Split started at: {split_start_time}")
+      return self.split_start_time
 
+   def unsplit(self):
+      """Stops a split. Returns the time elapsed since split was called"""
+      if self.split_start_time is None:
+         raise RuntimeError("Split not started")
+         tts("Split not started")
+      split_end = datetime.datetime.now()
+      split_time = split_end - self.split_start_time
+      time_string = self.format_time(split_time)
+      tts(f"Split stopped.  Time elapsed since the split started is {time_string}.")
 
-def elapsed(self, start_time):
-    """Time elapsed since start was called"""
-    if self.start_time is None:
-        raise RuntimeError("Stopwatch not started.")
-        tts("The stopwatch has not started")
-    time_elapsed = (datetime.datetime.now() - self.start_time)
-    time_string = format_time(time_elapsed)
-    tts("Time elapsed since the start is {time_string}")
-    return time_elapsed
+   def format_time(self, time_delta):
+      """Formats the time delta into hours, minutes, and seconds"""
+      print("Time delta:", time_delta)
+      hours, remainder = divmod(time_delta.total_seconds(), 3600)
+      minutes, seconds = divmod(remainder, 60)
+      time_string = ""
 
-
-def split(self):
-    self.split_start_time = datetime.datetime.now()
-    tts(f"Split started at: {split_start_time}")
-    return self.split_start_time
-
-
-def unsplit(self):
-    """Stops a split. Returns the time elapsed since split was called"""
-    if self.split_start_time is None:
-        raise RuntimeError("Split not started")
-        tts("Split not started")
-    split_end = datetime.datetime.now()
-    split_time = split_end - self.split_start_time
-    time_string = self.format_time(split_time)
-    tts(f"Split stopped.  Time elapsed since the split started is {time_string}.")
-
-
-def format_time(self, time_delta):
-    """Formats the time delta into hours, minutes, and seconds"""
-    print("Time delta:", time_delta)
-    hours, remainder = divmod(time_delta.total_seconds(), 3600)
-    minutes, seconds = divmod(remainder, 60)
-    time_string = ""
-
-    if hours > 0:
-        time_string += f"{int(hours)} {'hour' if hours == 1 else 'hours'} "
-    if minutes > 0:
-        time_string += f"{int(minutes)} {'minute' if minutes == 1 else 'minutes'} "
-    if seconds > 0 or time_string == "":
-        time_string += f"{int(seconds)} {'second' if seconds == 1 else 'seconds'}"
-    return time_string.strip()
+      if hours > 0:
+         time_string += f"{int(hours)} {'hour' if hours == 1 else 'hours'} "
+      if minutes > 0:
+         time_string += f"{int(minutes)} {'minute' if minutes == 1 else 'minutes'} "
+      if seconds > 0 or time_string == "":
+         time_string += f"{int(seconds)} {'second' if seconds == 1 else 'seconds'}"
+      return time_string.strip()
