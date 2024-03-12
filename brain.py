@@ -27,37 +27,40 @@ def brain(name, speech_text, city_name, city_code):
    stopwatch_instance = Stopwatch() #create an instance of the Stopwatch class
 
    while True:
-      if check_message(['start', 'stopwatch']):
-         if not stopwatch_started:
-            start_time = stopwatch_instance.start() #start the stopwatch if it's not started
-            stopwatch_started = True
-            tts("We are starting the stopwatch. Let's go.")
-            print("The stopwatch is running.",stopwatch_started)
-         else:
-            tts("The stopwatch is already runnning.")
-
-      elif check_message(['stop', 'stopwatch']):
-         if stopwatch_started:
-            total_time = stopwatch_instance.stop(start_time)#Pass the start_time to stop() and stop the stopwatch and get the total time elapsed
-            tts(f"The stopwatch has been stopped and the total time is {format_time(total_time)}.")
-            stopwatch_started = False
-         else:
-            tts("The stopwatch is not running.")
-            print("The stopwatch is not running.", stopwatch_started)
-
-      elif check_message(['time', 'elapsed', 'stopwatch']):
-         if stopwatch_started:
-            current_time = stopwatch_instance.elapsed()  # Get the current elapsed time on the stopwatch
-            tts(f"The current time elapsed on the stopwatch is {current_time} minutes.")
-         else:
-            tts("The stopwatch is not running.")
-
-      elif check_message(['split']):
-         if stopwatch_started:
-            stopwatch_instance.split()
-            tts("The stopwatch has been split.")
-         else:
-            tts("The stopwatch is not running.  Start it first.")
+       if not commmand_processed:
+           if check_message(['start', 'stopwatch']):
+               if not stopwatch_started:
+                   start_time = stopwatch_instance.start() #start the stopwatch if it's not started
+                   stopwatch_started = True
+                   tts("We are starting the stopwatch. Let's go.")
+                   print("The stopwatch is running.",stopwatch_started)
+               else:
+                   tts("The stopwatch is already runnning.")
+               command_processed = True #mark the command as processed
+        
+           elif check_message(['stop', 'stopwatch']):
+               if stopwatch_started:
+                   total_time = stopwatch_instance.stop(start_time)#Pass the start_time to stop() and stop the stopwatch and get the total time elapsed
+                   tts(f"The stopwatch has been stopped and the total time is {format_time(total_time)}.")
+                   stopwatch_started = False
+               else:
+                   tts("The stopwatch is not running.")
+                   print("The stopwatch is not running.", stopwatch_started)
+               command_processed = True #mark the command as processed
+           elif check_message(['time', 'elapsed', 'stopwatch']):
+               if stopwatch_started:
+                   current_time = stopwatch_instance.elapsed()  # Get the current elapsed time on the stopwatch
+                   tts(f"The current time elapsed on the stopwatch is {current_time} minutes.")
+               else:
+                   tts("The stopwatch is not running.")
+               command_processed = True #mark the command as processed
+           elif check_message(['split']):
+               if stopwatch_started:
+                   stopwatch_instance.split()
+                   tts("The stopwatch has been split.")
+           else:
+               tts("The stopwatch is not running.  Start it first.")
+           command_processed = True #mark the command as processed
 
       elif check_message(['exit']):
          if stopwatch_started:
