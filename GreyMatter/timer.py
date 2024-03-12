@@ -4,11 +4,7 @@ Created on Sat Mar  9 10:46:43 2024
 
 @author: Phyco
 """
-
-from SenseCells.tts_engine import tts
-
 import datetime
-
 
 def stopwatch(action):
     start_time = None
