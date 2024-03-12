@@ -40,7 +40,7 @@ def start(self):
 def stop(self, start_time):
     """Stops the timer.  Returns the time elapsed"""
     if self.start_time is None:
-        return "Error: Stopwatch not started."
+        raise RuntimeError("Stopwatch not started.")
     stop_time = datetime.datetime.now()
     self.is_running = False
     total_time = (stop_time - self.start_time)
@@ -76,9 +76,12 @@ def split(self):
 
 def unsplit(self):
     """Stops a split. Returns the time elapsed since split was called"""
+    if self.split_start_time is None:
+        raise RuntimeError("Split not started")
+        tts("Split not started")
     split_end = datetime.datetime.now()
-    split_time = split_end - split_start
-    time_string = format_time(split_time)
+    split_time = split_end - self.split_start_time
+    time_string = self.format_time(split_time)
     tts(f"Split stopped.  Time elapsed since the split started is {time_string}.")
 
 
