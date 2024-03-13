@@ -22,7 +22,6 @@ def brain(name, speech_text, city_name, city_code):
       else:
          return False
 
-   stopwatch_started = False
    start_time = None
    stopwatch_instance = Stopwatch() #create an instance of the Stopwatch class
 
@@ -33,25 +32,21 @@ def brain(name, speech_text, city_name, city_code):
 
        if not command_processed:
            if check_message(['start', 'stopwatch']):
-               if not stopwatch_started:
+               if not stopwatch_instance.is_running:
                    start_time = stopwatch_instance.start() #start the stopwatch if it's not started
-                   stopwatch_started = True
                    tts("We are starting the stopwatch. Let's go.")
-                   print("The stopwatch is running.",stopwatch_started)
+                   print("The stopwatch is running.",stopwatch_instance.is_runninng)
                else:
                    tts("The stopwatch is already runnning.")
                command_processed = True #mark the command as processed
-            else:
-               command_processed = False #reset the flag for the next iteration
- 
+            
            elif check_message(['stop', 'stopwatch']):
-               if stopwatch_started:
-                   total_time = stopwatch_instance.stop(start_time)#Pass the start_time to stop() and stop the stopwatch and get the total time elapsed
+               if stopwatch_instance.is_running:
+                   total_time = stopwatch_instance.stop()#stop the stopwatch and get the total time elapsed
                    tts(f"The stopwatch has been stopped and the total time is {format_time(total_time)}.")
-                   stopwatch_started = False
                else:
                    tts("The stopwatch is not running.")
-                   print("The stopwatch is not running.", stopwatch_started)
+                   print("The stopwatch is not running.", stopwatch_instance.is_running)
                command_processed = True #mark the command as processed
 
            elif check_message(['time', 'elapsed', 'stopwatch']):
