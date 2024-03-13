@@ -29,8 +29,6 @@ def brain(name, speech_text, city_name, city_code):
    command_processed = False
    """
    while True:
-       command_processed = False
-
        if not command_processed:
            if check_message(['start', 'stopwatch']):
                if not stopwatch_started:
@@ -41,9 +39,7 @@ def brain(name, speech_text, city_name, city_code):
                else:
                    tts("The stopwatch is already runnning.")
                command_processed = True #mark the command as processed
-            else:
-               command_processed = False #reset the flag for the next iteration
- 
+            
            elif check_message(['stop', 'stopwatch']):
                if stopwatch_started:
                    total_time = stopwatch_instance.stop(start_time)#Pass the start_time to stop() and stop the stopwatch and get the total time elapsed
