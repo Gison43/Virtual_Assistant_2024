@@ -15,6 +15,7 @@ class Stopwatch:
    def start(self):
       """Starts the timer"""
       self.start_time = datetime.datetime.now()
+      self.is_running = True
       return self.start_time
 
    def stop(self, start_time):
@@ -22,6 +23,7 @@ class Stopwatch:
       if self.start_time is None:
          raise RuntimeError("Stopwatch not started.")
       stop_time = datetime.datetime.now()
+      self.is_running = False
       total_time = (stop_time - self.start_time)
       time_string = format_time(total_time)
       #tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.")
