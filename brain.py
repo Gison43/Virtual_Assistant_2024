@@ -41,6 +41,8 @@ def brain(name, speech_text, city_name, city_code):
                else:
                    tts("The stopwatch is already runnning.")
                command_processed = True #mark the command as processed
+            else:
+               command_processed = False #reset the flag for the next iteration
  
            elif check_message(['stop', 'stopwatch']):
                if stopwatch_started:
