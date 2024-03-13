@@ -30,7 +30,6 @@ class Stopwatch:
       print("Type of total_time:", type(total_time))
       return total_time
 
-
    def now(self):
       """Returns the current time with a message"""
       current_time = (datetime.datetime.now())
