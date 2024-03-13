@@ -11,7 +11,7 @@ import translate
 from translate import Translator
 from GreyMatter.SenseCells.tts_engine import tts
 #instead of from gtts import gTTS
-from pydub import AudioSegment #need to download with sudo install pydub
+from pydub import AudioSegment #need to download with sudo apt-get install -y python3-pydub
 from pydub.playback import play
 
 #Initiate speech recognition
