@@ -7,11 +7,15 @@ from GreyMatter.stopwatch import Stopwatch
 
 #from GreyMatter import french_translator
 
-def process_command(speech_text):
-   global stopwatch_instance
+#stopwatch_instance = Stopwatch()
+
+
+def process_command(speech_text, stopwatch_instance):
+   print(stopwatch_instance.is_running)
    pass
 
-def brain(name, speech_text, city_name, city_code):
+
+def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
    """
    this function compares check vs speech_text to see if they are equal.  Also
    checks if the items in the list (specificed in the argument are present in 
@@ -27,7 +31,7 @@ def brain(name, speech_text, city_name, city_code):
          return False
 
    start_time = None
-   stopwatch_instance = Stopwatch() #create an instance of the Stopwatch class
+#   stopwatch_instance = Stopwatch() #create an instance of the Stopwatch class
 
 
    def is_stopwatch_command(command):
@@ -47,9 +51,11 @@ def brain(name, speech_text, city_name, city_code):
 
       elif 'stop stopwatch' in speech_text:
          if stopwatch_instance.is_running:
-             total_time = stopwatch_instance.stop() #stop the stopwatch and get the total time elapsed
+             total_time = stopwatch_instance.stop(start_time) #stop the stopwatch and get the total time elapsed
+             formatted_total_time = stopwatch_instance.format_time(total_time)
              stopwatch_instance.is_running = False
-             tts(f"The stopwatch has been stopped and the total time is {format_time(total_time)}.")
+             tts(f"The stopwatch has been stopped and the total time is {formatted_total_time}.")
+             print("The stopwatch has been stopped and the total time is" , total_time)
          else:
              tts("The stopwatch is not running.")
              print("The stopwatch is not running.", stopwatch_instance.is_running)

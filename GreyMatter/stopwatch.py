@@ -11,6 +11,7 @@ class Stopwatch:
       self.start_time = None
       self.is_running = False
       self.split_start_time = None
+      self.total_time = datetime.timedelta()
 
    def start(self):
       """Starts the timer"""
@@ -23,12 +24,12 @@ class Stopwatch:
       if self.start_time is None:
          raise RuntimeError("Stopwatch not started.")
       stop_time = datetime.datetime.now()
-      self.is_running = False
-      total_time = (stop_time - self.start_time)
-      time_string = format_time(total_time)
+      elapsed_time  = (stop_time - self.start_time)
+      self.total_time += elapsed_time #accumulate the elapsed time
       #tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.")
-      print("Type of total_time:", type(total_time))
-      return total_time
+      print("Type of elapsed_time:", type(elapsed_time))
+      self.is_running = False
+      return elapsed_time
 
    def now(self):
       """Returns the current time with a message"""
@@ -36,13 +37,17 @@ class Stopwatch:
       tts("The stopwatch is at {current_time}")
       return current_time
 
+   def reset(self):
+      """Resets the stopwatch to zero time """
+      self.total_time = datetime.timedelta()
+
    def elapsed(self, start_time):
       """Time elapsed since start was called"""
       if self.start_time is None:
          raise RuntimeError("Stopwatch not started.")
          tts("The stopwatch has not started")
       time_elapsed = (datetime.datetime.now() - self.start_time)
-      time_string = format_time(time_elapsed)
+      time_string = self.format_time(time_elapsed)
       tts("Time elapsed since the start is {time_string}")
       return time_elapsed
 
