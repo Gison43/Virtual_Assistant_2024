@@ -31,6 +31,10 @@ elif 12 <= current_hour > 18:
 else:
     tts('Good evening ' + name + 'systems are now ready to run.  what is your command.')
 
+def process_command(speech_text):
+   global stopwatch_instance
+   pass
+
 def main():
    r = sr.Recognizer()
    m = sr.Microphone()
@@ -38,19 +42,21 @@ def main():
        print("Adjusting...")
        r.adjust_for_ambient_noise(source)
        print("Set minimum energy threshold to {}".format(r.energy_threshold))
-       print("Listening...")
-       r.pause_threshold = 1
-       audio = r.listen(source, phrase_time_limit = 5.0)
+       while True:
+          print("Listening...")
+          r.pause_threshold = 1
+          audio = r.listen(source, phrase_time_limit = 10.0)
 
-   try:
-       speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
-       print("Recognizing and transcribing what you said...")
-       print('Computer thinks you said: ' + speech_text + "'")
-   except sr.UnknownValueError:
-        print("Computer didn't understand.")
-   except sr.RequestError as e:
-        print("Could not request results from Google Speech Recognition service; {0}".format(e))
+          try:
+             speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
+             print("Recognizing and transcribing what you said...")
+             print('Computer thinks you said: ' + speech_text + "'")
+             process_command(speech_text)
+          except sr.UnknownValueError:
+             print("Computer didn't understand.")
+          except sr.RequestError as e:
+             print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
-   brain(name, speech_text, city_name, city_code)
+          brain(name, speech_text, city_name, city_code)
 
 main()
