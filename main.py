@@ -42,7 +42,7 @@ def main():
    r = sr.Recognizer()
    m = sr.Microphone()
 
-   stopwatch_instance = Stopwatch()
+   stopwatch_instance = Stopwatch() #create a stopwatch instance so that we can use the Stopwatch class
    with m as source:
        print("Adjusting...")
        r.adjust_for_ambient_noise(source)
