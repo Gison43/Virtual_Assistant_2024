@@ -26,7 +26,7 @@ class Stopwatch:
       stop_time = datetime.datetime.now()
       elapsed_time  = (stop_time - self.start_time)
       self.total_time += elapsed_time #accumulate the elapsed time
-      #tts(f"The stopwatch has been stopped and the total time is {total_time} minutes.")
+      #tts(f"The stopwatch has been stopped and the total time is {elapsed_time} minutes.")
       print("Type of elapsed_time:", type(elapsed_time))
       self.is_running = False
       return elapsed_time
