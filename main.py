@@ -49,7 +49,7 @@ def main():
        print("Set minimum energy threshold to {}".format(r.energy_threshold))
        while True:
           print("Listening...")
-#          print("stopwatch instance ", stopwatch_instance.is_running)
+#         print("stopwatch instance ", stopwatch_instance.is_running)
           r.pause_threshold = 1
           audio = r.listen(source, phrase_time_limit = 10.0)
 
