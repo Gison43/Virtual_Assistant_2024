@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Created on Sat Mar  9 10:46:43 2024
 
@@ -33,8 +33,11 @@ class Stopwatch:
          raise RuntimeError("Stopwatch not started.")
 
       stop_time = datetime.datetime.now()
+
       self.is_running = False
+
       elapsed_time  = stop_time - self.start_time
+      print("Type of elpased_time"", type(elapsed_time))
 
       total_seconds = elapsed_time.total_seconds()
 
