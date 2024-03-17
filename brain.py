@@ -6,6 +6,7 @@ from GreyMatter import tell_time, general_conversations, spanish_translator, wea
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.spanish_translator import language_selection
 from GreyMatter.stopwatch import Stopwatch
+from swpy import Timer
 
 #from GreyMatter import french_translator
 
@@ -55,6 +56,8 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
              total_time, split_times  = stopwatch_instance.stop(start_time) #stop the stopwatch and get the total time elapsed and unpack the tuple
              total_time_delta = datetime.timedelta(seconds = total_time) #convert total_time to timedelta object
              formatted_total_time = stopwatch_instance.format_time(total_time_delta)
+             
+             split_times = stopwatch_instance.get_splits()
              formatted_split_times = [stopwatch_instance.format_time(split) for split in split_times] #format each split time
              stopwatch_instance.is_running = False
              tts(f"The stopwatch has been stopped and the total time is {formatted_total_time}.")
@@ -63,8 +66,8 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
                 tts(f"Split {i} time is {split_time}.")
          else:
              tts("The stopwatch is not running.")
-             print("The stopwatch is not running.", stopwatch_instance.is_running)
 
+      
       elif 'elapsed stopwatch' in speech_text:
          if stopwatch_instance.is_running:
              current_time = stopwatch_instance.elapsed(start_time)  # Get the current elapsed time on the stopwatch
@@ -85,8 +88,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
 
       elif 'split stopwatch' in speech_text:
          if stopwatch_instance.is_running:
-            split_start_time = datetime.datetime.now()  #get the current time before splitting
-            stopwatch_instance.split(split_start_time)
+            stopwatch_instance.split(title = "Split")
             tts("The stopwatch has been split.")
          else:
             tts("The stopwatch is not running.  Start it first.")
@@ -99,15 +101,10 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
             return
          #check if the stopwatch is running
          if stopwatch_instance.is_running:
-            try:
-               split_time = stopwatch_instance.stop_split(split_index - 1) #adjust the index
-               formatted_split_time = stopwatch_instance.format_time(split_time)
-               tts(f"Stopping split {split_index} at {formatted_split_time}.")
-            except IndexError:
-               tts(f"Invalid split index. Please try again.")
+            split_time = stopwatch_instance.split(title = "Split")
+            tts(f"Stopping split at {split_time}.")
          else:
             tts("The stopwatch is not running.")
-
 
       elif 'exit stopwatch' in speech_text:
          if stopwatch_instance.is_running:
