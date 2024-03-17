@@ -71,17 +71,23 @@ class Stopwatch:
       return time_elapsed
 
 
-   def split(self, current_time):
+   def split(self, title=None):
       if self.is_running:
          #split_start_time = datetime.datetime.now()
+         current_time = datetime.datetime.now()
          split_time = current_time - self.start_time  #should get a timedelta object here
          print("Current split time:", split_time)
          format_split = self.format_time(split_time)
          print("Formatted split time:", format_split)
          self.splits.append(split_time)
          print("Current splits:", self.splits)
-         tts(f"Split started at: {format_split}")
-#      return split_start_time
+         if title:
+            tts(f"Split {title} started at: {format_split}")
+         else:
+            tts(f"Split started at: {format_split}")
+      else:
+         tts("The stopwatch is not running.")
+      #return split_start_time
 
    def unsplit(self):
       """Stops a split. Returns the time elapsed since split was called"""
@@ -101,6 +107,9 @@ class Stopwatch:
       else:
          raise IndexError("Invalid split index")
 
+   def get_splits(self):
+      #returns the list of split times
+      return self.splits
 
    def reset_splits(self):
       #resets the split list

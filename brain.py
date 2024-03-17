@@ -56,7 +56,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
              total_time, split_times  = stopwatch_instance.stop(start_time) #stop the stopwatch and get the total time elapsed and unpack the tuple
              total_time_delta = datetime.timedelta(seconds = total_time) #convert total_time to timedelta object
              formatted_total_time = stopwatch_instance.format_time(total_time_delta)
-             
+
              split_times = stopwatch_instance.get_splits()
              formatted_split_times = [stopwatch_instance.format_time(split) for split in split_times] #format each split time
              stopwatch_instance.is_running = False
@@ -67,7 +67,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
          else:
              tts("The stopwatch is not running.")
 
-      
+
       elif 'elapsed stopwatch' in speech_text:
          if stopwatch_instance.is_running:
              current_time = stopwatch_instance.elapsed(start_time)  # Get the current elapsed time on the stopwatch
@@ -193,7 +193,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
       tell_time.what_is_date()
 
    elif check_message(['define']):
-       define_subject.define_subject(speech_text)
+      define_subject.define_subject(speech_text)
 
    elif check_message(['how', 'weather']) or check_message(['what', 'is','the', 'weather','forecast']):
       weather.weather(city_name = city_name, city_code = city_code)
