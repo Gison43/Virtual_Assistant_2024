@@ -28,7 +28,7 @@ class Stopwatch:
       return self.start_time
 
    def stop(self, start_time):
-      """Stops the timer.  Returns the time elapsed"""
+      #Stops the timer.  Returns the time elapsed
       if self.start_time is None:
          raise RuntimeError("Stopwatch not started.")
 
@@ -37,12 +37,16 @@ class Stopwatch:
       self.is_running = False
 
       elapsed_time  = stop_time - self.start_time
-      print("Type of elpased_time"", type(elapsed_time))
+      print("Type of elpased_time", type(elapsed_time))
 
       total_seconds = elapsed_time.total_seconds()
 
+      #convert start_time to a timedelta object
+      start_timedelta = stop_time - self.start_time
+
       #calculate the split times relative to start_time
-      split_times = [split - self.start_time for split in self.splits]
+      split_times = [split - elapsed_time for split in self.splits]
+      print("Split times:", split_times)
 
       self.total_time += elapsed_time #accumulate the elapsed time
       #print("Type of elapsed_time:", type(elapsed_time))
@@ -67,12 +71,15 @@ class Stopwatch:
       return time_elapsed
 
 
-   def split(self):
+   def split(self, current_time):
       if self.is_running:
-         split_start_time = datetime.datetime.now()
-         split_time = split_start_time - self.start_time  #should get a timedelta object here
+         #split_start_time = datetime.datetime.now()
+         split_time = current_time - self.start_time  #should get a timedelta object here
+         print("Current split time:", split_time)
          format_split = self.format_time(split_time)
+         print("Formatted split time:", format_split)
          self.splits.append(split_time)
+         print("Current splits:", self.splits)
          tts(f"Split started at: {format_split}")
 #      return split_start_time
 

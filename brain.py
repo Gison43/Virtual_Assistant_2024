@@ -2,7 +2,7 @@
 
 import datetime
 
-from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer
+from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.spanish_translator import language_selection
 from GreyMatter.stopwatch import Stopwatch
@@ -86,7 +86,8 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
 
       elif 'split stopwatch' in speech_text:
          if stopwatch_instance.is_running:
-            stopwatch_instance.split()
+            split_start_time = datetime.datetime.now()  #get the current time before splitting
+            stopwatch_instance.split(split_start_time)
             tts("The stopwatch has been split.")
          else:
             tts("The stopwatch is not running.  Start it first.")
@@ -188,6 +189,9 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
 
    elif check_message(['what','month']):
       tell_time.what_month()
+
+   elif check_message(['sleep']):
+      sleep.go_to_sleep()
 
    elif check_message(['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date']):
       tell_time.what_is_date()
