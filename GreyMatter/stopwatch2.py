@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
 """
-Created on Sat Mar  9 10:46:43 2024
+Created on Sat Mar 17 2024
 
 @author: Phyco
-
-currently only the start, stop, elapsed time, reset, format time functions are working.
-
-split times are not working well. It can spit time, but if I say stop, it brings up errors.
 
 """
 import datetime
 
 from .SenseCells.tts_engine import tts
+from swpy import Timer
+from time import sleep
 
 class Stopwatch:
    def __init__(self):
@@ -20,6 +18,7 @@ class Stopwatch:
       self.split_start_time = None
       self.splits = []
       self.total_time = datetime.timedelta()
+      self.timer = Timer()
 
    def start(self):
       """Starts the timer"""
