@@ -186,6 +186,12 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
    elif check_message(['what','month']):
       tell_time.what_month()
 
+   elif check_message(['what', 'are', 'you']):
+      general_conversations.what_are_you()
+
+   elif check_message(['what', 'your', 'name']):
+      general_conversations.what_is_your_name()
+
    elif check_message(['sleep']):
       sleep.go_to_sleep()
 
