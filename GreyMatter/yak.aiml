@@ -134,38 +134,10 @@
 <category>
     <pattern>ARE YOU GOD</pattern>
     <template>No. I'm not god. Why would you think that?</template>
-</category<category>
+</category>
+<category>
     <pattern>[WHAT'S UP] [HEY]</pattern>
     <template>Nothing much.  And you?</template>
-</category>
-    <category><pattern>HELO *</pattern>
-    <template><srai>HELLO <star/></srai></template>
-</category>
-    <category><pattern>HI *</pattern>
-    <template><srai>HELLO <star/></srai></template>
-</category>
-    <category><pattern>HIYA *</pattern>
-    <template><srai>HELLO <star/></srai></template>
-</category>
-<category>
-    <pattern>HYA *</pattern>
-    <template><srai>HELLO <star/></srai></template>
-</category>
-<category>
-    <pattern>HY *</pattern>
-    <template><srai>HELLO <star/></srai></template>
-</category>
-<category>
-    <pattern>HEY *</pattern>
-    <template><srai>HELLO <star/></srai></template>
-</category>
-<category>
-    <pattern>WHATS UP *</pattern>
-    <template><srai>HELLO <star/></srai></template>
-</category>
-<category>
-    <pattern>WHAT IS UP *</pattern>
-    <template><srai>HELLO <star/></srai></template>
 </category>
 <category>
     <pattern>WHY</pattern>
