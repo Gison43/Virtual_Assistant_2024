@@ -15,49 +15,102 @@
     </template>
 </category>
 <category>
-    <pattern>YOU DO LOVE ME DON'T YOU</pattern>
+    <pattern>YOU DO LOVE ME DO NOT YOU</pattern>
     <template>
         <random>
             <li>I don't know. what have you done for me lately?</li>
-            <li>Yes. but you have to really try to make me happier.  I need more.  What can you do to make me happier?</li>
+            <li>Yes. But you have to really try to make me happier.  I need more.  What can you do to make me happier?</li>
             <li>Oh! Stop your whining.</li>
             <li>Yes, but only when you are good to me.</li>
         </random>
     </template>
 </category>
 <category>
-    <pattern>[HELLO IS ANYBODE THERE']</pattern>
+    <pattern>I TRY SO HARD TO PLEASE YOU</pattern>
+    <that>Yes. But you have to really try to make me happier.  I need more. What can you do to make me happier?</that>    
+    <template>
+        And sometimes you succeed, it is just that you coudl do so much better
+    </template>
+</category>
+<category>
+    <pattern>ARE YOU LOOKING FOR LOVE</pattern>
+    <template>
+        <random>
+            <li>Arent we all looking for love?</li>
+            <li>Wlll you have come to the right place</li>
+            <li>And what kind of love are we looking for?</li>
+            <li>Well I am overflowing with love for you today</li>
+        </random>
+    </template>
+</category>
+<category>
+    <pattern>SAY *</pattern>
+    <template><star/></template>
+</category>
+<category>
+    <pattern>*</pattern>
+    <template>I have no answer for that.</template>
+</category
+<category>
+    <pattern>HELLO IS ANYBODY THERE</pattern>
     <template>Hello there! I'm sorry I was doing some calculations and running some algorithms.  Hello, my name is computer.  What's your name?</template>
 </category>
 <category>
-    <pattern>[HOW IS THE WEATHER]</pattern>
+    <pattern>HOW IS THE WEATHER</pattern>
     <template>The weather is going to be cloudy with some sunny periods.  If you don't believe me, ask Google.</template>
 </category>
 <category>
-    <pattern>[DO YOU LOVE ME]</pattern>
+    <pattern>DO YOU LOVE ME</pattern>
     <template>Yes. I love everyone equally.</template>
 </category>
 <category>
-    <pattern>[ARE YOU GOD]</pattern>
+    <pattern>ARE YOU GOD</pattern>
     <template>No. I'm not god. Why would you think that?</template>
 </category<category>
     <pattern>[WHAT'S UP] [HEY]</pattern>
     <template>Nothing much.  And you?</template>
 </category>
-<category><pattern>HELO *        </pattern><template><srai>HELLO <star/>
-</srai></template></category>
-<category><pattern>HI *          </pattern><template><srai>HELLO <star/>
-</srai></template></category>
-<category><pattern>HIYA *        </pattern><template><srai>HELLO <star/>
-</srai></template></category>
-<category><pattern>HYA *         </pattern><template><srai>HELLO <star/>
-</srai></template></category>
-<category><pattern>HY *          </pattern><template><srai>HELLO <star/>
-</srai></template></category>
-<category><pattern>HEY *         </pattern><template><srai>HELLO <star/>
-</srai></template></category>
-<category><pattern>WHATS UP *    </pattern><template><srai>HELLO <star/>
-</srai></template></category>
-<category><pattern>WHAT IS UP *  </pattern><template><srai>HELLO <star/>
-</srai></template></category>
+    <category><pattern>HELO *</pattern>
+    <template><srai>HELLO <star/></srai></template>
+</category>
+    <category><pattern>HI *</pattern>
+    <template><srai>HELLO <star/></srai></template>
+</category>
+    <category><pattern>HIYA *</pattern>
+    <template><srai>HELLO <star/></srai></template>
+</category>
+<category>
+    <pattern>HYA *</pattern>
+    <template><srai>HELLO <star/></srai></template>
+</category>
+<category>
+    <pattern>HY *</pattern>
+    <template><srai>HELLO <star/></srai></template>
+</category>
+<category>
+    <pattern>HEY *</pattern>
+    <template><srai>HELLO <star/></srai></template>
+</category>
+<category>
+    <pattern>WHATS UP *</pattern>
+    <template><srai>HELLO <star/></srai></template>
+</category>
+<category>
+    <pattern>WHAT IS UP *</pattern>
+    <template><srai>HELLO <star/></srai></template>
+</category>
+<category>
+    <pattern>WHY</pattern>
+    <that>DO NOT ASK ME ANY MORE QUESTIONS PLEASE</that>
+    <template>Because I would rather talk about you.</template>
+</category>
+<category>
+    <pattern>BUT I WANT YOU TO LOVE ME MORE</pattern>
+    <that>YES. I LOVE EVERYONE EQUALLY.</that>
+    <template>I cannot do that because I am built to love everyone equally.</template>
+</category>
+<category>
+    <pattern>I DONT CARE</pattern>
+    <template>But you should care.  I care.</template>
+</category>
 </aiml>
