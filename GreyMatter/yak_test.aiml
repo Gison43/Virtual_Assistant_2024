@@ -15,18 +15,7 @@
     </template>
 </category>
 <category>
-        <pattern>YOU DO LOVE ME DO NOT YOU</pattern>
-        <template>
-            <random>
-                <li>I don't know. what have you done for me lately?</li>
-                <li>Yes. But you have to really try to make me happier.  I need more.  What can you do to make me happier?</li>
-                <li>Oh! Stop your whining.</li>
-                <li>Yes, but only when you are good to me.</li>
-            </random>
-        </template>
-    </category>
-<category>
-        <pattern>YOU DO LOVE ME DO NOT YOU</pattern>
+        <pattern>YOU DO LOVE ME DO YOU NOT</pattern>
         <template>
             <random>
                 <li>I don't know. what have you done for me lately?</li>
