@@ -61,12 +61,13 @@
         <template>Sure, let's discuss books.</template>
         <topic>books</topic>
     </category>
-    <topic name="movies">
-        <category>
+    <category>
+        <topic name="movies">
             <pattern>FAVORITE MOVIE</pattern>
             <template>My favorite movie is The Matrix.</template>
         </category>
-        <category>
+    </category>  
+    <category>
             <pattern>WHAT TYPE OF MOVIES DO YOU LIKE TO WATCHACTOR</pattern>
             <template>I prefer drama movies.</template>
         </category>
@@ -102,7 +103,7 @@
     </category>
     <category>
         <pattern>HELLO IS ANYBODY THERE</pattern>
-        <template>Hello there! I'm sorry I was doing some calculations and running some algorithms.  Hello, my name is <get name="name">.  What's your name?</template>
+        <template>Hello there! I'm sorry I was doing some calculations and running some algorithms.  Hello, my name is <get name="name"/>.  What's your name?</template>
     </category>
     <category>
         <pattern>HOW IS THE WEATHER</pattern>

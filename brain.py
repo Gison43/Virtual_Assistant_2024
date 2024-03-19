@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import datetime
+import aiml
 
 from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep
 from GreyMatter.SenseCells.tts_engine import tts
@@ -13,6 +14,10 @@ from user_input import get_user_input
 
 #stopwatch_instance = Stopwatch()
 
+kernel = aiml.Kernel()
+
+#load AIML files
+kernel.bootstrap(learnFiles = "/GreyMatter/yak.aiml")
 
 def process_command(speech_text, stopwatch_instance):
    print(stopwatch_instance.is_running)

@@ -1,10 +1,10 @@
 import aiml
 import speech_recognition as sr
-from GreyMatter.SenseCells.tts_engine import tts
+from SenseCells.tts_engine import tts
 
 # Initialize the AIML interpreter
 kernel = aiml.Kernel()
-kernel.learn("yak.aiml")
+kernel.learn("yak_test.aiml")
 
 # Initialize the speech recognizer
 recognizer = sr.Recognizer()
@@ -28,7 +28,7 @@ def get_audio():
 while True:
     # Get user input through speech
     user_input = get_audio()
-    
+
     # Respond based on user input using AIML
     if user_input:
         response = kernel.respond(user_input)
