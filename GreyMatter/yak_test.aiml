@@ -54,6 +54,11 @@
             And sometimes you succeed, it is just that you could do so much better
         </template>
 </category>
+<category>
+        <pattern>I DON'T CARE</pattern>
+        <template>But you should care.  I care.</template>
+</category>
+
 
 </aiml>
 
