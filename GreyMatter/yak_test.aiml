@@ -4,6 +4,15 @@
     <pattern>HELLO COMPUTER</pattern>
     <template>Hello there!</template>
 </category>
+<category>
+<template>
+        <random>
+            <li>Hello. May I get your name please?</li>
+            <li>Hello. What is your favourite movie? May I get your name please?</li>
+            <li>Hello. How are you today?  May I get your name please?</li>
+        </random>
+    </template>
+</category>
 
 </aiml>
 
