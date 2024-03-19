@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><aiml version="2.0">
+<aiml>
+<category>
+    <pattern>HELLO COMPUTER</pattern>
+<template>Hello. May I get your name please?</template>
+</category>
+<category>
+    <pattern>HI*</pattern>
+    <template>
+        <random>
+            <li>Hello. May I get your name please?</li>
+            <li>Hello. What is your favourite movie? May I get your name please?</li>
+            <li>Hello. How are you today?  May I get your name please?</li>
+        </random>
+    </template>
+</category>
+<category>
+    <pattern>YOU DO LOVE ME DON'T YOU</pattern>
+    <template>
+        <random>
+            <li>I don't know. what have you done for me lately?</li>
+            <li>Yes. but you have to really try to make me happier.  I need more.  What can you do to make me happier?</li>
+            <li>Oh! Stop your whining.</li>
+            <li>Yes, but only when you are good to me.</li>
+        </random>
+    </template>
+</category>
+<category>
+    <pattern>[HELLO IS ANYBODE THERE']</pattern>
+    <template>Hello there! I'm sorry I was doing some calculations and running some algorithms.  Hello, my name is computer.  What's your name?</template>
+</category>
+<category>
+    <pattern>[HOW IS THE WEATHER]</pattern>
+    <template>The weather is going to be cloudy with some sunny periods.  If you don't believe me, ask Google.</template>
+</category>
+<category>
+    <pattern>[DO YOU LOVE ME]</pattern>
+    <template>Yes. I love everyone equally.</template>
+</category>
+<category>
+    <pattern>[ARE YOU GOD]</pattern>
+    <template>No. I'm not god. Why would you think that?</template>
+</category<category>
+    <pattern>[WHAT'S UP] [HEY]</pattern>
+    <template>Nothing much.  And you?</template>
+</category>
+<category><pattern>HELO *        </pattern><template><srai>HELLO <star/>
+</srai></template></category>
+<category><pattern>HI *          </pattern><template><srai>HELLO <star/>
+</srai></template></category>
+<category><pattern>HIYA *        </pattern><template><srai>HELLO <star/>
+</srai></template></category>
+<category><pattern>HYA *         </pattern><template><srai>HELLO <star/>
+</srai></template></category>
+<category><pattern>HY *          </pattern><template><srai>HELLO <star/>
+</srai></template></category>
+<category><pattern>HEY *         </pattern><template><srai>HELLO <star/>
+</srai></template></category>
+<category><pattern>WHATS UP *    </pattern><template><srai>HELLO <star/>
+</srai></template></category>
+<category><pattern>WHAT IS UP *  </pattern><template><srai>HELLO <star/>
+</srai></template></category>
+</aiml>
