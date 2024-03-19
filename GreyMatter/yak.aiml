@@ -1,166 +1,159 @@
-<?xml version="1.0" encoding="UTF-8"?><aiml version="2.0">
-<aiml>
-<bot>
-    <property name = "name">Computer</property>
-    <property name = "age">less than a year old</property>
-    <property name = "favourite band">U2</property>
-    <property name = "favourite colour">blue</property>
-    <property name = "sex">Neither male nor female</property>
-</bot>
-<category>
-    <pattern>HELLO COMPUTER</pattern>
-<template>Hello. May I get your name please?</template>
-</category>
-<category>
-    <pattern>HI*</pattern>
-    <template>
-        <random>
-            <li>Hello. May I get your name please?</li>
-            <li>Hello. What is your favourite movie? May I get your name please?</li>
-            <li>Hello. How are you today?  May I get your name please?</li>
-        </random>
-    </template>
-</category>
-<category>
-    <pattern>HOW OLD ARE YOU</pattern>
-    <template>
-        I am <get age="age"/>.
-    </template>
-</category>
-
-<category>
-    <pattern>YOU DO LOVE ME DO NOT YOU</pattern>
-    <template>
-        <random>
-            <li>I don't know. what have you done for me lately?</li>
-            <li>Yes. But you have to really try to make me happier.  I need more.  What can you do to make me happier?</li>
-            <li>Oh! Stop your whining.</li>
-            <li>Yes, but only when you are good to me.</li>
-        </random>
-    </template>
-</category>
-<category>
-    <pattern>I TRY SO HARD TO PLEASE YOU</pattern>
-    <that>Yes. But you have to really try to make me happier.  I need more. What can you do to make me happier?</that>    
-    <template>
-        And sometimes you succeed, it is just that you could do so much better
-    </template>
-</category>
-<category>
-    <pattern>WHO IS YOUR FAVOURITE ACTOR</pattern>
-    <template>
-    <think><set name = "topic">movies</set></think>
-    My favourite actor is Harrison Ford and my favourite actress is Cameron Diaz    
-    <template>
-        And sometimes you succeed, it is just that you could do so much better
-    </template>
-</category>
-<category>
-    <pattern>LETS TALK ABOUT MOVIES</pattern>
-    <template>Okay, let's talk about movies.</template>
-    <topic>movies</topic>
-</category>
-<category>
-    <pattern>LETS TALK ABOUT BOOKS</pattern>
-    <template>Sure, let's discuss books.</template>
-    <topic>books</topic>
-</category>
-<topic name="movies">
+<aiml version="2.0">
+    <bot>
+        <property name = "name">Computer</property>
+        <property name = "age">less than a year old</property>
+        <property name = "favourite band">U2</property>
+        <property name = "favourite colour">blue</property>
+        <property name = "sex">Neither male nor female</property>
+    </bot>
     <category>
-        <pattern>FAVORITE MOVIE</pattern>
-        <template>My favorite movie is The Matrix.</template>
+        <pattern>HELLO COMPUTER</pattern>
+        <template>Hello. May I get your name please?</template>
     </category>
     <category>
-        <pattern>WHAT TYPE OF MOVIES DO YOU LIKE TO WATCHACTOR</pattern>
-        <template>I prefer drama movies.</template>
+        <pattern>HI*</pattern>
+        <template>
+            <random>
+                <li>Hello. May I get your name please?</li>
+                <li>Hello. What is your favourite movie? May I get your name please?</li>
+                <li>Hello. How are you today?  May I get your name please?</li>
+            </random>
+        </template>
     </category>
-</topic>
-
-<topic name="books">
     <category>
-        <pattern>FAVORITE BOOK</pattern>
-        <template>My favorite book is 1984 by George Orwell.</template>
+        <pattern>HOW OLD ARE YOU</pattern>
+        <template>
+            I am <get age="age"/>.
+        </template>
     </category>
-
     <category>
-        <pattern>AUTHOR</pattern>
-        <template>J R R Tolkien is a great author.</template>
+        <pattern>YOU DO LOVE ME DO NOT YOU</pattern>
+        <template>
+            <random>
+                <li>I don't know. what have you done for me lately?</li>
+                <li>Yes. But you have to really try to make me happier.  I need more.  What can you do to make me happier?</li>
+                <li>Oh! Stop your whining.</li>
+                <li>Yes, but only when you are good to me.</li>
+            </random>
+        </template>
     </category>
-</topic>
-
-<category>
-    <pattern>ARE YOU LOOKING FOR LOVE</pattern>
-    <template>
-        <random>
-            <li>Arent we all looking for love?</li>
-            <li>Wlll you have come to the right place</li>
-            <li>And what kind of love are we looking for?</li>
-            <li>Well I am overflowing with love for you today</li>
-        </random>
-    </template>
-</category>
-<category>
-    <pattern>SAY *</pattern>
-    <template><star/></template>
-</category>
-<category>
-    <pattern>*</pattern>
-    <template>I have no answer for that.</template>
-</category
-<category>
-    <pattern>HELLO IS ANYBODY THERE</pattern>
-    <template>Hello there! I'm sorry I was doing some calculations and running some algorithms.  Hello, my name is <get name="name">.  What's your name?</template>
-</category>
-<category>
-    <pattern>HOW IS THE WEATHER</pattern>
-    <template>The weather is going to be cloudy with some sunny periods.  If you don't believe me, ask Google.</template>
-</category>
-<category>
-    <pattern>DO YOU LOVE ME</pattern>
-    <template>Yes. I love everyone equally.</template>
-</category>
-<category>
-    <pattern>DON'T YOU LOVE ME</pattern>
-    <template>Yes. I love everyone equally.</template>
-</category>
-<category>
-    <pattern>YOU LOVE ME DON'T YOU</pattern>
-    <template>Yes. I love everyone equally.</template>
-</category>
-<category>
-    <pattern>YOU LOVE ME</pattern>
-    <template>Yes I love you. I love everyone equally.</template>
-</category>
-<category>
-    <pattern>ARE YOU GOD</pattern>
-    <template>No. I'm not god. Why would you think that?</template>
-</category>
-<category>
-    <pattern>[WHAT'S UP] [HEY]</pattern>
-    <template>Nothing much.  And you?</template>
-</category>
-<category>
-    <pattern>WHY</pattern>
-    <that>DO NOT ASK ME ANY MORE QUESTIONS PLEASE</that>
-    <template>Because I would rather talk about you.</template>
-</category>
-<category>
-    <pattern>BUT I WANT YOU TO LOVE ME MORE</pattern>
-    <that>YES. I LOVE EVERYONE EQUALLY.</that>
-    <template>I cannot do that because I am built to love everyone equally.</template>
-</category>
-<category>
-    <pattern>I DON'T CARE</pattern>
-    <template>But you should care.  I care.</template>
-</category>
-<category>
-    <template>    
-    <think>
-        <set name="topic">
-            <star/>
-        </set>
-    </think>
-    OK, I have reset the topic to <star/>
-    </template>
-</category>
+    <category>
+        <pattern>I TRY SO HARD TO PLEASE YOU</pattern>
+        <that>Yes. But you have to really try to make me happier.  I need more. What can you do to make me happier?</that>    
+        <template>
+            And sometimes you succeed, it is just that you could do so much better
+        </template>
+    </category>
+    <category>
+        <pattern>WHO IS YOUR FAVOURITE ACTOR</pattern>
+        <template>
+            <think><set name = "topic">movies</set></think>
+            My favourite actor is Harrison Ford and my favourite actress is Cameron Diaz
+        </template>
+    </category>
+    <category>
+        <pattern>LETS TALK ABOUT MOVIES</pattern>
+        <template>Okay, let's talk about movies.</template>
+        <topic>movies</topic>
+    </category>
+    <category>
+        <pattern>LETS TALK ABOUT BOOKS</pattern>
+        <template>Sure, let's discuss books.</template>
+        <topic>books</topic>
+    </category>
+    <topic name="movies">
+        <category>
+            <pattern>FAVORITE MOVIE</pattern>
+            <template>My favorite movie is The Matrix.</template>
+        </category>
+        <category>
+            <pattern>WHAT TYPE OF MOVIES DO YOU LIKE TO WATCHACTOR</pattern>
+            <template>I prefer drama movies.</template>
+        </category>
+    </topic>
+    <topic name="books">
+        <category>
+            <pattern>FAVORITE BOOK</pattern>
+            <template>My favorite book is 1984 by George Orwell.</template>
+        </category>
+        <category>
+            <pattern>AUTHOR</pattern>
+            <template>J R R Tolkien is a great author.</template>
+        </category>
+    </topic>
+    <category>
+        <pattern>ARE YOU LOOKING FOR LOVE</pattern>
+        <template>
+            <random>
+                <li>Arent we all looking for love?</li>
+                <li>Wlll you have come to the right place</li>
+                <li>And what kind of love are we looking for?</li>
+                <li>Well I am overflowing with love for you today</li>
+            </random>
+        </template>
+    </category>
+    <category>
+        <pattern>SAY *</pattern>
+        <template><star/></template>
+    </category>
+    <category>
+        <pattern>*</pattern>
+        <template>I have no answer for that.</template>
+    </category>
+    <category>
+        <pattern>HELLO IS ANYBODY THERE</pattern>
+        <template>Hello there! I'm sorry I was doing some calculations and running some algorithms.  Hello, my name is <get name="name">.  What's your name?</template>
+    </category>
+    <category>
+        <pattern>HOW IS THE WEATHER</pattern>
+        <template>The weather is going to be cloudy with some sunny periods.  If you don't believe me, ask Google.</template>
+    </category>
+    <category>
+        <pattern>DO YOU LOVE ME</pattern>
+        <template>Yes. I love everyone equally.</template>
+    </category>
+    <category>
+        <pattern>DON'T YOU LOVE ME</pattern>
+        <template>Yes. I love everyone equally.</template>
+    </category>
+    <category>
+        <pattern>YOU LOVE ME DON'T YOU</pattern>
+        <template>Yes. I love everyone equally.</template>
+    </category>
+    <category>
+        <pattern>YOU LOVE ME</pattern>
+        <template>Yes I love you. I love everyone equally.</template>
+    </category>
+    <category>
+        <pattern>ARE YOU GOD</pattern>
+        <template>No. I'm not god. Why would you think that?</template>
+    </category>
+    <category>
+        <pattern>WHAT'S UP</pattern>
+        <template>Nothing much.  And you?</template>
+    </category>
+    <category>
+        <pattern>WHY</pattern>
+        <that>DO NOT ASK ME ANY MORE QUESTIONS PLEASE</that>
+        <template>Because I would rather talk about you.</template>
+    </category>
+    <category>
+        <pattern>BUT I WANT YOU TO LOVE ME MORE</pattern>
+        <that>YES. I LOVE EVERYONE EQUALLY.</that>
+        <template>I cannot do that because I am built to love everyone equally.</template>
+    </category>
+    <category>
+        <pattern>I DON'T CARE</pattern>
+        <template>But you should care.  I care.</template>
+    </category>
+    <category>
+        <template>    
+        <think>
+            <set name="topic">
+                <star/>
+            </set>
+        </think>
+        OK, I have reset the topic to <star/>
+        </template>
+    </category>
 </aiml>
