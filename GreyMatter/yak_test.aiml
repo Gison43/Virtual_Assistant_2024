@@ -37,6 +37,17 @@
         </template>
 </category>
 <category>
+        <pattern>ARE YOU LOOKING FOR LOVE</pattern>
+        <template>
+            <random>
+                <li>Arent we all looking for love?</li>
+                <li>Wlll you have come to the right place</li>
+                <li>And what kind of love are we looking for?</li>
+                <li>Well I am overflowing with love for you today</li>
+            </random>
+        </template>
+</category>
+<category>
         <pattern>I TRY SO HARD TO PLEASE YOU</pattern>
         <that>Yes. But you have to really try to make me happier.  I need more. What can you do to make me happier?</that>    
         <template>
