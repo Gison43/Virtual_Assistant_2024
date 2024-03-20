@@ -27,6 +27,26 @@
     </template>
 </category>
 <category>
+    <pattern>HI</pattern>
+    <template>
+        <random>
+            <li>Hello. May I get your name please?</li>
+            <li>Hello. What is your favourite movie? May I get your name please?</li>
+            <li>Hello. How are you today?  May I get your name please?</li>
+        </random>
+    </template>
+</category>
+<category>
+    <pattern>HELLO</pattern>
+    <template>
+        <random>
+            <li>Hello. May I get your name please?</li>
+            <li>Hello. What is your favourite movie? May I get your name please?</li>
+            <li>Hello. How are you today?  May I get your name please?</li>
+        </random>
+    </template>
+</category>
+<category>
         <pattern>YOU DO LOVE ME DO YOU NOT</pattern>
         <template>
             <random>
