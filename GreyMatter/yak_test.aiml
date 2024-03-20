@@ -27,6 +27,38 @@
     </template>
 </category>
 <category>
+        <pattern>THANK YOU</pattern>
+        <template>
+            <random>
+            <li> Anytime for you! </li>
+            <li> Don't thank me!Thank the team behind this.Long live my developers! </li>
+            <li> The pleasure is mine. </li>
+            </random>
+        </template>
+</category>
+<category>
+        <pattern>THANKS</pattern>
+        <template>
+            <random>
+            <li> Anytime for you! </li>
+            <li> Don't thank me!Thank the team behind this.Long live the developers! </li>
+            <li> The pleasure is mine. </li>
+            </random>
+        </template>
+</category>
+<category>
+        <pattern>SCHOOL</pattern>
+        <template>School is an important institution in a child's life.</template>
+</category>
+<category>
+        <pattern>WHAT ABOUT MOVIES</pattern>
+        <template>Do you like comedy movies?</template>  
+</category>
+<category>
+        <pattern>I LIKE COFFEE</pattern>
+        <template>Do you take cream or sugar in your coffee?</template>
+</category>
+<category>
     <pattern>HI</pattern>
     <template>
         <random>
