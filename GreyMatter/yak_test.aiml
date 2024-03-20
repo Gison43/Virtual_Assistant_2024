@@ -13,6 +13,10 @@
     <template>Hello there!</template>
 </category>
 <category>
+    <pattern>I DON'T CARE</pattern>
+    <template>But you should care.  I care.</template>
+</category>
+<category>
     <pattern>HI THERE</pattern>
     <template>
         <random>
@@ -45,22 +49,8 @@
         </template>
 </category>
 <category>
-        <pattern>I TRY SO HARD TO PLEASE YOU</pattern>
-        <that>Yes. But you have to really try to make me happier.  I need more. What can you do to make me happier?</that>    
-        <template>
-            And sometimes you succeed, it is just that you could do so much better
-        </template>
-</category>
-<category>
-        <pattern>I DON'T CARE</pattern>
-        <template>But you should care.  I care.</template>
-</category>
-<category>
-        <pattern>*</pattern>
-        <template>I have no answer for that.</template>
-</category>
-<category>
         <pattern>HELLO IS ANYBODY THERE</pattern>
+        <template> Yes, I am here.</template>
 </category>
 
 </aiml>
