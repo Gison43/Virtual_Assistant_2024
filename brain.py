@@ -7,7 +7,7 @@ from GreyMatter import tell_time, general_conversations, spanish_translator, wea
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.spanish_translator import language_selection
 from GreyMatter.stopwatch import Stopwatch
-from swpy import Timer
+#from swpy import Timer
 from user_input import get_user_input
 
 #from GreyMatter import french_translator
@@ -40,8 +40,6 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
          return False
 
    start_time = None
-#   stopwatch_instance = Stopwatch() #create an instance of the Stopwatch class
-
 
    def is_stopwatch_command(command):
       stopwatch_commands = ['start stopwatch', 'stop stopwatch', 'elapsed stopwatch', 'exit stopwatch', 'split stopwatch', 'reset stopwatch']

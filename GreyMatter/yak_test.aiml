@@ -2,7 +2,7 @@
 
 <bot>
         <property name = "name">Computer</property>
-        <property name = "age">less than a year old</property>
+        <property name="age">less than a year old</property>
         <property name = "favourite band">U2</property>
         <property name = "favourite colour">blue</property>
         <property name = "sex">Neither male nor female</property>
@@ -27,6 +27,16 @@
     </template>
 </category>
 <category>
+    <pattern>HOW OLD ARE YOU</pattern>
+    <template>I am <get name="age"/>.</template>
+</category>
+<category>
+    <pattern>WHAT IS YOUR SEX</pattern>
+    <template><get name="sex"/>.</template>
+</category>
+
+
+<category>
         <pattern>YOU DO LOVE ME DO YOU NOT</pattern>
         <template>
             <random>
@@ -37,6 +47,28 @@
             </random>
         </template>
 </category>
+<category>
+        <pattern>THANK YOU</pattern>
+        <template>
+            <random>
+                <li>Anytime for you!</li>
+                <li>Don't thank me! Thank the team behind this.  Long live the developers!</li>
+                <li>The pleasure is mine</li>
+                <li>You are very, very welcome.</li>
+            </random>
+        </template>
+</category>
+
+
+
+
+
+
+
+
+
+
+
 <category>
         <pattern>ARE YOU LOOKING FOR LOVE</pattern>
         <template>
