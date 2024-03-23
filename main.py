@@ -12,7 +12,7 @@ import brain
 from os import path
 from speech_recognition.recognizers import google
 
-
+from GreyMatter import play_music
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.stopwatch import Stopwatch
 
@@ -25,6 +25,9 @@ name = profile_data['name']
 city_name = profile_data['city_name']
 city_code = profile_data['city_code']
 current_hour = datetime.datetime.now().hour
+music_path = profile_data['music_path']
+
+play_music.mp3gen(music_path)
 
 if 5 <= current_hour < 12:
     tts('Good morning ' + name + ' systems are now ready to run.  what is your command.')
@@ -65,6 +68,6 @@ def main():
           except sr.RequestError as e:
              print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
-          brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance)
+          brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
 
 main()

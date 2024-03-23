@@ -3,7 +3,7 @@
 import datetime
 import aiml
 
-from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep
+from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep, play_music
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.spanish_translator import language_selection
 from GreyMatter.stopwatch import Stopwatch
@@ -24,7 +24,7 @@ def process_command(speech_text, stopwatch_instance):
    pass
 
 
-def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
+def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path):
    """
    this function compares check vs speech_text to see if they are equal.  Also
    checks if the items in the list (specificed in the argument are present in 
@@ -201,6 +201,12 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance):
 
    elif check_message(['what', 'is', 'the', 'date', 'today']) or check_message(['current', 'date']):
       tell_time.what_is_date()
+
+   elif check_message(['play', 'music']) or check_message(['music']):
+      play_music.play_random(music_path)
+
+   elif check_message(['play']):
+      play_music.play_specific_music(speech_text, music_path)
 
    elif check_message(['define']):
       define_subject.define_subject(speech_text)
