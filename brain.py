@@ -3,7 +3,8 @@
 import datetime
 import aiml
 
-from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep, play_music, list
+from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep, play_music
+from GreyMatter.list import List
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.spanish_translator import language_selection
 from GreyMatter.stopwatch import Stopwatch
@@ -18,6 +19,8 @@ kernel = aiml.Kernel()
 
 #load AIML files
 kernel.bootstrap(learnFiles = "/GreyMatter/yak.aiml")
+
+list = List()  #create an instance of the list class
 
 def process_command(speech_text, stopwatch_instance):
    print(stopwatch_instance.is_running)
@@ -135,10 +138,16 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
        tell_time.current_year()
 
    elif check_message(['create', 'list']) or check_message(['start', 'list']):
-       list.create_list()
-
+       tts("Sure. Let's create a new list. What would you like to name your new list.")
+       list_name = get_user_input()
+       list.create_list(list_name) #call the create_list method and pass the list name to it
+       tts(f"Ok. I've created a list called {list_name}")
+      
    elif check_message(['add','to', 'list']):
-       list.add_list()
+       tts("What item or items would you like to add to the list?")
+       item = get_user_input
+       list.add_item(item)
+       tts(f"{item} now added to the list called {list_name}")
 
    elif check_message(['how', 'old', 'am', 'i']):
        tell_time.how_old()
