@@ -6,7 +6,7 @@ Created on Sat Mar  9 10:46:43 2024
 
 currently only the start, stop, elapsed time, reset, format time functions are working.
 
-split times are not working well. It can spit time, but if I say stop, it brings up errors.
+split times are not working well. It can split time, but if I say stop, it brings up errors.
 
 """
 import datetime
@@ -82,7 +82,7 @@ class Stopwatch:
          self.splits.append(split_time)
          print("Current splits:", self.splits)
          if title:
-            tts(f"Split {title} started at: {format_split}")
+            tts(f"Split started at: {format_split}")
          else:
             tts(f"Split started at: {format_split}")
       else:

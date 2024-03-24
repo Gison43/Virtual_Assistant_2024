@@ -134,6 +134,12 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
    elif check_message(['what', 'year', 'is','it']) or check_message(['what', 'current', 'year']):
        tell_time.current_year()
 
+   elif check_message(['create', 'list']) or check_message(['start', 'list']):
+       list.create_list()
+
+   elif check_message(['add','to', 'list']):
+       list.add_list()
+
    elif check_message(['how', 'old', 'am', 'i']):
        tell_time.how_old()
 

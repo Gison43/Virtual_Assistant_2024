@@ -11,3 +11,6 @@ translate == 3.6.1
 requests == 2.31.0
 espeak == 1.48.15
 python-aiml == 0.9.3
+
+#music player
+mgp123-1.32.5

@@ -1,0 +1,6 @@
+profile.yaml
+*pyc
+brain_2.py
+profile.yaml.default
+testing/
+mpg123-1.32.5/
