@@ -142,10 +142,10 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
        list_name = get_user_input()
        list.create_list(list_name) #call the create_list method and pass the list name to it
        tts(f"Ok. I've created a list called {list_name}")
-      
+
    elif check_message(['add','to', 'list']):
        tts("What item or items would you like to add to the list?")
-       item = get_user_input
+       item = get_user_input()
        list.add_item(item)
        tts(f"{item} now added to the list called {list_name}")
 
