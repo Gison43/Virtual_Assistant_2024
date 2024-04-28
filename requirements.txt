@@ -5,6 +5,7 @@ gTTS == 2.5.1
 pydub == 0.25.1
 PyYaml == 6.0.1
 swpy == 0.1.2
+argparse == 1.4.0
 
 #translation program
 translate == 3.6.1

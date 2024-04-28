@@ -8,6 +8,7 @@ import yaml
 import speech_recognition as sr
 import datetime
 import brain
+import argparse
 
 from os import path
 from speech_recognition.recognizers import google
@@ -19,6 +20,13 @@ from GreyMatter.stopwatch import Stopwatch
 profile = open('profile.yaml')
 profile_data = yaml.safe_load(profile)
 profile.close()
+
+#this is to initialize text commands to the VA
+parser = argparse.ArgumentParser(description="Virtual Assistant with text and voice input.")
+parser.add_argument("-t", "--text", help = "Enable text input mode.", action = "store_true")
+
+#Parse the command-line arguments
+args = parser.parse_args()
 
 #Functioning Variables
 name = profile_data['name']
@@ -42,15 +50,24 @@ def process_command(speech_text):
 """
 
 def main():
-   r = sr.Recognizer()
-   m = sr.Microphone()
 
    stopwatch_instance = Stopwatch() #create a stopwatch instance so that we can use the Stopwatch class
-   with m as source:
-       print("Adjusting...")
-       r.adjust_for_ambient_noise(source)
-       print("Set minimum energy threshold to {}".format(r.energy_threshold))
-       while True:
+
+   if args.text: #text input mode
+      while True:
+         user_input = input("Enter you command: ")
+         if user_input.lower() == "exit":
+            break #exit loop when the user types 'exit'
+         brain.neural_network(name, user_input, city_name, city_code, stopwatch_instance, music_path) #process text-based commands
+   else: #speech input mode
+      r = sr.Recognizer()
+      m = sr.Microphone()
+
+      with m as source:
+          print("Adjusting...")
+          r.adjust_for_ambient_noise(source)
+          print("Set minimum energy threshold to {}".format(r.energy_threshold))
+      while True:
           print("Listening...")
           #print("stopwatch instance ", stopwatch_instance.is_running)
           r.pause_threshold = 1
