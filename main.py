@@ -55,10 +55,10 @@ def main():
 
    if args.text: #text input mode
       while True:
-         user_input = input("Enter you command: ")
-         if user_input.lower() == "exit":
+         keyboard_input = input("Enter you command: ")
+         if keyboard_input.lower() == "exit":
             break #exit loop when the user types 'exit'
-         brain.neural_network(name, user_input, city_name, city_code, stopwatch_instance, music_path) #process text-based commands
+         brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path) #process text-based commands
    else: #speech input mode
       r = sr.Recognizer()
       m = sr.Microphone()
@@ -70,8 +70,9 @@ def main():
       while True:
           print("Listening...")
           #print("stopwatch instance ", stopwatch_instance.is_running)
-          r.pause_threshold = 1
-          audio = r.listen(source, phrase_time_limit = 10.0)
+          with m as source:
+              r.pause_threshold = 1
+              audio = r.listen(source, phrase_time_limit = 10.0)
 
           try:
              speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
