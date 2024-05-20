@@ -23,6 +23,9 @@ class Stopwatch:
 
    def start(self):
       """Starts the timer"""
+      if self.is_running:
+          raise RuntimeError("Stopwatch is already running.")
+          tts("The stopwatch is already running")
       self.start_time = datetime.datetime.now()
       self.is_running = True
       return self.start_time
@@ -55,21 +58,24 @@ class Stopwatch:
 
    def reset(self):
       """Resets the stopwatch to zero time """
-      print("resetting the stopwatch")
-      print("current total time before reset:", self.total_time)
+      print("Resetting the stopwatch")
+      print("Current total time before reset:", self.total_time)
+      self.start_time = None
       self.total_time = datetime.timedelta()
       self.is_running = False #stop the stopwatch
       print("Total time after reset:", self.total_time)
 
-   def elapsed(self, start_time):
+   def elapsed(self, start_time=None):
       """Time elapsed since start was called"""
       if self.start_time is None:
-         raise RuntimeError("Stopwatch not started.")
+         raise RuntimeError("The stopwatch has not started")
          tts("The stopwatch has not started")
-      time_elapsed = (datetime.datetime.now() - self.start_time)
+      if self.is_running:
+         time_elapsed = (datetime.datetime.now() - self.start_time)
+      else:
+         time_elapsed = self.total_time
       time_string = self.format_time(time_elapsed)
-      return time_elapsed
-
+      return time_elapsed, time_string
 
    def split(self, title=None):
       if self.is_running:

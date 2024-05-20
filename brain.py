@@ -77,21 +77,31 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
       elif 'elapsed stopwatch' in speech_text:
          if stopwatch_instance.is_running:
-             current_time = stopwatch_instance.elapsed(start_time)  # Get the current elapsed time on the stopwatch
-             formatted_elapsed_time = stopwatch_instance.format_time(current_time)
+             current_time_delta, formatted_elapsed_time = stopwatch_instance.elapsed()  # Get the current elapsed time on the stopwatch
              tts(f"The current time elapsed on the stopwatch is {formatted_elapsed_time}.")
-             print("The stopwatch elapsed time is ", current_time)
+             print("The stopwatch elapsed time is ", current_time_delta)
+         elif stopwatch_instance.start_time is None:
+             tts("The stopwatch has not been started")
          else:
-             tts("The stopwatch is not running.")
+             total_time_delta, formatted_total_time = stopwatch_instance.elapsed() #Get the total elpased time when the stopwatch is stopped
+             tts(f"The stopwatch is stopped.  The total elapsed time is {formatted_total_time}.")
+             print("The stopwatch is stopped.  The total elapsed time is ", total_time_delta)
+
          for i, split_time in enumerate(stopwatch_instance.splits, start = 1):
              split_time_str = stopwatch_instance.format_time(split_time)
              tts(f"Split {i}: {split_time_str}")
 
 
       elif 'reset stopwatch' in speech_text:
-         if stopwatch_instance.is_running:
-            stopwatch_instance.reset()
-            tts("The stopwatch has been reset to zero time.")
+         if stopwatch_instance.start_time is None:
+            tts("Please start the stopwatch.")
+         else:
+            try:
+               stopwatch_instance.reset()
+               tts("I have reset the stopwatch.")
+            except Exception as e:
+               tts("An error occured while resetting the stopwatch.")
+               print("Error resetting the stopwatch:", e)
 
       elif 'split stopwatch' in speech_text:
          if stopwatch_instance.is_running:
