@@ -206,7 +206,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
    elif check_message(['who', 'am', 'i']) or check_message(['what','is','my', 'name']) or check_message(['whats', 'my', 'name']):
       general_conversations.who_am_i(name)
 
-   elif check_message(['time']) or check_message(['what', 'time', 'is', 'it']):
+   elif check_message(['time']) and not check_message(['stopwatch']) or check_message(['what', 'time', 'is', 'it']) and not check_message(['stopwatch']):
       tell_time.what_is_time()
 
    elif check_message(['what', 'day', 'number']):
@@ -217,6 +217,14 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
    elif check_message(['what','month']):
       tell_time.what_month()
+
+   elif check_message(['time', 'stopwatch']) or check_message(['current','time', 'on', 'stopwatch']) or check_message(['what', 'is', 'the','time', 'on','the','stopwatch']):
+      if stopwatch_instance.is_running:
+         current_time_delta, formatted_elapsed_time = stopwatch_instance.elapsed()
+         tts(f"The current time elapsed on the stopwatch is {formatted_elapsed_time}")
+         print("The stopwatch elapsed time is ", current_time_delta)
+      elif stopwatch_instance.start_time is None:
+         tts("The stopwatch has not been started")
 
    elif check_message(['what', 'are', 'you']):
       general_conversations.what_are_you()
