@@ -16,6 +16,7 @@ def get_user_input():
    except sr.UnknownValueError:
        print("Computer didn't understand.")
        return None
-   except sr.RequrestError as e:
+
+   except sr.RequestError as e:
        print("Could not request results from Google Speech Recognition service; {0}".format(e))
        return None

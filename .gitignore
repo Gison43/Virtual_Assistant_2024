@@ -11,3 +11,8 @@ environment/
 /__pycache__
 *virtual_key
 env/lib/python3.9/site-packages/grpc/_cython/cygrpc.cpython-39-arm-linux-gnueabihf.so
+*pyc
+brain_2.py
+profile.yaml.default
+testing/
+mpg123-1.32.5/

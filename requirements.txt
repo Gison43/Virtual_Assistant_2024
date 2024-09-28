@@ -4,8 +4,14 @@ SpeechRecognition == 3.10.1
 gTTS == 2.5.1
 pydub == 0.25.1
 PyYaml == 6.0.1
+swpy == 0.1.2
+argparse == 1.4.0
 
 #translation program
 translate == 3.6.1
 requests == 2.31.0
-espeak-ng == 
+espeak == 1.48.15
+python-aiml == 0.9.3
+
+#music player
+mgp123-1.32.5

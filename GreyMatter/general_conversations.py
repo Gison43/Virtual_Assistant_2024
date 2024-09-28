@@ -30,5 +30,11 @@ def when_were_you_created():
 def who_am_i(name):
    tts('Well, you are ' + name + ', of course! A brilliant, chemistry technologist working for environment and climate change canada.')
 
+def what_are_you():
+   tts('I am a fully functional, artificially intelligent, state of the art virtual assistant, and I am all yours, baby.')
+
+def what_is_your_name():
+   tts('I dont have a name, yet')
+
 def undefined():
    tts("I don't know what that means!")
