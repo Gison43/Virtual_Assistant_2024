@@ -27,7 +27,7 @@ def music_player(file_name):
         player = "afplay '" + file_name+ "'"
         return os.system(player)
     elif sys.platform == 'linux2' or sys.platform == 'linux':
-        player = "mpg123 '" + file_name +"'"
+        player = "vlc '" + file_name +"'"
         return os.system(player)
 
 def play_random(music_path):
