@@ -22,6 +22,8 @@ kernel.bootstrap(learnFiles = "/GreyMatter/yak.aiml")
 
 list = List()  #create an instance of the list class
 
+music_path = profile_data['music_path']
+
 def process_command(speech_text, stopwatch_instance):
    print(stopwatch_instance.is_running)
    pass
