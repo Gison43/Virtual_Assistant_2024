@@ -9,7 +9,7 @@ from .SenseCells.tts_engine import tts
 def mp3gen(music_path):
     """
     This function finds all the MP3 files in a folder and its subfolders and
-    returns a list:
+    returns a list as an array:
     """
     music_list = []
     for root, dirs, files in os.walk(music_path):
