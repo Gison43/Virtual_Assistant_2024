@@ -27,13 +27,15 @@ def music_player(file_name):
         player = "afplay '" + file_name+ "'"
         return os.system(player)
     elif sys.platform == 'linux2' or sys.platform == 'linux':
-        player = "vlc '" + file_name +"'"
+        player = "vlc-wrapper -I dummy '" + file_name +"' vlc://quit"
         return os.system(player)
 
 def play_random(music_path):
     try:
         music_listing = mp3gen(music_path)
+        print("Music Listing:", music_listing) #debugging: print all found mp3s
         music_playing = random.choice(music_listing)
+        print("Selected Track:", music_playing) #show the chosen mp3
         #extract the filename from the full path
         music_filename = os.path.basename(music_playing)
         #remove the file extension ".mp3"
