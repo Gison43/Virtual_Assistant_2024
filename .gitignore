@@ -1,9 +1,6 @@
-profile.yaml
 profile.yaml.default
 OSR_uk_000_0021_8k.wav
 *.pyc
-*.mp3
-*.wav
 *.so
 env/
 python2/
