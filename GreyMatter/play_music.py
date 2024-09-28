@@ -9,7 +9,7 @@ from .SenseCells.tts_engine import tts
 def mp3gen(music_path):
     """
     This function finds all the MP3 files in a folder and its subfolders and
-    returns a list:
+    returns a list as an array:
     """
     music_list = []
     for root, dirs, files in os.walk(music_path):
@@ -27,7 +27,7 @@ def music_player(file_name):
         player = "afplay '" + file_name+ "'"
         return os.system(player)
     elif sys.platform == 'linux2' or sys.platform == 'linux':
-        player = "mpg123 '" + file_name +"'"
+        player = "vlc '" + file_name +"'"
         return os.system(player)
 
 def play_random(music_path):
