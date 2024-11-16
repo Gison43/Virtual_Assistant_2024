@@ -21,5 +21,5 @@ def send_text_via_email(phone_number, message):
            server.login(from_email, from_password)
            server.sendmail(from_email, to_number, msg.as_string())
         print("Text message sent successfully!")
-except Exception as e:
+   except Exception as e:
         print(f"Failed to send message: {e}")
