@@ -23,3 +23,9 @@ def send_text_via_email(phone_number, message):
         print("Text message sent successfully!")
    except Exception as e:
         print(f"Failed to send message: {e}")
+
+
+if __name__ == "__main__":
+   phone_number = "6138169713"
+   message = "Hello this is s a test"
+   send_text_via_email(phone_number, message)
