@@ -15,3 +15,6 @@ python-aiml == 0.9.3
 
 #music player
 mgp123-1.32.5
+
+
+aiml == 0.9.3
