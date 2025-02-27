@@ -30,17 +30,16 @@ class Stopwatch:
       self.is_running = True
       return self.start_time
 
-   def stop(self, start_time):
+   def stop(self):
       #Stops the timer.  Returns the time elapsed
       if self.start_time is None:
          raise RuntimeError("Stopwatch not started.")
 
       stop_time = datetime.datetime.now()
-
       self.is_running = False
-
       elapsed_time  = stop_time - self.start_time
       print("Type of elpased_time", type(elapsed_time))
+      self.total_time += elapsed_time #accumulate total time
 
       total_seconds = elapsed_time.total_seconds()
 
@@ -48,13 +47,23 @@ class Stopwatch:
       start_timedelta = stop_time - self.start_time
 
       #calculate the split times relative to start_time
-      split_times = [split - elapsed_time for split in self.splits]
-      print("Split times:", split_times)
+      split_seconds = [split.total_seconds() for split in self.splits]
+      print("Split times:", split_seconds)
 
       self.total_time += elapsed_time #accumulate the elapsed time
       #print("Type of elapsed_time:", type(elapsed_time))
       self.splits = [] #reset splits after stopping
-      return total_seconds, [split.total_seconds() for split in split_times]
+
+      tts(f"The stopwatch has stopped.  Total time: {self.format_time(elapsed_time)}")
+
+      if split_seconds:
+         split_messages = []
+         for index, split in enumerate(split_seconds, 1):
+            formatted_split = self.format_time(datetime.timedelta(seconds=split))
+            split_messages.append(f"Split{index}: {formatted_split}")
+            tts(" ".join(split_messages))
+            
+      return total_seconds, split seconds
 
    def reset(self):
       """Resets the stopwatch to zero time """
