@@ -28,6 +28,7 @@ class Stopwatch:
           tts("The stopwatch is already running")
       self.start_time = datetime.datetime.now()
       self.is_running = True
+      self.splits = []
       return self.start_time
 
    def stop(self):
@@ -89,17 +90,33 @@ class Stopwatch:
    def split(self, title=None):
       if self.is_running:
          #split_start_time = datetime.datetime.now()
+         if len(self.splits) >=5:
+            tts("Maximum of 5 splits reached.")
+            print("Maximum of 5 splits reached.")
+            return
+            
          current_time = datetime.datetime.now()
-         split_time = current_time - self.start_time  #should get a timedelta object here
-         print("Current split time:", split_time)
+         
+         if self.splits:
+              split_time = current_time - self.splits[-1]['time'] #time since last split
+         else:
+              split_time = current_time - self.start_time #time since stopwatch started
+            
          format_split = self.format_time(split_time)
          print("Formatted split time:", format_split)
-         self.splits.append(split_time)
-         print("Current splits:", self.splits)
-         if title:
-            tts(f"Split started at: {format_split}")
-         else:
-            tts(f"Split started at: {format_split}")
+         
+         split_entry = {
+            'time': current_time,
+            'split_time': split_time,
+            'formatted': format_split,
+            'title':title or f"Split {len(self.splits} + 1}"
+         }
+         
+         self.splits.append(split_entry)
+         
+         print(f"{split_entry['title']} - Time: {format_split}")
+         tts(f"{split_entry['title']} recoreded at: {format_split}")
+         
       else:
          tts("The stopwatch is not running.")
       #return split_start_time
