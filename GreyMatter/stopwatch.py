@@ -140,10 +140,6 @@ class Stopwatch:
       #returns the list of split times
       return self.splits
 
-   def reset_splits(self):
-      #resets the split list
-      self.splits = []
-
    def format_time(self, time_delta):
       """Formats the time delta into hours, minutes, and seconds"""
       print("Time delta:", time_delta)
