@@ -64,7 +64,7 @@ class Stopwatch:
             split_messages.append(f"Split{index}: {formatted_split}")
             tts(" ".join(split_messages))
             
-      return total_seconds, split seconds
+      return total_seconds, split_seconds
 
    def reset(self):
       """Resets the stopwatch to zero time """
@@ -109,7 +109,7 @@ class Stopwatch:
             'time': current_time,
             'split_time': split_time,
             'formatted': format_split,
-            'title':title or f"Split {len(self.splits} + 1}"
+            'title':title or f"Split {len(self.splits) + 1}"
          }
          
          self.splits.append(split_entry)
