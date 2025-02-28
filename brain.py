@@ -51,7 +51,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
    if is_stopwatch_command(speech_text):
       if 'start stopwatch' in speech_text:
          if not stopwatch_instance.is_running:
-            stopwatch_instance.is_running = True
+            stopwatch_instance.start()
             tts("We are starting the stopwatch. Let's go.")
             print("The stopwatch is running.",stopwatch_instance.is_running)
          else:
