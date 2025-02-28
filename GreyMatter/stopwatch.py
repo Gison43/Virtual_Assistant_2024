@@ -40,7 +40,7 @@ class Stopwatch:
       stop_time = datetime.datetime.now()
       self.is_running = False
       elapsed_time  = stop_time - self.start_time
-      print("Type of elpased_time", type(elapsed_time))
+      print("Type of elapsed_time", type(elapsed_time))
       self.total_time += elapsed_time #accumulate total time
 
       total_seconds = elapsed_time.total_seconds()
@@ -51,10 +51,6 @@ class Stopwatch:
       #calculate the split times relative to start_time
       split_seconds = [split.total_seconds() for split in self.splits]
       print("Split times:", split_seconds)
-
-      self.total_time += elapsed_time #accumulate the elapsed time
-      #print("Type of elapsed_time:", type(elapsed_time))
-      self.splits = [] #reset splits after stopping
 
       tts(f"The stopwatch has stopped.  Total time: {self.format_time(elapsed_time)}")
 
@@ -72,8 +68,9 @@ class Stopwatch:
       print("Resetting the stopwatch")
       print("Current total time before reset:", self.total_time)
       self.start_time = None
-      self.total_time = datetime.timedelta()
+      self.total_time = datetime.timedelta(0)
       self.is_running = False #stop the stopwatch
+      self.splits = []
       print("Total time after reset:", self.total_time)
 
    def elapsed(self, start_time=None):
@@ -90,34 +87,32 @@ class Stopwatch:
       return time_elapsed, time_string
 
    def split(self, title=None):
-      if self.is_running:
-         #split_start_time = datetime.datetime.now()
+      if not self.is_running:
+         tts("The stopwatch is not running.")
+         
          if len(self.splits) >=5:
             tts("Maximum of 5 splits reached.")
             print("Maximum of 5 splits reached.")
             return
             
-         current_time = datetime.datetime.now()
-         
          if self.splits:
-              split_time = current_time - self.splits[-1]['time'] #time since last split
+            previous_split_time = self.splits[-1]['time'] #time since last split
+            split_duration = now - self.start_time #time since stopwatch started
          else:
-              split_time = current_time - self.start_time #time since stopwatch started
+              split_duration = now - self.start_time #time since stopwatch started
             
-         format_split = self.format_time(split_time)
-         print("Formatted split time:", format_split)
+         formatted_split = self.format_time(split_duration)
+         print("Formatted split time:", formatted_split)
          
-         split_entry = {
-            'time': current_time,
-            'split_time': split_time,
-            'formatted': format_split,
+         self.splits.append({
+            'time': now,
+            'split_time': split_duration,
+            'formatted': formatted_split,
             'title':title or f"Split {len(self.splits) + 1}"
-         }
+         })
          
-         self.splits.append(split_entry)
-         
-         print(f"{split_entry['title']} - Time: {format_split}")
-         tts(f"{split_entry['title']} recorded at: {format_split}")
+         print(f"Split {len(self.splits)} recorded at {formatted_split}")
+         tts(f"Split {len(self.splits)} recorded at {formatted_split}")
          
       else:
          tts("The stopwatch is not running.")
