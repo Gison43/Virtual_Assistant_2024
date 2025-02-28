@@ -2,8 +2,9 @@
 
 import datetime
 import aiml
+import re
 
-from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep, play_music
+from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep, play_music, area
 from GreyMatter.list import List
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.spanish_translator import language_selection
@@ -30,7 +31,7 @@ def process_command(speech_text, stopwatch_instance):
 def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path):
    """
    this function compares check vs speech_text to see if they are equal.  Also
-   checks if the items in the list (specificed in the argument are present in 
+   checks if the items in the list (specified in the argument are present in 
    the user's speech.
    """
 
@@ -42,29 +43,27 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
       else:
          return False
 
-   start_time = None
-
    def is_stopwatch_command(command):
       stopwatch_commands = ['start stopwatch', 'stop stopwatch', 'elapsed stopwatch', 'exit stopwatch', 'split stopwatch', 'reset stopwatch']
       return any(stopwatch_command in command for stopwatch_command in stopwatch_commands)
 
    if is_stopwatch_command(speech_text):
       if 'start stopwatch' in speech_text:
-         try:
+         if not stopwatch_instance.is_running:
             stopwatch_instance.start()
             tts("We are starting the stopwatch. Let's go.")
             print("The stopwatch is running.",stopwatch_instance.is_running)
-         except RuntimeError:
+         else:
             tts("The stopwatch is already running.")
 
       elif 'stop stopwatch' in speech_text:
          if stopwatch_instance.is_running:
-             total_time, split_times  = stopwatch_instance.stop(start_time) #stop the stopwatch and get the total time elapsed and unpack the tuple
+             total_time, split_times  = stopwatch_instance.stop() #stop the stopwatch and get the total time elapsed and unpack the tuple
              total_time_delta = datetime.timedelta(seconds = total_time) #convert total_time to timedelta object
              formatted_total_time = stopwatch_instance.format_time(total_time_delta)
 
              split_times = stopwatch_instance.get_splits()
-             formatted_split_times = [stopwatch_instance.format_time(split) for split in split_times] #format each split time
+             formatted_split_times = [split['formatted'] for split in split_times] #format each split time
              stopwatch_instance.is_running = False
              tts(f"The stopwatch has been stopped and the total time is {formatted_total_time}.")
              print("The stopwatch has been stopped and the total time is", total_time)
@@ -72,7 +71,6 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
                 tts(f"Split {i} time is {split_time}.")
          else:
              tts("The stopwatch is not running.")
-
 
       elif 'elapsed stopwatch' in speech_text:
          if stopwatch_instance.is_running:
@@ -90,7 +88,6 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
              split_time_str = stopwatch_instance.format_time(split_time)
              tts(f"Split {i}: {split_time_str}")
 
-
       elif 'reset stopwatch' in speech_text:
          if stopwatch_instance.start_time is None:
             tts("Please start the stopwatch.")
@@ -104,7 +101,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
       elif 'split stopwatch' in speech_text:
          if stopwatch_instance.is_running:
-            stopwatch_instance.split(title = "Split")
+            stopwatch_instance.split()
             tts("The stopwatch has been split.")
          else:
             tts("The stopwatch is not running.  Start it first.")
@@ -124,7 +121,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
       elif 'exit stopwatch' in speech_text:
          if stopwatch_instance.is_running:
-            total_time = stopwatch_instance.stop(start_time)
+            total_time = stopwatch_instance.stop()
             formatted_time = stopwatch_instance.format_time(total_time)
             tts(f"The stopwatch has been stopped and the total time is {formatted_time}.  Exiting the stopwatch program.")
          else:
