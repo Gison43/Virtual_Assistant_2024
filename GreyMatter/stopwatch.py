@@ -24,8 +24,9 @@ class Stopwatch:
    def start(self):
       """Starts the timer"""
       if self.is_running:
-          raise RuntimeError("Stopwatch is already running.")
           tts("The stopwatch is already running")
+          raise RuntimeError("Stopwatch is already running.")
+          
       self.start_time = datetime.datetime.now()
       self.is_running = True
       self.splits = []
@@ -62,9 +63,9 @@ class Stopwatch:
          for index, split in enumerate(split_seconds, 1):
             formatted_split = self.format_time(datetime.timedelta(seconds=split))
             split_messages.append(f"Split{index}: {formatted_split}")
-            tts(" ".join(split_messages))
+         tts(" ".join(split_messages))
             
-      return total_seconds, split seconds
+      return total_seconds, split_seconds
 
    def reset(self):
       """Resets the stopwatch to zero time """
@@ -78,8 +79,9 @@ class Stopwatch:
    def elapsed(self, start_time=None):
       """Time elapsed since start was called"""
       if self.start_time is None:
-         raise RuntimeError("The stopwatch has not started")
          tts("The stopwatch has not started")
+         raise RuntimeError("The stopwatch has not started")
+         
       if self.is_running:
          time_elapsed = (datetime.datetime.now() - self.start_time)
       else:
@@ -109,13 +111,13 @@ class Stopwatch:
             'time': current_time,
             'split_time': split_time,
             'formatted': format_split,
-            'title':title or f"Split {len(self.splits} + 1}"
+            'title':title or f"Split {len(self.splits) + 1}"
          }
          
          self.splits.append(split_entry)
          
          print(f"{split_entry['title']} - Time: {format_split}")
-         tts(f"{split_entry['title']} recoreded at: {format_split}")
+         tts(f"{split_entry['title']} recorded at: {format_split}")
          
       else:
          tts("The stopwatch is not running.")
@@ -129,13 +131,13 @@ class Stopwatch:
          tts("No splits recorded.")
       else:
          split_time = self.splits.pop() #remove the last split time from the list
-         time_string = self.format_time(split_time)
+         time_string = split_time['formatted']
          tts(f"Split stopped.  Time elapsed since the split started is {time_string}.")
 
    def stop_split(self, split_index):
       if 0 <= split_index < len(self.splits):
          split_time = self.splits.pop(split_index)
-         return split_time - self.start_time
+         return split_time['split_time']
       else:
          raise IndexError("Invalid split index")
 
