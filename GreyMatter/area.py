@@ -18,7 +18,7 @@ def extract_numerical_value(input_text):
         except ValueError:
             continue  #continue to the next word if the conversion fails
 
-  return numerical_value
+    return numerical_value
 
 #Ask the length of the rectangle
 tts('What is the length of the rectangle in centimeters')
