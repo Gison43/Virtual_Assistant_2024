@@ -49,7 +49,7 @@ class Stopwatch:
       start_timedelta = stop_time - self.start_time
 
       #calculate the split times relative to start_time
-      split_seconds = [split.['split_time'].total_seconds() for split in self.splits]
+      split_seconds = [split['split_time'].total_seconds() for split in self.splits]
       print("Split times:", split_seconds)
 
       if split_seconds:
