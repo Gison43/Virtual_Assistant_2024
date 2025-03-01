@@ -52,8 +52,6 @@ class Stopwatch:
       split_seconds = [split.total_seconds() for split in self.splits]
       print("Split times:", split_seconds)
 
-      tts(f"The stopwatch has stopped.  Total time: {self.format_time(elapsed_time)}")
-
       if split_seconds:
          split_messages = []
          for index, split in enumerate(split_seconds, 1):
