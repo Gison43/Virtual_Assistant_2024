@@ -4,10 +4,6 @@ Created on Sat Mar  9 10:46:43 2024
 
 @author: Phyco
 
-currently only the start, stop, elapsed time, reset, format time functions are working.
-
-split times are not working well. It can split time, but if I say stop, it brings up errors.
-
 """
 import datetime
 
