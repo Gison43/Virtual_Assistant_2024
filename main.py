@@ -73,6 +73,7 @@ def main():
           with m as source:
               r.pause_threshold = 1
               audio = r.listen(source, phrase_time_limit = 10.0)
+          speech_text = " " #Initialize the speech_text to prevent crashes if no speech.
 
           try:
              speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
@@ -86,6 +87,6 @@ def main():
           except sr.RequestError as e:
              print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
-          brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
-
+          if speech_text.strip(): #only process if something is actually said
+             brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
 main()
