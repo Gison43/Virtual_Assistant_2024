@@ -63,18 +63,8 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
       elif 'stop stopwatch' in speech_text:
          print(f"[DEBUG] Stop requested - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
          if stopwatch_instance.is_running:
-             total_time, split_times  = stopwatch_instance.stop() #stop the stopwatch and get the total time elapsed and unpack the tuple
-             total_time_delta = datetime.timedelta(seconds = total_time) #convert total_time to timedelta object
-             formatted_total_time = stopwatch_instance.format_time(total_time_delta)
-
-             split_times = stopwatch_instance.get_splits()
-             formatted_split_times = [split['formatted'] for split in split_times] #format each split time
+             stopwatch_instance.stop()
              stopwatch_instance.is_running = False
-             print(f"[DEBUG] Calling tts to announce stopwatch stop.")
-             tts(f"The stopwatch has been stopped and the total time is {formatted_total_time}.")
-             print("The stopwatch has been stopped and the total time is", total_time)
-             for i, split_time in enumerate(formatted_split_times, start = 1):
-                tts(f"Split {i} time is {split_time}.")
          else:
              tts("The stopwatch is not running.")
 
