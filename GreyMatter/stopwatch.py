@@ -43,7 +43,7 @@ class Stopwatch:
       print("Type of elapsed_time", type(elapsed_time))
       self.total_time += elapsed_time #accumulate total time
 
-      total_seconds = elapsed_time.total_seconds()
+      formatted_elapsed_time = self.format_time(elapsed_time)
 
       message = f"The stopwatch has been stopped.  Total time: {formatted_elapsed_time}."
 
