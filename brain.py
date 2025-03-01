@@ -70,6 +70,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
              split_times = stopwatch_instance.get_splits()
              formatted_split_times = [split['formatted'] for split in split_times] #format each split time
              stopwatch_instance.is_running = False
+             print(f"[DEBUG] Calling tts to announce stopwatch stop.")
              tts(f"The stopwatch has been stopped and the total time is {formatted_total_time}.")
              print("The stopwatch has been stopped and the total time is", total_time)
              for i, split_time in enumerate(formatted_split_times, start = 1):
