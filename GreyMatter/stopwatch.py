@@ -87,30 +87,34 @@ class Stopwatch:
    def split(self, title=None):
       if not self.is_running:
          tts("The stopwatch is not running.")
+         return
          
-         if len(self.splits) >=5:
-            tts("Maximum of 5 splits reached.")
-            print("Maximum of 5 splits reached.")
-            return
-            
-         if self.splits:
-            previous_split_time = self.splits[-1]['time'] #time since last split
-            split_duration = now - self.start_time #time since stopwatch started
+      if len(self.splits) >=5:
+          tts("Maximum of 5 splits reached.")
+          print("Maximum of 5 splits reached.")
+          return
+      current_time = datetime.datetime.now()
+      
+      if self.splits:
+         last_split_time = self.splits[-1]['time']
+         split_time = current_time - last_split_time #time since the last split
          else:
-              split_duration = now - self.start_time #time since stopwatch started
+              split_time = current_time - self.start_time #time since stopwatch started
             
-         formatted_split = self.format_time(split_duration)
-         print("Formatted split time:", formatted_split)
-         
-         self.splits.append({
-            'time': now,
-            'split_time': split_duration,
+         formatted_split = self.format_time(split_time)
+                  
+         split_entry = {
+            'time': current_time,
+            'split_time': split_time,
             'formatted': formatted_split,
             'title':title or f"Split {len(self.splits) + 1}"
-         })
-         
-         print(f"Split {len(self.splits)} recorded at {formatted_split}")
-         tts(f"Split {len(self.splits)} recorded at {formatted_split}")
+         }
+
+         self.splits.appent(split_entry)
+      
+         print(f"[DEBUG] Split {len(self.splits)} recorded at {formatted_split}")
+         print(f"[DEBUG] All splits so far: {self.splits}")
+         tts(f"{split_entry['title']} recorded at {formatted_split}")
          
       else:
          tts("The stopwatch is not running.")
