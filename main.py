@@ -65,7 +65,16 @@ def main():
 
       with m as source:
           print("Adjusting...")
-          r.adjust_for_ambient_noise(source)
+          #suppress ALSA/JACK noise during ambient noise adjustment
+          import os
+          stderr_backup = sys.stderr
+          sys.stderr = open(os.devnull, 'w')
+          try:
+             r.adjust_for_ambient_noise(source)
+          finally:
+             sys.stderr.close()
+             sys.stderr = stderr_backup
+              
           print("Set minimum energy threshold to {}".format(r.energy_threshold))
       while True:
           print("Listening...")
