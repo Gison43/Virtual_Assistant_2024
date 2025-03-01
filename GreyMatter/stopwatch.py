@@ -110,16 +110,12 @@ class Stopwatch:
           'title':title or f"Split {len(self.splits) + 1}"
       }
 
-      self.splits.appent(split_entry)
+      self.splits.append(split_entry)
       
       print(f"[DEBUG] Split {len(self.splits)} recorded at {formatted_split}")
       print(f"[DEBUG] All splits so far: {self.splits}")
       tts(f"{split_entry['title']} recorded at {formatted_split}")
-         
-      else:
-         tts("The stopwatch is not running.")
-      #return split_start_time
-
+      
    def unsplit(self):
       """Stops a split. Returns the time elapsed since split was called"""
       if self.is_running:
