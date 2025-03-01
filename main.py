@@ -61,27 +61,35 @@ def main():
          brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path) #process text-based commands
    else: #speech input mode
       r = sr.Recognizer()
-      m = sr.Microphone()
 
-      with m as source:
+      #suppress ALSA/JACK noise during microphone setup
+      stderr_backup = sys.stderr
+      sys.stderr = open(os.devnull, 'w')
+      try:
+          m = sr.Microphone()
+      finally:
+          sys.stderr.close()
+          sys.stderr = stderr_backup
+      
+       with m as source:
           print("Adjusting...")
-          #suppress ALSA/JACK noise during ambient noise adjustment
-          import os
-          stderr_backup = sys.stderr
-          sys.stderr = open(os.devnull, 'w')
-          try:
-             r.adjust_for_ambient_noise(source)
-          finally:
-             sys.stderr.close()
-             sys.stderr = stderr_backup
-              
+          r.adjust_for_ambient_noise(source)
           print("Set minimum energy threshold to {}".format(r.energy_threshold))
-      while True:
+           
+       while True:
           print("Listening...")
           #print("stopwatch instance ", stopwatch_instance.is_running)
           with m as source:
               r.pause_threshold = 1
-              audio = r.listen(source, phrase_time_limit = 10.0)
+
+               #suppress ALSA/JACK noise during microphone setup
+              stderr_backup = sys.stderr
+              sys.stderr = open(os.devnull, 'w')
+              try:
+                 audio = r.listen(source, phrase_time_limit = 10.0)
+              finally:
+                  sys.stderr.close()
+                  sys.stderr = stderr_backup
           speech_text = " " #Initialize the speech_text to prevent crashes if no speech.
 
           try:
