@@ -98,23 +98,23 @@ class Stopwatch:
       if self.splits:
          last_split_time = self.splits[-1]['time']
          split_time = current_time - last_split_time #time since the last split
-         else:
-              split_time = current_time - self.start_time #time since stopwatch started
+      else:
+         split_time = current_time - self.start_time #time since stopwatch started
             
-         formatted_split = self.format_time(split_time)
+      formatted_split = self.format_time(split_time)
                   
-         split_entry = {
-            'time': current_time,
-            'split_time': split_time,
-            'formatted': formatted_split,
-            'title':title or f"Split {len(self.splits) + 1}"
-         }
+      split_entry = {
+          'time': current_time,
+          'split_time': split_time,
+          'formatted': formatted_split,
+          'title':title or f"Split {len(self.splits) + 1}"
+      }
 
-         self.splits.appent(split_entry)
+      self.splits.appent(split_entry)
       
-         print(f"[DEBUG] Split {len(self.splits)} recorded at {formatted_split}")
-         print(f"[DEBUG] All splits so far: {self.splits}")
-         tts(f"{split_entry['title']} recorded at {formatted_split}")
+      print(f"[DEBUG] Split {len(self.splits)} recorded at {formatted_split}")
+      print(f"[DEBUG] All splits so far: {self.splits}")
+      tts(f"{split_entry['title']} recorded at {formatted_split}")
          
       else:
          tts("The stopwatch is not running.")
