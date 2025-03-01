@@ -45,22 +45,20 @@ class Stopwatch:
 
       total_seconds = elapsed_time.total_seconds()
 
-      #convert start_time to a timedelta object
-      start_timedelta = stop_time - self.start_time
+      message = f"The stopwatch has been stopped.  Total time: {formatted_elapsed_time}."
 
-      #calculate the split times relative to start_time
-      split_seconds = [split['split_time'].total_seconds() for split in self.splits]
-      print("Split times:", split_seconds)
-
-      if split_seconds:
+      if self.splits:
          split_messages = []
-         for index, split in enumerate(split_seconds, 1):
-            formatted_split = self.format_time(datetime.timedelta(seconds=split))
+         for index, split in enumerate(self.splits, 1):
+            formatted_split = split['formatted']
             split_messages.append(f"Split{index}: {formatted_split}")
-         tts(" ".join(split_messages))
+         message +=" " + " ".join(split_messages)
             
-      return total_seconds, split_seconds
+      print(f"[DEBUG] Final message from stopwatch.stop(): {message}")
+      tts(message)
 
+      return elapsed_time.total_seconds()
+      
    def reset(self):
       """Resets the stopwatch to zero time """
       print("Resetting the stopwatch")
