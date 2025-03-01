@@ -29,6 +29,7 @@ def process_command(speech_text, stopwatch_instance):
 
 
 def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path):
+   print(f"[DEBUG] Entering neural_network() - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
    """
    this function compares check vs speech_text to see if they are equal.  Also
    checks if the items in the list (specified in the argument are present in 
@@ -48,15 +49,19 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
       return any(stopwatch_command in command for stopwatch_command in stopwatch_commands)
 
    if is_stopwatch_command(speech_text):
+      print(f"[DEBUG] Detected stopwatch command: {speech_text}")
+      print(f"[DEBUG] Pre-command - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
       if 'start stopwatch' in speech_text:
          if not stopwatch_instance.is_running:
             stopwatch_instance.start()
             tts("We are starting the stopwatch. Let's go.")
+            print(f"[DEBUG] After start - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
             print("The stopwatch is running.",stopwatch_instance.is_running)
          else:
             tts("The stopwatch is already running.")
 
       elif 'stop stopwatch' in speech_text:
+         print(f"[DEBUG] Stop requested - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
          if stopwatch_instance.is_running:
              total_time, split_times  = stopwatch_instance.stop() #stop the stopwatch and get the total time elapsed and unpack the tuple
              total_time_delta = datetime.timedelta(seconds = total_time) #convert total_time to timedelta object
@@ -109,6 +114,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
                tts(f"Split {i}: {stopwatch_instance.format_time(split['split_time'])}")
 
       elif 'split stopwatch' in speech_text:
+         print(f"[DEBUG] Split requested - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
          if stopwatch_instance.is_running:
             stopwatch_instance.split()
             tts("The stopwatch has been split.")
