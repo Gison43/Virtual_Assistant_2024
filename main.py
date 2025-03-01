@@ -3,6 +3,7 @@
 #the book Building a Virtual Assistant  with RPi" year 2016
 
 import sys
+import os
 
 import yaml
 import speech_recognition as sr
@@ -59,10 +60,11 @@ def main():
          if keyboard_input.lower() == "exit":
             break #exit loop when the user types 'exit'
          brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path) #process text-based commands
+   
    else: #speech input mode
       r = sr.Recognizer()
 
-      #suppress ALSA/JACK noise during microphone setup
+      #suppress ALSA/JACK noise during audio capture
       stderr_backup = sys.stderr
       sys.stderr = open(os.devnull, 'w')
       try:
@@ -71,7 +73,7 @@ def main():
           sys.stderr.close()
           sys.stderr = stderr_backup
       
-       with m as source:
+      with m as source:
           print("Adjusting...")
           r.adjust_for_ambient_noise(source)
           print("Set minimum energy threshold to {}".format(r.energy_threshold))
