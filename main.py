@@ -89,4 +89,6 @@ def main():
 
           if speech_text.strip(): #only process if something is actually said
              brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
+          else:
+             print("No speech detected. Waiting for next command.")
 main()
