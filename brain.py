@@ -23,6 +23,17 @@ kernel.bootstrap(learnFiles = "GreyMatter/yak.aiml")
 
 list = List()  #create an instance of the list class
 
+ELAPSED_PHRASES = {
+   'elapsed stopwatch',
+   'time elapsed on stopwatch',
+   'current stopwatch time',
+   'what is the time on the stopwatch',
+   'how much time has passed on the stopwatch',
+   'what time is on the stopwatch',
+   'whats the time elapsed on the stopwatch',
+   'what is the current time on the stopwatch'
+   }
+   
 def process_command(speech_text, stopwatch_instance):
    print(stopwatch_instance.is_running)
    pass
@@ -30,6 +41,7 @@ def process_command(speech_text, stopwatch_instance):
 
 def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path):
    print(f"[DEBUG] Entering neural_network() - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
+   print(f"[DEBUG] Received speech_text: '{speech_text}'")
    """
    this function compares check vs speech_text to see if they are equal.  Also
    checks if the items in the list (specified in the argument are present in 
@@ -45,7 +57,8 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
          return False
 
    def is_stopwatch_command(command):
-      stopwatch_commands = ['start stopwatch', 'stop stopwatch', 'elapsed stopwatch', 'exit stopwatch', 'split stopwatch', 'reset stopwatch']
+      stopwatch_commands = ['start stopwatch', 'stop stopwatch', 'elapsed stopwatch', 'exit stopwatch', 'split stopwatch', 'reset stopwatch',
+                           'list splits', 'show splits', 'what are the splits']
       return any(stopwatch_command in command for stopwatch_command in stopwatch_commands)
 
    if is_stopwatch_command(speech_text):
@@ -96,14 +109,16 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
                tts("An error occured while resetting the stopwatch.")
                print("Error resetting the stopwatch:", e)
 
-      elif 'list splits' in speech_text or 'show splits' in speech_text:
+      elif any(phrase in speech_text for phrase in ['list splits', 'show splits', 'what are the splits']):
          splits = stopwatch_instance.get_splits()
-
          if not splits:
             tts("There are no splits recorded")
          else:
-            for i, split in enumerate(splits, 1):
-               tts(f"Split {i}: {stopwatch_instance.format_time(split['split_time'])}")
+            split_messages = []
+            for index, split in enumerate(splits, start=1):
+               split_messages.append(f"Split {index}: {split['fomatted']}")
+               tts("Here are the splits. " + " ".join(split_messages))
+      return
 
       elif 'split stopwatch' in speech_text:
          print(f"[DEBUG] Split requested - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
