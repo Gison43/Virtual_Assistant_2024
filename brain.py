@@ -58,7 +58,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
    def is_stopwatch_command(command):
       stopwatch_commands = ['start stopwatch', 'stop stopwatch', 'elapsed stopwatch', 'exit stopwatch', 'split stopwatch', 'reset stopwatch',
-                           'list splits', 'show splits', 'what are the splits'] + list(ELAPSED_PHRASES)
+                           'list splits', 'show splits', 'what are the splits']
       return any(stopwatch_command in command for stopwatch_command in stopwatch_commands)
 
    if is_stopwatch_command(speech_text):
