@@ -83,7 +83,9 @@ def delete_notes(date=None):
   print(f"Notes for {date if date else 'ALL dates'} deleted.")
   tts(f"Notes for  {date if date else 'ALL dates'} deleted.")
 
-def read_notes(date="today"):
+def read_notes(date=None):
+    tts("Let me check your notes.  One moment please.")
+  
     conn = sqlite3.connect("memory.db")
     cursor = conn.cursor()
 
