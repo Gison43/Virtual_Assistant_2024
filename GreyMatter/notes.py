@@ -16,31 +16,38 @@ def note_something(speech_text):
   tts('your note has been saved.')
 
 def handle_notes(speech_text):
+    speech_text = speech_text.lower()
     """
     Handles reading and deleting notes based on user's command.
     This centralizes all note management logic in notes.py.
     """
-    if 'read notes' in speech_text:
-        if 'today' in speech_text:
-            read_notes('today')
-        elif 'yesterday' in speech_text:
-            read_notes('yesterday')
-        elif 'tomorrow' in speech_text:
-            read_notes('tomorrow')
-        else:
-            tts("What date would you like to read notes for?")
-            date = get_user_input()
-            read_notes(date)
+    is_reading = 'read' in speech_text:
+    is_deleting = 'delete' in speech_text:
 
-    elif 'delete notes' in speech_text:
-        if 'today' in speech_text:
-            delete_notes(datetime.now().strftime("%d-%m-%Y"))
-        elif 'all' in speech_text:
-            delete_notes(None)
-        else:
-            tts("What date would you like to delete notes for?")
-            date = get_user_input()
-            delete_notes(date)
+    if 'today' in speech_text:
+      date = dateteime.datetime.now()strftime("%d-%m-%Y")
+
+    elif 'yesterday' in speech_text:
+      date = (dateteime.datetime.now() - timdelta(days=1)).strftime("%d-%m-%Y")
+
+    elif 'tomorrow' in speech_text:
+      date = (dateteime.datetime.now() + timdelta(days=1)).strftime("%d-%m-%Y")
+
+    elif 'all' in speech_text and is_deleting:
+      #special case: delete all notes
+      date = None
+
+    else:
+      #ask for a date if none was specified
+      tts("What date would you like to work with?")
+      from user_input import get_user_input
+      date = get_user_input()
+
+    if is_reading:
+      read_notes(date)
+
+    elif is_deleting:
+      delete_notes(date)
 
 def delete_notes(date=None):
   conn = sqlite3.connect('memory.db')
