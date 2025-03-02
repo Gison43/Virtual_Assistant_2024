@@ -58,7 +58,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
    def is_stopwatch_command(command):
       stopwatch_commands = ['start stopwatch', 'stop stopwatch', 'elapsed stopwatch', 'exit stopwatch', 'split stopwatch', 'reset stopwatch',
-                           'list splits', 'show splits', 'what are the splits']
+                           'list splits', 'show splits', 'what are the splits'] + list(ELAPSED_PHRASES)
       return any(stopwatch_command in command for stopwatch_command in stopwatch_commands)
 
    if is_stopwatch_command(speech_text):
@@ -279,6 +279,10 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
    else:
       #if not, then call the function 'i don't understand'
       general_conversations.undefined()
+
+except Exception as e:
+   print(f"[ERROR] Exception in neural_network():{e}")
+   tts("Something whent wrong while processing your command.")
 
 if __name__ == "__main__":
    main()
