@@ -77,37 +77,35 @@ def main():
           print("Adjusting...")
           r.adjust_for_ambient_noise(source)
           print("Set minimum energy threshold to {}".format(r.energy_threshold))
-           
-   while True:
-       print("Listening...")
-       #print("stopwatch instance ", stopwatch_instance.is_running)
-          with m as source:
-              r.pause_threshold = 1
+          
+          while True:
+              print("Listening...") #print("stopwatch instance ", stopwatch_instance.is_running)
+              with m as source:
+                  r.pause_threshold = 1
+                  #suppress ALSA/JACK noise during microphone setup
+                  stderr_backup = sys.stderr
+                  sys.stderr = open(os.devnull, 'w')
+                  try:
+                     audio = r.listen(source, phrase_time_limit = 10.0)
+                  finally:
+                      sys.stderr.close()
+                      sys.stderr = stderr_backup
+              speech_text = "" #Initialize the speech_text to prevent crashes if no speech.
 
-               #suppress ALSA/JACK noise during microphone setup
-              stderr_backup = sys.stderr
-              sys.stderr = open(os.devnull, 'w')
               try:
-                 audio = r.listen(source, phrase_time_limit = 10.0)
-              finally:
-                  sys.stderr.close()
-                  sys.stderr = stderr_backup
-          speech_text = "" #Initialize the speech_text to prevent crashes if no speech.
+                  speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
+                  print("Recognizing and transcribing what you said...")
+                  print(f"Computer thinks you said: '{speech_text}'")
+                  brain.process_command(speech_text, stopwatch_instance)
+                  print("stopwatch instance ", stopwatch_instance.is_running)
+              except sr.UnknownValueError:
+                  print("Computer didn't understand.")
+                  tts("I do not understand")
+              except sr.RequestError as e:
+                  print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
-          try:
-             speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
-             print("Recognizing and transcribing what you said...")
-             print(f"Computer thinks you said: '{speech_text}'")
-             brain.process_command(speech_text, stopwatch_instance)
-             print("stopwatch instance ", stopwatch_instance.is_running)
-          except sr.UnknownValueError:
-             print("Computer didn't understand.")
-             tts("I do not understand")
-          except sr.RequestError as e:
-             print("Could not request results from Google Speech Recognition service; {0}".format(e))
-
-          if speech_text.strip(): #only process if something is actually said
-             brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
-          else:
-             print("No speech detected. Waiting for next command.")
+              if speech_text.strip(): #only process if something is actually said
+                  brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
+              else:
+                  print("No speech detected. Waiting for next command.")
 main()
