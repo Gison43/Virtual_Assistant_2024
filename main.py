@@ -80,16 +80,15 @@ def main():
 
           while True:
               print("Listening...") #print("stopwatch instance ", stopwatch_instance.is_running)
-              with m as source:
-                  r.pause_threshold = 1
-                  #suppress ALSA/JACK noise during microphone setup
-                  stderr_backup = sys.stderr
-                  sys.stderr = open(os.devnull, 'w')
-                  try:
-                     audio = r.listen(source, phrase_time_limit = 10.0)
-                  finally:
-                      sys.stderr.close()
-                      sys.stderr = stderr_backup
+              r.pause_threshold = 1
+              #suppress ALSA/JACK noise during microphone setup
+              stderr_backup = sys.stderr
+              sys.stderr = open(os.devnull, 'w')
+              try:
+                  audio = r.listen(source, phrase_time_limit = 10.0)
+              finally:
+                  sys.stderr.close()
+                  sys.stderr = stderr_backup
               speech_text = "" #Initialize the speech_text to prevent crashes if no speech.
 
               try:
