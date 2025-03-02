@@ -116,10 +116,9 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
          else:
             split_messages = []
             for index, split in enumerate(splits, start=1):
-               split_messages.append(f"Split {index}: {split['fomatted']}")
+               split_messages.append(f"Split {index}: {split['formatted']}")
                tts("Here are the splits. " + " ".join(split_messages))
-      return
-
+         
       elif 'split stopwatch' in speech_text:
          print(f"[DEBUG] Split requested - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
          if stopwatch_instance.is_running:
