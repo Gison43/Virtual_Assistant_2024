@@ -21,17 +21,17 @@ def handle_notes(speech_text):
     Handles reading and deleting notes based on user's command.
     This centralizes all note management logic in notes.py.
     """
-    is_reading = 'read' in speech_text:
-    is_deleting = 'delete' in speech_text:
+    is_reading = 'read' in speech_text
+    is_deleting = 'delete' in speech_text
 
     if 'today' in speech_text:
-      date = dateteime.datetime.now()strftime("%d-%m-%Y")
+      date = datetime.datetime.now().strftime("%d-%m-%Y")
 
     elif 'yesterday' in speech_text:
-      date = (dateteime.datetime.now() - timdelta(days=1)).strftime("%d-%m-%Y")
+      date = (datetime.datetime.now() - timedelta(days=1)).strftime("%d-%m-%Y")
 
     elif 'tomorrow' in speech_text:
-      date = (dateteime.datetime.now() + timdelta(days=1)).strftime("%d-%m-%Y")
+      date = (datetime.datetime.now() + timdelta(days=1)).strftime("%d-%m-%Y")
 
     elif 'all' in speech_text and is_deleting:
       #special case: delete all notes
@@ -54,9 +54,10 @@ def delete_notes(date=None):
   cursor = conn.cursor()
 
   if date is None:
-    confirmation = input("Are you sure you want to delete all notes? (yes or no): ")
+    tts("Are you sure you want to delete all notes?")
+    confirmation = input("Type 'yes' to confirm: ")
     if confirmation.lower() != "yes":
-      print("Cancelled")
+      tts("Cancelled")
       conn.close()
       return
     cursor.execute("DELETE FROM notes")
@@ -78,7 +79,7 @@ def read_notes(date="today"):
     elif date == "tomorrow":
         date = (datetime.now() + timedelta(days=1)).strftime("%d-%m-%Y")
 
-    cursor.execute("SELECT notes FROM notes WHERE date = ?", (date,))
+    cursor.execute("SELECT notes FROM notes WHERE notes_date = ?", (date,))
     notes = cursor.fetchall()
 
     conn.close()
@@ -87,6 +88,7 @@ def read_notes(date="today"):
         print(f"Notes for {date}:")
         for note in notes:
             print(f"- {note[0]}")
+            tts(note[0])
     else:
         print(f"No notes found for {date}.")
 
@@ -97,6 +99,6 @@ def show_all_notes():
   cursor = conn.execute("SELECT notes FROM notes")
 
   for row in cursor:
-    tts(row[0])
+    tts(f""On {row[1]}: {row[0]}")
 
   conn.close()
