@@ -260,6 +260,9 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
    elif check_message(['note']):
       notes.note_something(speech_text)
 
+   elif check_messages(['all', 'notes']) or check_messages(['notes']):
+      notes.show_all_notes
+
    elif check_message(['how', 'weather']) or check_message(['what', 'is','the', 'weather','forecast']):
       weather.weather(city_name = city_name, city_code = city_code)
 
