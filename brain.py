@@ -82,7 +82,8 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
              tts("The stopwatch is not running.")
 
       elif any(phrase in speech_text for phrase in ELAPSED_PHRASES):
-         print(f"[DEBUG] Matched command: elapsed stopwatch (phrase = '{speech_text}')"
+         print(f"[DEBUG] Matched command: elapsed stopwatch (phrase = '{speech_text}')")
+               
          if stopwatch_instance.is_running:
              current_time_delta, formatted_elapsed_time = stopwatch_instance.elapsed()  # Get the current elapsed time on the stopwatch
              tts(f"The current time elapsed on the stopwatch is {formatted_elapsed_time}.")
