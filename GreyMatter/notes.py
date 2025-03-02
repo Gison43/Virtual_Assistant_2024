@@ -25,13 +25,13 @@ def handle_notes(speech_text):
     is_deleting = 'delete' in speech_text
 
     if 'today' in speech_text:
-      date = datetime.datetime.now().strftime("%d-%m-%Y")
+      date = datetime.now().strftime("%d-%m-%Y")
 
     elif 'yesterday' in speech_text:
-      date = (datetime.datetime.now() - timedelta(days=1)).strftime("%d-%m-%Y")
+      date = (datetime.now() - timedelta(days=1)).strftime("%d-%m-%Y")
 
     elif 'tomorrow' in speech_text:
-      date = (datetime.datetime.now() + timdelta(days=1)).strftime("%d-%m-%Y")
+      date = (datetime.now() + timedelta(days=1)).strftime("%d-%m-%Y")
 
     elif 'all' in speech_text and is_deleting:
       #special case: delete all notes
@@ -42,6 +42,8 @@ def handle_notes(speech_text):
       tts("What date would you like to work with?")
       from user_input import get_user_input
       date = get_user_input()
+
+    print(f"[DEBUG] Handling notes for date: {date if date else 'ALL'}")
 
     if is_reading:
       read_notes(date)
@@ -62,11 +64,13 @@ def delete_notes(date=None):
       return
     cursor.execute("DELETE FROM notes")
   else:
-    cursor.execute("DELETE FROM notes WHERE date = ?", (date,))
+    cursor.execute("DELETE FROM notes WHERE notes_date = ?", (date,))
+    tts(f"Notes for {date} deleted.")
 
   conn.commit()
   conn.close()
   print(f"Notes for {date if date else 'ALL dates'} deleted.")
+  tts(f"Notes for  {date if date else 'ALL dates'} deleted.")
 
 def read_notes(date="today"):
     conn = sqlite3.connect("memory.db")
@@ -96,9 +100,9 @@ def show_all_notes():
   conn = sqlite3.connect('memory.db')
   tts('Your notes are as follows:')
   
-  cursor = conn.execute("SELECT notes FROM notes")
+  cursor = conn.execute("SELECT notes, notes_date FROM notes")
 
   for row in cursor:
-    tts(f""On {row[1]}: {row[0]}")
+    tts(f"On {row[1]}: {row[0]}")
 
   conn.close()
