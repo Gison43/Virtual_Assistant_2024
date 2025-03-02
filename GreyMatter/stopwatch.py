@@ -134,8 +134,8 @@ class Stopwatch:
          tts("No splits have been recorded.")
          return
 
-     split_messages = [f"Split {i+1}: {split['formatted']}" for i, split in enumerate(self.splits)]
-     tts("Here are the recorded splits: " + ", ".join(split_messages))
+      split_messages = [f"Split {i+1}: {split['formatted']}" for i, split in enumerate(self.splits)]
+      tts("Here are the recorded splits: " + ", ".join(split_messages))
 
    def format_time(self, time_delta):
       """Formats the time delta into hours, minutes, and seconds"""
