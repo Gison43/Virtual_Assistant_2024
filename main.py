@@ -107,4 +107,10 @@ def main():
                   brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
               else:
                   print("No speech detected. Waiting for next command.")
-main()
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(f"[ERROR] Uncaught exception in main(): {e}")
+        tts("A critical error occurred. Restarting required.")
+
