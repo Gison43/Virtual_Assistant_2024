@@ -20,7 +20,7 @@ def show_all_notes():
   
   cursor = conn.execute("SELECT notes FROM notes")
 
-for row in cursor:
-  tts(row[0])
+  for row in cursor:
+    tts(row[0])
 
-conn.close()
+  conn.close()
