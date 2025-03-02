@@ -74,7 +74,7 @@ def main():
           finally:
              sys.stderr.close()
              sys.stderr = stderr_backup
-              
+
           print("Set minimum energy threshold to {}".format(r.energy_threshold))
       while True:
           print("Listening...")
