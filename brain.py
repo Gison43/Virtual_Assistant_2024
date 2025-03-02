@@ -4,7 +4,7 @@ import datetime
 import aiml
 import re
 
-from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep, play_music, area
+from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep, play_music, area, notes
 from GreyMatter.list import List
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.spanish_translator import language_selection
@@ -256,6 +256,9 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
    elif check_message(['define']):
       define_subject.define_subject(speech_text)
+
+   elif check_message(['note']):
+      notes.note_something(speech_text)
 
    elif check_message(['how', 'weather']) or check_message(['what', 'is','the', 'weather','forecast']):
       weather.weather(city_name = city_name, city_code = city_code)
