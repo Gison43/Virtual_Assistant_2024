@@ -93,10 +93,12 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
              tts(f"The stopwatch is stopped.  The total elapsed time is {formatted_total_time}.")
              print("The stopwatch is stopped.  The total elapsed time is ", total_time_delta)
 
-         for i, split_time in enumerate(stopwatch_instance.get_splits(), start = 1):
-             split_time_str = split_entry['formatted']
-             tts(f"Split {i}: {split_time_str}")
-             print(f"[DEBUG] splits currently stored in brain: {stopwatch_instance.splits}")
+         splits = stopwatch_instance.get_splits()
+
+         if splits:
+            tts("Here are the split times.")
+            for split_entry in splits:
+               tts(f"{split_entry['title']}: {split_entry['formatted']}")
 
       elif 'reset stopwatch' in speech_text:
          if stopwatch_instance.start_time is None:
