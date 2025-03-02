@@ -109,6 +109,10 @@ class Stopwatch:
       print(f"[DEBUG] Split {len(self.splits)} recorded at {formatted_split}")
       print(f"[DEBUG] All splits so far: {self.splits}")
       tts(f"{split_entry['title']} recorded at {formatted_split}")
+
+   def get_splits(self):
+      """Return the list of all recorded splits."""
+      return self.splits
       
    def unsplit(self):
       """Stops a split. Returns the time elapsed since split was called"""
