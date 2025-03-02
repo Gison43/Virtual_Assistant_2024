@@ -78,9 +78,9 @@ def main():
           r.adjust_for_ambient_noise(source)
           print("Set minimum energy threshold to {}".format(r.energy_threshold))
            
-       while True:
-          print("Listening...")
-          #print("stopwatch instance ", stopwatch_instance.is_running)
+   while True:
+       print("Listening...")
+       #print("stopwatch instance ", stopwatch_instance.is_running)
           with m as source:
               r.pause_threshold = 1
 
@@ -92,12 +92,12 @@ def main():
               finally:
                   sys.stderr.close()
                   sys.stderr = stderr_backup
-          speech_text = " " #Initialize the speech_text to prevent crashes if no speech.
+          speech_text = "" #Initialize the speech_text to prevent crashes if no speech.
 
           try:
              speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
              print("Recognizing and transcribing what you said...")
-             print('Computer thinks you said: ' + speech_text + "'")
+             print(f"Computer thinks you said: '{speech_text}'")
              brain.process_command(speech_text, stopwatch_instance)
              print("stopwatch instance ", stopwatch_instance.is_running)
           except sr.UnknownValueError:
