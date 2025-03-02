@@ -41,6 +41,7 @@ def process_command(speech_text, stopwatch_instance):
 
 def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path):
    print(f"[DEBUG] Entering neural_network() - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
+   print(f"[DEBUG] Received speech_text: '{speech_text}'")
    """
    this function compares check vs speech_text to see if they are equal.  Also
    checks if the items in the list (specified in the argument are present in 
