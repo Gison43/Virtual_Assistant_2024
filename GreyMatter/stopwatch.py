@@ -128,9 +128,14 @@ class Stopwatch:
       else:
          raise IndexError("Invalid split index")
 
-   def get_splits(self):
+   def list_splits(self):
       #returns the list of split times
-      return self.splits
+      if not self.splits:
+         tts("No splits have been recorded.")
+         return
+
+     split_messages = [f"Split {i+1}: {split['formatted']}" for i, split in enumerate(self.splits)]
+     tts("Here are the recorded splits: " + ", ".join(split_messages))
 
    def format_time(self, time_delta):
       """Formats the time delta into hours, minutes, and seconds"""
