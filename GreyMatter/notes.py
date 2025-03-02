@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+from datetime import timedelta
 
 from GreyMatter.SenseCells.tts_engine import tts
 
@@ -53,7 +54,7 @@ def delete_notes(date=None):
       return
     cursor.execute("DELETE FROM notes")
   else:
-    cursor.execute("DELETE FROM notes WHERE date = ?", (date))
+    cursor.execute("DELETE FROM notes WHERE date = ?", (date,))
 
   conn.commit()
   conn.close()
@@ -70,7 +71,7 @@ def read_notes(date="today"):
     elif date == "tomorrow":
         date = (datetime.now() + timedelta(days=1)).strftime("%d-%m-%Y")
 
-    cursor.execute("SELECT note FROM notes WHERE date = ?", (date,))
+    cursor.execute("SELECT notes FROM notes WHERE date = ?", (date,))
     notes = cursor.fetchall()
 
     conn.close()
