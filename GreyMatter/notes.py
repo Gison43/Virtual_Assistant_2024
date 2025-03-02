@@ -53,7 +53,7 @@ def handle_notes(speech_text):
     if date is None and action == 'delete':
       tts("Are you sure you want to delete all notes?  Yes or no.")
       confirmation = get_user_input().strip().lower()
-      if confimration != 'yes':
+      if confirmation != 'yes':
         tts("Ok, I won't delete anything.")
         return
 
