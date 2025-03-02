@@ -21,7 +21,7 @@ kernel = aiml.Kernel()
 #load AIML files
 kernel.bootstrap(learnFiles = "GreyMatter/yak.aiml")
 
-list = List()  #create an instance of the list class
+my_list = List()  #create an instance of the list class
 
 ELAPSED_PHRASES = {
    'elapsed stopwatch',
@@ -168,7 +168,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
    elif check_message(['create', 'list']) or check_message(['start', 'list']):
        tts("Sure. Let's create a new list. What would you like to name your new list.")
        list_name = get_user_input()
-       list.create_list(list_name) #call the create_list method and pass the list name to it
+       my_list.create_list(list_name) #call the create_list method and pass the list name to it
        tts(f"Ok. I've created a list called {list_name}")
 
    elif check_message(['add','to', 'list']):
@@ -177,7 +177,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
        tts("What item or items would you like to add to the list?")
        items = get_user_input().split()
        for item in items:
-           list.add_item(item, list_name) #provide the list_name argument and add each item to the list
+           my_list.add_item(item, list_name) #provide the list_name argument and add each item to the list
            tts(f"{', '.join(items)} now added to the list called {list_name}")
 
    elif check_message(['how', 'old', 'am', 'i']):
