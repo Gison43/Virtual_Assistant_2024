@@ -127,6 +127,16 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
          else:
             tts("The stopwatch is not running.  Start it first.")
 
+      elif 'list splits' in speech_text:
+         splits = stopwatch_instance.get_splits()
+         
+         if splits:
+            tts("Here are the current splits.")
+            for i, split_entry in enumerate(stopwatch_instance.get_splits(), start=1):
+               tts(f"{split_entry['title']} - {split_entry['formatted']}")
+         else:
+            tts("There are no splits recorded.")
+
       elif 'exit stopwatch' in speech_text:
          if stopwatch_instance.is_running:
             total_time = stopwatch_instance.stop()
