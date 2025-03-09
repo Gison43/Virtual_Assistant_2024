@@ -2,7 +2,7 @@ import sqlite3
 
 def add_words(conn, spanish):
 #inserts a new row into the  table statement
-  sql = ''' INSERT INTO spanish(spanish_word, english_word)
+  sql = ''' INSERT INTO spanish_words(spanish_word, english_word)
     VALUES(?,?) '''  
 
 #create a cursor
