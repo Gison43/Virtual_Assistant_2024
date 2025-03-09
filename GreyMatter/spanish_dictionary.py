@@ -14,7 +14,7 @@ def add_words(conn, spanish):
 #commit the changes
   conn.commit()
 
-#get teh id of the last inserted row
+#get the id of the last inserted row
   return cursor.lastrowid
 
 def main():
@@ -22,7 +22,7 @@ def main():
     with sqlite3.connect("spanish_words.db") as conn:  #open a connection to the database
 
     #add spanish/english words
-      spanish = [
+      spanishs = [
         ('toalla', 'towel'),
         ('rusia', 'russia'),
         ('bolsos', 'purses'),
@@ -57,7 +57,10 @@ def main():
 
     for spanish in spanishs:
       spanish_list = add_words(conn, spanish)
-      print(f'Created spanish list with the id{spanish_list}')
+      print(f'Created spanish list with the id {spanish_list}')
 
   except sqlite3.Error as e:
     print(e)
+
+if __name__ == '__main__':
+  main()
