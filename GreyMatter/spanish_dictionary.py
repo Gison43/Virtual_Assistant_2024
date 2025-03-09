@@ -1,12 +1,18 @@
+#!/usr/bin/python
+
 import sqlite3
 
-sql_statements = [
-  """CREATE A TABLE IF NOT EXISTS spanish_words (
-    id INEGER PRIMARY KEY,
-    spanish_word text NOT NULL,
-    english_word text NOT NULL
-    );"""
-]
+conn = sqlite3.connect('spanish_words.db')
+print("Opened database successfully")
+
+conn.execute("""CREATE TABLE IF NOT EXISTS spanish_words 
+  (spanish_word text NOT NULL,
+  english_word text NOT NULL);""")
+
+print "Table created successfully";
+
+conn.commit()
+conn.close()
 
 def add_words(conn, spanish):
 #inserts a new row into the  table statement
