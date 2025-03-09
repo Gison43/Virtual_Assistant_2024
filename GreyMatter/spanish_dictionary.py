@@ -80,6 +80,21 @@ def main():
         ('huevos hervidos', 'boiled eggs'),
         ('sección', 'section'),
         ('ten cuidado', 'be careful'),
+        ('llanta', 'tire'),
+        ('maletero', 'car trunk'),
+        ('estacionamiento', 'car parking lot'),
+        ('capó', 'car hood'),
+        ('gotea', 'leaking'),
+        ('acera', 'sidewalk'),
+        ('túnel', 'tunnel'),
+        ('cruce peatonal', 'crosswalk'),
+        ('cambiar', 'to fix'),
+        ('disinflada', 'disinflated'),
+        ('el carro hacia el tunnel', 'the car approaches the tunnel'),
+        ('el carro entra el tunnel', 'the car enters the tunnel'),
+        ('el carro pasa el tunnel', 'the car passes through the tunnel'),
+        ('el carro sale el tunnel', 'the car exits the tunnel'),
+        ('sémaforo', 'traffic light'),
     ]
 
       for spanish in spanishs:
