@@ -30,7 +30,7 @@ def main():
         ('cuero', 'leather'),
         ('abotanaré', 'to button up'),
         ('un barba', 'a beard'),
-        ('desodorante, 'deodorant'),
+        ('desodorante', 'deodorant'),
         ('un anillo', 'a ring'),
         ('un bigote', 'a moustache')
         ('planchar', 'to iron'),
@@ -47,7 +47,7 @@ def main():
         ('llàmeme', 'call me'),
         ('salud', 'bless you'),
         ('fiebre', 'fever'),
-        ('pulseras', bracelets'),
+        ('pulseras', 'bracelets'),
         ('pelo rizado', 'curly hair'),
         ('abotanaré', 'to button up'),
         ('poner', 'to put on'),
