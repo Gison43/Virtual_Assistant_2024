@@ -64,7 +64,7 @@ def main():
     ]
 
     for spanish in spanishs:
-      spanish_list = add_words(conn, spanish)
+      spanish_list = add_words(conn, spanish_words)
       print(f'Created spanish list with the id {spanish_list}')
 
   except sqlite3.Error as e:
