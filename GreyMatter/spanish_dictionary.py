@@ -73,6 +73,18 @@ def main():
         ('cremallera', 'zipper'),
         ('guantes', 'gloves'),
         ('calcetines', 'socks'),
+        ('largo', 'long'),
+        ('carne de vaca', 'beef'),
+        ('horno', 'oven'),
+        ('corto', 'short'),
+        ('cierra la cremallera', 'close the zipper'),
+        ('papas hervidas', 'boiled potatoes'),
+        ('vegetariano', 'vegeterian'),
+        ('sartén', 'frying pan'),
+        ('cebollas fritas', 'fried onion rings'),
+        ('huevos hervidas', 'boiled eggs'),
+        ('sección', 'section'),
+        ('ten cuidado', 'be careful'),
     ]
 
     for spanish in spanishs:
