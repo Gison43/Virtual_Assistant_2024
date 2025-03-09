@@ -22,37 +22,37 @@ def main():
     with sqlite3.connect("spanish_words.db") as conn:  #open a connection to the database
 
     #add spanish/english words
-    spanish = [
-      ('toalla', 'towel'),
-      ('rusia', 'russia'),
-      ('bolsos', 'purses'),
-      ('botas', 'boots'),
-      ('cuero', 'leather'),
-      ('abotanaré', 'to button up'),
-      ('un barba', 'a beard'),
-      ('desodorante, 'deodorant'),
-      ('un anillo', 'a ring'),
-      ('un bigote', 'a moustache')
-      ('planchar', 'to iron'),
-      ('maqillar', 'to put on makeup')
-      ('mejórante pronto', 'get well soon'),
-      ('violines','violins'),
-      ('bosos', 'purses'),
-      ('doblar', 'to fold'),
-      ('acoser', 'to sew'),
-      ('bolsillos', 'pockets'),
-      ('bufanda', 'scarf'),
-      ('saco', 'suit jacket'),
-      ('abrigo', 'jacket'),
-      ('llàmeme', 'call me'),
-      ('salud', 'bless you'),
-      ('fiebre', 'fever'),
-      ('pulseras', bracelets'),
-      ('pelo rizado', 'curly hair'),
-      ('abotanaré', 'to button up'),
-      ('poner', 'to put on'),
-      ('guantes', 'gloves'),
-      ('calcetines', 'socks'),
+      spanish = [
+        ('toalla', 'towel'),
+        ('rusia', 'russia'),
+        ('bolsos', 'purses'),
+        ('botas', 'boots'),
+        ('cuero', 'leather'),
+        ('abotanaré', 'to button up'),
+        ('un barba', 'a beard'),
+        ('desodorante, 'deodorant'),
+        ('un anillo', 'a ring'),
+        ('un bigote', 'a moustache')
+        ('planchar', 'to iron'),
+        ('maqillar', 'to put on makeup')
+        ('mejórante pronto', 'get well soon'),
+        ('violines','violins'),
+        ('bosos', 'purses'),
+        ('doblar', 'to fold'),
+        ('acoser', 'to sew'),
+        ('bolsillos', 'pockets'),
+        ('bufanda', 'scarf'),
+        ('saco', 'suit jacket'),
+        ('abrigo', 'jacket'),
+        ('llàmeme', 'call me'),
+        ('salud', 'bless you'),
+        ('fiebre', 'fever'),
+        ('pulseras', bracelets'),
+        ('pelo rizado', 'curly hair'),
+        ('abotanaré', 'to button up'),
+        ('poner', 'to put on'),
+        ('guantes', 'gloves'),
+        ('calcetines', 'socks'),
     ]
 
     for spanish in spanishs:
