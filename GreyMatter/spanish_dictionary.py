@@ -5,11 +5,12 @@ import sqlite3
 conn = sqlite3.connect('spanish_words.db')
 print("Opened database successfully")
 
-conn.execute("""CREATE TABLE IF NOT EXISTS spanish_words 
-  (spanish_word text NOT NULL,
-  english_word text NOT NULL);""")
+conn.execute("""CREATE TABLE IF NOT EXISTS spanish_words
+  (id INTEGER PRIMARY KEY AUTOINCREMENT,
+  spanish_word TEXT NOT NULL,
+  english_word TEXT NOT NULL);""")
 
-print ("Table created successfully");
+print ("Table created successfully")
 
 conn.commit()
 conn.close()
@@ -18,18 +19,14 @@ def add_words(conn, spanish):
 #inserts a new row into the  table statement
   sql = ''' INSERT INTO spanish_words(spanish_word, english_word)
     VALUES(?,?) '''  
-
-#create a cursor
-  cursor = conn.cursor()
-
-#execute the INSERT statement
-  cursor.execute(sql, spanish)
-
-#commit the changes
-  conn.commit()
-
-#get the id of the last inserted row
-  return cursor.lastrowid
+  try:  
+    cursor = conn.cursor() #create a cursor
+    cursor.execute(sql, spanish) #execute the INSERT statement
+    conn.commit() #commit the changes
+    return cursor.lastrowid #get the id of the last inserted row
+  except: sqlite3.Error as e:
+    print(f"Error inserting {spanish}: {e}")
+    return None #return None if insertion failes
 
 def main():
   try:
@@ -42,18 +39,16 @@ def main():
         ('bolsos', 'purses'),
         ('botas', 'boots'),
         ('cuero', 'leather'),
-        ('abotanaré', 'to button up'),
         ('un barba', 'a beard'),
         ('desodorante', 'deodorant'),
         ('un anillo', 'a ring'),
         ('un bigote', 'a moustache'),
         ('planchar', 'to iron'),
-        ('maqillar', 'to put on makeup'),
+        ('maquillar', 'to put on makeup'),
         ('mejórante pronto', 'get well soon'),
         ('violines','violins'),
-        ('bosos', 'purses'),
-        ('doblar', 'to fold'),
-        ('acoser', 'to sew'),
+        ('bolsos', 'purses'),
+        ('coser', 'to sew'),
         ('bolsillos', 'pockets'),
         ('bufanda', 'scarf'),
         ('saco', 'suit jacket'),
@@ -82,14 +77,17 @@ def main():
         ('vegetariano', 'vegeterian'),
         ('sartén', 'frying pan'),
         ('cebollas fritas', 'fried onion rings'),
-        ('huevos hervidas', 'boiled eggs'),
+        ('huevos hervidos', 'boiled eggs'),
         ('sección', 'section'),
         ('ten cuidado', 'be careful'),
     ]
 
-    for spanish in spanishs:
-      spanish_list = add_words(conn, spanish)
-      print(f'Created spanish list with the id {spanish_list}')
+      for spanish in spanishs:
+        spanish_list = add_words(conn, spanish)
+        if spanish_list:
+          print(f'Created spanish list with the id {spanish_list}')
+        else:
+          print(f"Skipping duplicate or error for {spanish_list}")
 
   except sqlite3.Error as e:
     print(e)
