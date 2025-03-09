@@ -17,7 +17,7 @@ def add_words(conn, spanish):
   cursor = conn.cursor()
 
 #execute the INSERT statement
-  cursor.execute(sql, spanish_words)
+  cursor.execute(sql, spanish)
 
 #commit the changes
   conn.commit()
