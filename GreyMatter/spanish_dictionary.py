@@ -1,6 +1,6 @@
 import sqlite3
 
-def add_words(conn, spanish):
+def add_words(conn, spanish_words):
 #inserts a new row into the  table statement
   sql = ''' INSERT INTO spanish_words(spanish_word, english_word)
     VALUES(?,?) '''  
@@ -9,7 +9,7 @@ def add_words(conn, spanish):
   cursor = conn.cursor()
 
 #execute the INSERT statement
-  cursor.execute(sql, spanish)
+  cursor.execute(sql, spanish_words)
 
 #commit the changes
   conn.commit()
