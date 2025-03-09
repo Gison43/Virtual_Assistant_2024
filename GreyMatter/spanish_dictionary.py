@@ -32,9 +32,9 @@ def main():
         ('un barba', 'a beard'),
         ('desodorante', 'deodorant'),
         ('un anillo', 'a ring'),
-        ('un bigote', 'a moustache')
+        ('un bigote', 'a moustache'),
         ('planchar', 'to iron'),
-        ('maqillar', 'to put on makeup')
+        ('maqillar', 'to put on makeup'),
         ('mejórante pronto', 'get well soon'),
         ('violines','violins'),
         ('bosos', 'purses'),
