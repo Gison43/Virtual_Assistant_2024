@@ -19,7 +19,7 @@ def add_words(conn, spanish):
 
 def main():
   try:
-    with sqlite3.connect("spanish_words.db") as conn:  #open a connection to the database
+    with sqlite3.connect('spanish_words.db') as conn:  #open a connection to the database
 
     #add spanish/english words
       spanishs = [
