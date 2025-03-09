@@ -65,6 +65,12 @@ def main():
         ('pelo rizado', 'curly hair'),
         ('abotanaré', 'to button up'),
         ('poner', 'to put on'),
+        ('cretes', 'earrings'),
+        ('abotonar', 'to button up'),
+        ('collar', 'necklace'),
+        ('doblar', 'to fold'),
+        ('se quita', 'to take off'),
+        ('cremallera', 'zipper'),
         ('guantes', 'gloves'),
         ('calcetines', 'socks'),
     ]
