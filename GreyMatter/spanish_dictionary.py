@@ -9,7 +9,7 @@ conn.execute("""CREATE TABLE IF NOT EXISTS spanish_words
   (spanish_word text NOT NULL,
   english_word text NOT NULL);""")
 
-print "Table created successfully";
+print ("Table created successfully");
 
 conn.commit()
 conn.close()
