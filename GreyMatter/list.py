@@ -7,6 +7,12 @@ from GreyMatter.SenseCells.tts_engine import tts
 class List:
     def __init__(self):
         self.items = [] #Initialize the items attribute as an empty list
+        self.list_dir = "GreyMatter/Lists"  #central storage directory
+        os.makedirs(self.list_dir, exist_ok=True)
+
+    def _get_file_path(self, list_name):
+        """Returns the full path of the list file."""
+        return os.path.join(self.list_dir, f"{list_name.replace(' ', '_')}.txt")
 
     def create_list(self, list_name):
         file_name = f"{list_name.replace(' ', '_')}.txt"
