@@ -3,6 +3,8 @@ import sqlite3
 
 app = Flask(__name__)
 
+LIST_DIR = "GreyMatter/Lists"
+
 def init_db():
     with sqlite3.connect("va_data.db") as conn:
         cursor = conn.cursor()
