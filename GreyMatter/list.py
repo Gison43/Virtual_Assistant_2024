@@ -31,7 +31,7 @@ class List:
     def save_list(self, list_name):
         directory = os.path.expanduser("~/GreyMatter/Lists")
         os.makedirs(directory, exist_ok=True)
-        file_name = os.path.join(directory, f"{list_name.replace(' ', '_')}.txt")file_name = f"{list_name.replace(' ', '_')}.txt"
+        file_name = os.path.join(directory, f"{list_name.replace(' ', '_')}.txt")
         with open(file_name, 'w') as f:
             for item in self.items:
                 f.write(f"{item}\n")
@@ -46,7 +46,7 @@ class List:
     def read_list(self, list_name):
         directory = os.path.expanduser("~/GreyMatter/Lists")
         os.makedirs(directory, exist_ok=True)
-        file_name = os.path.join(directory, f"{list_name.replace(' ', '_')}.txt")file_name = f"{list_name}.txt"
+        file_name = os.path.join(directory, f"{list_name.replace(' ', '_')}.txt")
         if os.path.exists(file_name):
             with open(file_name, 'r') as f:
                 items = f.readlines()
