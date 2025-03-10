@@ -15,7 +15,9 @@ class List:
         return os.path.join(self.list_dir, f"{list_name.replace(' ', '_')}.txt")
 
     def create_list(self, list_name):
-        file_name = f"{list_name.replace(' ', '_')}.txt"
+        directory = os.path.expanduser("~/GreyMatter/Lists")
+        os.makedirs(directory, exist_ok=True)
+        file_name = os.path.join(directory, f"{list_name.replace(' ', '_')}.txt")
         with open(file_name, 'w') as f:
             for item in self.items:
                 f.write(f"{item}\n")
@@ -27,7 +29,9 @@ class List:
         print(f"{item} added to the list called {list_name}")
 
     def save_list(self, list_name):
-        file_name = f"{list_name.replace(' ', '_')}.txt"
+        directory = os.path.expanduser("~/GreyMatter/Lists")
+        os.makedirs(directory, exist_ok=True)
+        file_name = os.path.join(directory, f"{list_name.replace(' ', '_')}.txt")file_name = f"{list_name.replace(' ', '_')}.txt"
         with open(file_name, 'w') as f:
             for item in self.items:
                 f.write(f"{item}\n")
@@ -40,7 +44,9 @@ class List:
             print(f"{item} is not in the list called {list_name}")
 
     def read_list(self, list_name):
-        file_name = f"{list_name}.txt"
+        directory = os.path.expanduser("~/GreyMatter/Lists")
+        os.makedirs(directory, exist_ok=True)
+        file_name = os.path.join(directory, f"{list_name.replace(' ', '_')}.txt")file_name = f"{list_name}.txt"
         if os.path.exists(file_name):
             with open(file_name, 'r') as f:
                 items = f.readlines()
