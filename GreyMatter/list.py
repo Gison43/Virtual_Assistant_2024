@@ -22,6 +22,7 @@ class List:
             for item in self.items:
                 f.write(f"{item}\n")
         tts(f"List '{list_name}' has been created and saved")
+        print(f"(Saving list to: {file_name}")  #debugging
 
     def add_item(self,item, list_name):
         file_path = self._get_file_path(list_name)
