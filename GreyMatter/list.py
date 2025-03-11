@@ -29,6 +29,13 @@ class List:
         file_path = self._get_file_path(list_name)
         #load existing items from file
 
+         # Ignore "and" when adding items
+        if item.lower() == "and":
+            print("⚠️ Ignoring 'and' in the list.")
+            return
+
+        print(f"📝 Adding item '{item}' to {file_path}")  # Debugging print
+
         items = []  #initialize the list before checking the file
         
         if os.path.exists(file_path):
