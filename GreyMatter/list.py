@@ -38,7 +38,7 @@ class List:
                 exiting_items = [line.strip() for line in f.readlines()]
                 
         # Remove "and" and add only new items
-        items = [item for item in items if item.lower() != "and"]
+        items = [item.strip() for item in items if item.lower().strip() != "and"]
         existing_items.extend(items)  # Add all new items at once
 
     # Save the updated list
