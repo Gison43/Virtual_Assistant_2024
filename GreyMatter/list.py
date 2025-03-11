@@ -18,11 +18,14 @@ class List:
         with open(file_name, 'w') as f:
             pass
         tts(f"List '{list_name}' has been created and saved in {self.list_dir}")
-        print(f"(Saving list to: {file_name}")  #debugging
+        print(f"Saving list to: {file_name}")  #debugging
 
     def add_item(self,item, list_name):
         file_path = self._get_file_path(list_name)
         #load existing items from file
+
+        items = []  #initialize the list before checking the file
+        
         if os.path.exists(file_path):
             with open(file_path, 'r') as f:
                 items = [line.strip() for line in f.readlines()]
@@ -39,10 +42,16 @@ class List:
         directory = os.path.expanduser("~/GreyMatter/Lists")
         os.makedirs(directory, exist_ok=True)
         file_name = os.path.join(directory, f"{list_name.replace(' ', '_')}.txt")
-        with open(file_name, 'w') as f:
-            for item in self.items:
-                f.write(f"{item}\n")
 
+        items = []
+        if os.path.exists(file_name):
+            with open(file_name, 'r') as f:
+                items = [line.strip() for line in f.readlines()]
+    #write the items back to the file
+        with open(file_name, 'w') as f:
+            for item in items:
+                f.write(f"{item}\n")
+                
         if os.path.exists(file_name):
             print(f"List successfully saved at: {file_name}")
 
