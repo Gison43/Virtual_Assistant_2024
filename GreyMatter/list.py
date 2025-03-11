@@ -7,7 +7,7 @@ from GreyMatter.SenseCells.tts_engine import tts
 class List:
     def __init__(self):
         self.items = [] #Initialize the items attribute as an empty list
-        self.list_dir = "~/GreyMatter/Lists"  #central storage directory
+        self.list_dir = os.path.expanduser("~/GreyMatter/Lists")  #central storage directory
         os.makedirs(self.list_dir, exist_ok=True)
 
     def _get_file_path(self, list_name):
@@ -24,6 +24,12 @@ class List:
         tts(f"List '{list_name}' has been created and saved")
 
     def add_item(self,item, list_name):
+        file_path = self._get_file_path(list_name)
+        #load existing items from file
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as f:
+                self.items = [line.strip() for line in f.readlines()]
+                #add new item and save
         self.items.append(item)
         self.save_list(list_name)
         print(f"{item} added to the list called {list_name}")
@@ -52,8 +58,8 @@ class List:
                 items = f.readlines()
             if items:
                 tts(f"Here are the items in list called '{list_name}':")
-            for item in items:
-                tts(item.strip())
+                for item in items:
+                    tts(item.strip())
             else:
                 tts(f"The list called '{list_name}' is empty")
         else:
