@@ -25,16 +25,17 @@ class List:
             print(f"❌ ERROR: List file was NOT created at: {file_name}")
 
 
-    def add_item(self,item, list_name):
+    def add_item(self,items, list_name):
         file_path = self._get_file_path(list_name)
         #load existing items from file
-
-         # Load existing itmes.
-        existing_items = []
-               
+        #Ensure items is always a list
+        if isinstance(items, str):
+            items = [items] #converta a single item to a list
+        # Load existing itmes.
+        existing_items = []           
         if os.path.exists(file_path):
             with open(file_path, 'r') as f:
-                items = [line.strip() for line in f.readlines()]
+                exiting_items = [line.strip() for line in f.readlines()]
                 
         # Remove "and" and add only new items
         items = [item for item in items if item.lower() != "and"]
