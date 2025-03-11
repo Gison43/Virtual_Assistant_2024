@@ -6,7 +6,6 @@ from GreyMatter.SenseCells.tts_engine import tts
 
 class List:
     def __init__(self):
-        self.items = [] #Initialize the items attribute as an empty list
         self.list_dir = os.path.expanduser("~/GreyMatter/Lists")  #central storage directory
         os.makedirs(self.list_dir, exist_ok=True)
 
@@ -15,13 +14,10 @@ class List:
         return os.path.join(self.list_dir, f"{list_name.replace(' ', '_')}.txt")
 
     def create_list(self, list_name):
-        directory = os.path.expanduser("~/GreyMatter/Lists")
-        os.makedirs(directory, exist_ok=True)
-        file_name = os.path.join(directory, f"{list_name.replace(' ', '_')}.txt")
+        file_name = self._get_file_path(list_name)
         with open(file_name, 'w') as f:
-            for item in self.items:
-                f.write(f"{item}\n")
-        tts(f"List '{list_name}' has been created and saved")
+            pass
+        tts(f"List '{list_name}' has been created and saved in {self.list_dir}")
         print(f"(Saving list to: {file_name}")  #debugging
 
     def add_item(self,item, list_name):
@@ -29,11 +25,15 @@ class List:
         #load existing items from file
         if os.path.exists(file_path):
             with open(file_path, 'r') as f:
-                self.items = [line.strip() for line in f.readlines()]
-                #add new item and save
-        self.items.append(item)
-        self.save_list(list_name)
+                items = [line.strip() for line in f.readlines()]
+                
+        items.append(item)
+        #add new item and save
+        with open(file_path, 'w') as f:
+            for i in items:
+                f.write(f"{i}\n")
         print(f"{item} added to the list called {list_name}")
+        tts(f"{item} added to the list called {list_name}")
 
     def save_list(self, list_name):
         directory = os.path.expanduser("~/GreyMatter/Lists")
@@ -50,32 +50,47 @@ class List:
             print(f"ERROR: List was not saved at: {file_name}")
 
     def remove_items(self, item, list_name):
-        if item in self.items:
-            self.items.remove(item)
+        file_path = self._get_file_path(list_name)
+
+        if not os.path.exists(file_path):
+            tts(f"Sorry, the list '{list_name}' does not exist.")
+            return
+
+        with open(file_path, 'r') as f:
+            items = [line.strip() for line in f.readlines()]
+            
+        if item in items:
+            items.remove(item)
+            with open(file_path, 'w') as f:
+                for i in items:
+                    f.write(f"{i}\n")
+            tts(f"{item} removed from the list called {list_name}")
             print(f"{item} removed from the list called {list_name}")
         else:
             print(f"{item} is not in the list called {list_name}")
+            tts(f"{item} is not in the list called {list_name}")
 
     def read_list(self, list_name):
-        directory = os.path.expanduser("~/GreyMatter/Lists")
-        os.makedirs(directory, exist_ok=True)
-        file_name = os.path.join(directory, f"{list_name.replace(' ', '_')}.txt")
-        if os.path.exists(file_name):
-            with open(file_name, 'r') as f:
-                items = f.readlines()
+        file_path = self._get_file_path(list_name)
+
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as f:
+                items = [line.strip() for line in f.readlines()]
+
             if items:
-                tts(f"Here are the items in list called '{list_name}':")
+                tts(f"Here are the items in the list called '{list_name}':")
                 for item in items:
-                    tts(item.strip())
+                    tts(item)
             else:
                 tts(f"The list called '{list_name}' is empty")
         else:
-            tts(f"Sorry the list called '{list_name}' does not exist.")
-
+            tts(f"Sorry the list called '{list_name}' does not exist")
+            
     def view_list(self):
-        if self.items:
-            print("{list_name}")
-            for index, item in enumerate(self.items, start = 1):
-                print(f"{index}. {item}")
-        else:
-            print(f"Your list called {list_name} is empty.")
+        lists = os.listdir(self.list_dir)
+        
+        if lists:
+            tts("Here are your available lists:")
+            for lst in lists:
+                list_name = lst.replace("_", " ").replace(".txt"," ")
+                tts(list_name)
