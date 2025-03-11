@@ -174,11 +174,11 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
    elif check_message(['add','to', 'list']):
        tts("What is the name of the list?")
        list_name = get_user_input()
+      
        tts("What item or items would you like to add to the list?")
-       items = get_user_input().split()
-       for item in items:
-           my_list.add_item(item, list_name) #provide the list_name argument and add each item to the list
-           tts(f"{', '.join(items)} now added to the list called {list_name}")
+       items = get_user_input().split(",") #split by commas to handle multiple items
+       
+      my_list.add_item(item, list_name) #provide the list_name argument and add each item to the list
 
    elif check_message(['how', 'old', 'am', 'i']):
        tell_time.how_old()
