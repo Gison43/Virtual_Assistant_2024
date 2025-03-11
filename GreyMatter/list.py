@@ -43,6 +43,12 @@ class List:
             for item in self.items:
                 f.write(f"{item}\n")
 
+        if os.path.exists(file_name):
+            print(f"List successfully saved at: {file_name}")
+
+        else:
+            print(f"ERROR: List was not saved at: {file_name}")
+
     def remove_items(self, item, list_name):
         if item in self.items:
             self.items.remove(item)
