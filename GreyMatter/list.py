@@ -29,26 +29,28 @@ class List:
         file_path = self._get_file_path(list_name)
         #load existing items from file
 
-         # Ignore "and" when adding items
-        if item.lower() == "and":
-            print("⚠️ Ignoring 'and' in the list.")
-            return
-
-        print(f"📝 Adding item '{item}' to {file_path}")  # Debugging print
-
-        items = []  #initialize the list before checking the file
-        
+         # Load existing itmes.
+        existing_items = []
+               
         if os.path.exists(file_path):
             with open(file_path, 'r') as f:
                 items = [line.strip() for line in f.readlines()]
                 
-        items.append(item)
-        #add new item and save
+        # Remove "and" and add only new items
+        items = [item for item in items if item.lower() != "and"]
+        existing_items.extend(items)  # Add all new items at once
+
+    # Save the updated list
         with open(file_path, 'w') as f:
-            for i in items:
+            for i in existing_items:
                 f.write(f"{i}\n")
-        print(f"{item} added to the list called {list_name}")
-        tts(f"{item} added to the list called {list_name}")
+
+    # Speak confirmation only once
+        if items:
+            tts(f"{', '.join(items)} added to the list called {list_name}")
+            print(f"✅ {', '.join(items)} added to {file_path}")
+        else:
+            print("⚠️ No valid items to add.")
 
     def save_list(self, list_name):
         directory = os.path.expanduser("~/GreyMatter/Lists")
