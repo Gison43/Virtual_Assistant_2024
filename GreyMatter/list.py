@@ -16,9 +16,14 @@ class List:
     def create_list(self, list_name):
         file_name = self._get_file_path(list_name)
         with open(file_name, 'w') as f:
-            pass
+            f.write("") #ensure the file is properly initialized
         tts(f"List '{list_name}' has been created and saved in {self.list_dir}")
         print(f"Saving list to: {file_name}")  #debugging
+        if os.path.exists(file_name):
+            print(f"✅ List file created at: {file_name}")
+        else:
+            print(f"❌ ERROR: List file was NOT created at: {file_name}")
+
 
     def add_item(self,item, list_name):
         file_path = self._get_file_path(list_name)
@@ -48,7 +53,7 @@ class List:
             with open(file_name, 'r') as f:
                 items = [line.strip() for line in f.readlines()]
     #write the items back to the file
-        with open(file_name, 'w') as f:
+        with open(file_name, 'a') as f:
             for item in items:
                 f.write(f"{item}\n")
                 
