@@ -175,7 +175,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
       #force the VA to ignore any lingering input before listening again
        print("Flushing unintended input to prevent misinterpretation...")
        _ = get_user_input()  #capture and discard the next speed input
-      print("Input flushed.  Ready for the next command.")
+       print("Input flushed.  Ready for the next command.")
 
    elif check_message(['add','to', 'list']):
        tts("What is the name of the list?")
