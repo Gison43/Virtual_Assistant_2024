@@ -172,6 +172,10 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
        my_list.create_list(list_name) #call the create_list method and pass the list name to it
        tts(f"Ok. I've created a list called {list_name}")
        time.sleep(2) # add a small delay to prevent immediate re-listening
+      #force the VA to ignore any lingering input before listening again
+       print("Flushing unintended input to prevent misinterpretation...")
+       _ = get_user_input()  #capture and discard the next speed input
+      print("Input flushed.  Ready for the next command.")
 
    elif check_message(['add','to', 'list']):
        tts("What is the name of the list?")
