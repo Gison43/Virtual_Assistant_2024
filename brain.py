@@ -3,6 +3,7 @@
 import datetime
 import aiml
 import re
+import time
 
 from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep, play_music, area, notes
 from GreyMatter.list import List
