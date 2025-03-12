@@ -22,3 +22,6 @@ mgp123-1.32.5
 flask ==
 
 aiml == 0.9.3
+
+#python functions
+time
