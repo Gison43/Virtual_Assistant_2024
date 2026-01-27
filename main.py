@@ -10,6 +10,7 @@ import speech_recognition as sr
 import datetime
 import brain
 import argparse
+import subprocess
 
 from os import path
 from speech_recognition.recognizers import google
@@ -50,6 +51,24 @@ def process_command(speech_text):
    pass
 """
 
+import subprocess
+
+def fix_audio_logic():
+    # Use your SoundBlaster's long name here
+    SB_NAME = "alsa_output.usb-Creative_Technology_Ltd_Sound_Blaster_Play__3_00311390-00.analog-stereo"
+
+    try:
+        # Force PulseAudio to switch to the SoundBlaster
+        subprocess.run(["pactl", "set-default-sink", SB_NAME], check=True)
+        # Ensure it's not muted and volume is audible
+        subprocess.run(["pactl", "set-sink-mute", SB_NAME, "0"], check=True)
+        subprocess.run(["pactl", "set-sink-volume", SB_NAME, "85%"], check=True)
+
+        return "Audio routing fixed. I am now using the SoundBlaster."
+    except Exception as e:
+        return f"I couldn't fix the audio. Is the device plugged in? Error: {e}"
+
+
 def main():
 
    stopwatch_instance = Stopwatch() #create a stopwatch instance so that we can use the Stopwatch class
@@ -74,8 +93,8 @@ def main():
           sys.stderr = stderr_backup
 
       with m as source:
-          print("Adjusting...")
-          r.adjust_for_ambient_noise(source)
+          print("Adjusting for ambient noise...Please be quiet.")
+          r.adjust_for_ambient_noise(source, duration=1)
           print("Set minimum energy threshold to {}".format(r.energy_threshold))
 
           while True:
@@ -95,16 +114,28 @@ def main():
                   speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
                   print("Recognizing and transcribing what you said...")
                   print(f"Computer thinks you said: '{speech_text}'")
+
+                  if "fix audio" in speech_text:
+                      print("Executing manual audio override...")
+                      result_message = fix_audio_logic()
+                      tts(result_message)
+                      continue  # Jump back to the start of the loop
+
                   brain.process_command(speech_text, stopwatch_instance)
+                  import time
+                  time.sleep(1)
+
                   print("stopwatch instance ", stopwatch_instance.is_running)
               except sr.UnknownValueError:
                   print("Computer didn't understand.")
-                  tts("I do not understand")
+                  #tts("I do not understand")
+
               except sr.RequestError as e:
                   print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
               if speech_text.strip(): #only process if something is actually said
                   brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
+                  time.sleep(1)
               else:
                   print("No speech detected. Waiting for next command.")
 if __name__ == "__main__":

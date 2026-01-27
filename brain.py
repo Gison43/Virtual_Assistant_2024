@@ -34,11 +34,10 @@ ELAPSED_PHRASES = {
    'whats the time elapsed on the stopwatch',
    'what is the current time on the stopwatch'
    }
-   
+
 def process_command(speech_text, stopwatch_instance):
    print(stopwatch_instance.is_running)
    pass
-
 
 def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path):
    print(f"[DEBUG] Entering neural_network() - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
@@ -84,7 +83,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
       elif any(phrase in speech_text for phrase in ELAPSED_PHRASES):
          print(f"[DEBUG] Matched command: elapsed stopwatch (phrase = '{speech_text}')")
-               
+
          if stopwatch_instance.is_running:
              current_time_delta, formatted_elapsed_time = stopwatch_instance.elapsed()  # Get the current elapsed time on the stopwatch
              tts(f"The current time elapsed on the stopwatch is {formatted_elapsed_time}.")
@@ -123,7 +122,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
             for index, split in enumerate(splits, start=1):
                split_messages.append(f"Split {index}: {split['formatted']}")
                tts("Here are the splits. " + " ".join(split_messages))
-         
+
       elif 'split stopwatch' in speech_text:
          print(f"[DEBUG] Split requested - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
          if stopwatch_instance.is_running:
@@ -134,7 +133,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
       elif 'list splits' in speech_text:
          splits = stopwatch_instance.get_splits()
-         
+
          if splits:
             tts("Here are the current splits.")
             for i, split_entry in enumerate(stopwatch_instance.get_splits(), start=1):
@@ -180,10 +179,10 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
    elif check_message(['add','to', 'list']):
        tts("What is the name of the list?")
        list_name = get_user_input()
-      
+
        tts("What item or items would you like to add to the list?")
        items = get_user_input().split(",") #split by commas to handle multiple items
-       
+
        my_list.add_item(items, list_name) #provide the list_name argument and add each item to the list
        time.sleep(2) # add a small delay to prevent immediate re-listening
        #force the VA to ignore any lingering input before listening again
@@ -276,7 +275,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
    elif check_message(['read', 'notes']) or check_message(['notes']):
       notes.handle_notes(speech_text)
-      
+
    elif check_message(['all', 'notes']) or check_message(['notes']):
       notes.show_all_notes()
 
