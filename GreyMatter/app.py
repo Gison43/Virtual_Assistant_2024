@@ -14,6 +14,12 @@ def init_db():
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT UNIQUE NOT NULL,
                             items TEXT NOT NULL)''')
+
+    with sqlite3.connect("memory.db") as conn:
+        conn.execute('''CREATE TABLE IF NOT EXISTS notes (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        notes TEXT,
+                        notes_date TEXT)''')
         conn.commit()
 
 # Helper to connect to the notes database
@@ -45,15 +51,20 @@ def index():
     <head>
         <title>VA Control Center</title>
         <style>
-            body { font-family: sans-serif; background: #121212; color: #e0e0e0; text-align: center; }
-            .container { max-width: 600px; margin: auto; padding: 20px; }
-            .card { background: #1e1e1e; border: 1px solid #333; padding: 15px; margin: 10px; border-radius: 8px; text-align: left; }
-            h1 { color: #bb86fc; }
+            body { font-family: sans-serif; background: #121212; color: #e0e0e0; text-align: center;font-size:18px; }
+            .container { max-width: 600px; margin: auto; padding: 15px; }
+            .card { background: #1e1e1e; border: 1px solid #333; padding: 20px; margin: 15px 0; border-radius: 12px; text-align: left;font-size: 1.1rem; }
+            h1 { color: #bb86fc; font-size: 2.2rem; }
+            h2 { color: #03dac6; font-size: 1.8rem; margin-top: 30px; }
+            h3 { margin-top: 0; color: #bb86fc; }
+
             .status { color: #03dac6; font-weight: bold; }
-            button { background: #03dac6; color: black; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+
+            button { background: #03dac6; color: black; border: none; padding: 15px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; width: 100%; margin-top: 10px; }
             .fix-btn { background: #cf6679; margin-bottom: 20px; }
-            input[type="text"] { width: 80%; padding: 10px; margin: 5px; border-radius: 4px; border: 1px solid #333; background: #2c2c2c; color: white; }
-            hr { border: 0; border-top: 1px solid #333; margin: 30px 0; }
+            input[type="text"] { width: 100%; box-sizing: border-box; padding: 15px; margin: 10px 0; border-radius: 8px; border: 1px solid #333; background: #2c2c2c; color: white;font-size: 1rem; }
+            hr { border: 0; border-top: 1px solid #333; margin: 40px 0; }
+            small { font-size: 0.9rem; }
         </style>
     </head>
     <body>
