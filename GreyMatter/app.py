@@ -133,6 +133,19 @@ def get_list(name):
         return jsonify({"message": "List not found!"}), 404
 
 @app.route('/add_note_web', methods=['POST'])
+
+@app.route('/add_list_web', methods=['POST'])
+def add_list_web():
+    # This pulls data from the HTML form fields
+    name = request.form.get('list_name')
+    items = request.form.get('list_items')
+    
+    with sqlite3.connect("va_data.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT OR REPLACE INTO lists (name, items) VALUES (?, ?)", (name, items))
+        conn.commit()
+    return redirect(url_for('index'))
+    
 def add_note_web():
     note_text = request.form.get('note_text')
     date_str = datetime.now().strftime('%d-%m-%Y')
