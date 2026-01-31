@@ -47,28 +47,59 @@ def index():
         <style>
             body { font-family: sans-serif; background: #121212; color: #e0e0e0; text-align: center; }
             .container { max-width: 600px; margin: auto; padding: 20px; }
-            .list-card { background: #1e1e1e; border: 1px solid #333; padding: 15px; margin: 10px; border-radius: 8px; text-align: left; }
+            .card { background: #1e1e1e; border: 1px solid #333; padding: 15px; margin: 10px; border-radius: 8px; text-align: left; }
             h1 { color: #bb86fc; }
             .status { color: #03dac6; font-weight: bold; }
-            button { background: #cf6679; color: black; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-            button:hover { background: #b00020; color: white; }
+            button { background: #03dac6; color: black; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+            .fix-btn { background: #cf6679; margin-bottom: 20px; }
+            input[type="text"] { width: 80%; padding: 10px; margin: 5px; border-radius: 4px; border: 1px solid #333; background: #2c2c2c; color: white; }
+            hr { border: 0; border-top: 1px solid #333; margin: 30px 0; }
         </style>
     </head>
     <body>
         <div class="container">
             <h1>Assistant Dashboard</h1>
             <p>System Status: <span class="status">Online</span></p>
-
-            <p><a href="/fix_audio_web"><button>Fix Audio Issue</button></a><p>
+            <a href="/fix_audio_web"><button class="fix-btn">Fix Audio Issue</button></a>
             
+            <div class="card">
+                <h3>📝 Create New List</h3>
+                <form action="/add_list_web" method="POST">
+                    <input type="text" name="list_name" placeholder="List Name (e.g. Groceries)" required><br>
+                    <input type="text" name="list_items" placeholder="Items (comma separated)" required><br>
+                    <button type="submit">Save List</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>📓 Quick Note</h3>
+                <form action="/add_note_web" method="POST">
+                    <input type="text" name="note_text" placeholder="Type a note..." required><br>
+                    <button type="submit">Save Note</button>
+                </form>
+            </div>
+
             <hr>
-            <h2>My Saved Lists</h2>
-            {% for name, items in lists %}
-                <div class="list-card">
-                    <strong>{{ name }}:</strong> {{ items }}
+
+            <h2>Recent Notes</h2>
+            {% for note, date in notes %}
+                <div class="card">
+                    <small style="color: #888;">{{ date }}</small><br>
+                    {{ note }}
                 </div>
             {% else %}
-                <p>No lists found in database.</p>
+                <p>No notes found in memory.db.</p>
+            {% endfor %}
+
+            <hr>
+
+            <h2>My Saved Lists</h2>
+            {% for name, items in lists %}
+                <div class="card">
+                    <strong style="color: #03dac6;">{{ name }}:</strong> {{ items }}
+                </div>
+            {% else %}
+                <p>No lists found in va_data.db.</p>
             {% endfor %}
         </div>
     </body>
