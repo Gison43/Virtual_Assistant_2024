@@ -15,7 +15,6 @@ def init_db():
                             name TEXT UNIQUE NOT NULL,
                             items TEXT NOT NULL)''')
         conn.commit()
-@app.route('/')
 
 # Helper to connect to the notes database
 def get_notes():
@@ -25,11 +24,11 @@ def get_notes():
             # Grabbing the last 10 notes so the page isn't too long
             cursor.execute("SELECT notes, notes_date FROM notes ORDER BY id DESC LIMIT 10")
             return cursor.fetchall()
-    except Exception:
+    except Exception as e:
+        print(f"Database error: {e}")
         return []
 
 @app.route('/')
-
 def index():
     # This fetches all your lists from the database to show on the website
     with sqlite3.connect("va_data.db") as conn:
@@ -75,7 +74,7 @@ def index():
     </body>
     </html>
     """
-    return render_template_string(html_template, lists=all_lists)
+    return render_template_string(html_template, lists=all_lists, notes=all_notes)
 
 @app.route('/add_list', methods=['POST'])
 def add_list():
