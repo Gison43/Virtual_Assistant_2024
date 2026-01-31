@@ -4,6 +4,7 @@ import datetime
 import aiml
 import re
 import time
+import requests
 
 from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep, play_music, area, notes
 from GreyMatter.list import List
@@ -189,6 +190,25 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
        print("Flushing unintended input to prevent misinterpretation...")
        _ = get_user_input()  #capture and discard the next speech input
        print("Input flushed.  Ready for the next command.")
+
+   elif check_message(['what', 'on', 'list']) or check_message(['read', 'list']):
+        tts("Which list would you like me to read?")
+        list_name = get_user_input().lower()  # e.g., "grocery"
+
+        try:
+            # This asks your Flask server for the list items
+            response = requests.get(f"http://127.0.0.1:5000/get_list/{list_name}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                items = data['items'] # This is the list of items
+                item_string = ", ".join(items)
+                tts(f"Your {list_name} list contains: {item_string}")
+            else:
+                tts(f"I'm sorry, I couldn't find a list named {list_name}.")
+        except Exception as e:
+            print(f"Error fetching list: {e}")
+            tts("I had trouble accessing the database.")
 
    elif check_message(['how', 'old', 'am', 'i']):
        tell_time.how_old()
