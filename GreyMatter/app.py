@@ -8,7 +8,7 @@ app = Flask(__name__)
 LIST_DIR = "GreyMatter/Lists"
 
 def init_db():
-    with sqlite3.connect("va_data.db") as conn:
+    with sqlite3.connect("memory.db") as conn:
         cursor = conn.cursor()
         cursor.execute('''CREATE TABLE IF NOT EXISTS lists (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -37,7 +37,7 @@ def get_notes():
 @app.route('/')
 def index():
     # This fetches all your lists from the database to show on the website
-    with sqlite3.connect("va_data.db") as conn:
+    with sqlite3.connect("memory.db") as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT name, items FROM lists")
         all_lists = cursor.fetchall()
@@ -110,7 +110,7 @@ def index():
                     <strong style="color: #03dac6;">{{ name }}:</strong> {{ items }}
                 </div>
             {% else %}
-                <p>No lists found in va_data.db.</p>
+                <p>No lists found in memory.db.</p>
             {% endfor %}
         </div>
     </body>
@@ -124,7 +124,7 @@ def add_list():
     name = data.get('name')
     items = ",".join(data.get('items', []))
 
-    with sqlite3.connect("va_data.db") as conn:
+    with sqlite3.connect("memory.db") as conn:
         cursor = conn.cursor()
         cursor.execute("INSERT OR REPLACE INTO lists (name, items) VALUES (?, ?)", (name, items))
         conn.commit()
@@ -134,7 +134,7 @@ def add_list():
 @app.route('/get_list/<name>', methods=['GET'])
 def get_list(name):
     search_name = name.lower()
-    with sqlite3.connect("va_data.db") as conn:
+    with sqlite3.connect("memory.db") as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT items FROM lists WHERE LOWER(name) = ?", (search_name,))
         row = cursor.fetchone()
@@ -148,7 +148,7 @@ def add_list_web():
     # This pulls data from the HTML form fields
     name = request.form.get('list_name')
     items = request.form.get('list_items')
-    with sqlite3.connect("va_data.db") as conn:
+    with sqlite3.connect("memory.db") as conn:
         cursor = conn.cursor()
         cursor.execute("INSERT OR REPLACE INTO lists (name, items) VALUES (?, ?)", (name, items))
         conn.commit()
