@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template_string, redirect, url_for
 import sqlite3
 import subprocess
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -15,12 +16,29 @@ def init_db():
                             items TEXT NOT NULL)''')
         conn.commit()
 @app.route('/')
+
+# Helper to connect to the notes database
+def get_notes():
+    try:
+        with sqlite3.connect('memory.db') as conn:
+            cursor = conn.cursor()
+            # Grabbing the last 10 notes so the page isn't too long
+            cursor.execute("SELECT notes, notes_date FROM notes ORDER BY id DESC LIMIT 10")
+            return cursor.fetchall()
+    except Exception:
+        return []
+
+@app.route('/')
+
 def index():
     # This fetches all your lists from the database to show on the website
     with sqlite3.connect("va_data.db") as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT name, items FROM lists")
         all_lists = cursor.fetchall()
+
+    #fetch notes (memory.db)
+    all_notes = get_notes()
 
     html_template = """
     <!DOCTYPE html>
@@ -83,6 +101,16 @@ def get_list(name):
         return jsonify({"name": name, "items": row[0].split(",")})
     else:
         return jsonify({"message": "List not found!"}), 404
+
+@app.route('/add_note_web', methods=['POST'])
+def add_note_web():
+    note_text = request.form.get('note_text')
+    date_str = datetime.now().strftime('%d-%m-%Y')
+    
+    with sqlite3.connect('memory.db') as conn:
+        conn.execute("INSERT INTO notes (notes, notes_date) VALUES (?, ?)", (note_text, date_str))
+        conn.commit()
+    return redirect(url_for('index'))
 
 @app.route('/fix_audio_web')
 def fix_audio_web():
