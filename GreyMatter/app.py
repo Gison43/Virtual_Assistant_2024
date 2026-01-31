@@ -133,9 +133,10 @@ def add_list():
 
 @app.route('/get_list/<name>', methods=['GET'])
 def get_list(name):
+    search_name = name.lower()
     with sqlite3.connect("va_data.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT items FROM lists WHERE name = ?", (name,))
+        cursor.execute("SELECT items FROM lists WHERE LOWER(name) = ?", (search_name,))
         row = cursor.fetchone()
     if row:
         return jsonify({"name": name, "items": row[0].split(",")})
