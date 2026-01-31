@@ -19,12 +19,12 @@ def add_list():
     data = request.json
     name = data.get('name')
     items = ",".join(data.get('items', []))
-    
+
     with sqlite3.connect("va_data.db") as conn:
         cursor = conn.cursor()
         cursor.execute("INSERT OR REPLACE INTO lists (name, items) VALUES (?, ?)", (name, items))
         conn.commit()
-    
+
     return jsonify({"message": "List added successfully!"})
 
 @app.route('/get_list/<name>', methods=['GET'])
@@ -33,7 +33,7 @@ def get_list(name):
         cursor = conn.cursor()
         cursor.execute("SELECT items FROM lists WHERE name = ?", (name,))
         row = cursor.fetchone()
-    
+
     if row:
         return jsonify({"name": name, "items": row[0].split(",")})
     else:
