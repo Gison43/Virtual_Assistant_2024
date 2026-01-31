@@ -43,7 +43,7 @@ def index():
             <p>System Status: <span class="status">Online</span></p>
 
             <p><a href="/fix_audio_web"><button>Fix Audio Issue</button></a><p>
-            
+
             <hr>
             <h2>My Saved Lists</h2>
             {% for name, items in lists %}
