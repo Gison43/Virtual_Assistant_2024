@@ -1,5 +1,6 @@
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template_string, redirect, url_for
 import sqlite3
+import subprocess
 
 app = Flask(__name__)
 
@@ -32,12 +33,17 @@ def index():
             .list-card { background: #1e1e1e; border: 1px solid #333; padding: 15px; margin: 10px; border-radius: 8px; text-align: left; }
             h1 { color: #bb86fc; }
             .status { color: #03dac6; font-weight: bold; }
+            button { background: #cf6679; color: black; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+            button:hover { background: #b00020; color: white; }
         </style>
     </head>
     <body>
         <div class="container">
             <h1>Assistant Dashboard</h1>
             <p>System Status: <span class="status">Online</span></p>
+
+            <p><a href="/fix_audio_web"><button>Fix Audio Issue</button></a><p>
+            
             <hr>
             <h2>My Saved Lists</h2>
             {% for name, items in lists %}
@@ -77,6 +83,20 @@ def get_list(name):
         return jsonify({"name": name, "items": row[0].split(",")})
     else:
         return jsonify({"message": "List not found!"}), 404
+
+@app.route('/fix_audio_web')
+def fix_audio_web():
+    import subprocess
+    SB_NAME = "alsa_output.usb-Creative_Technology_Ltd_Sound_Blaster_Play__3_00311390-00.analog-stereo"
+    try:
+        subprocess.run(["pactl", "set-default-sink", SB_NAME], check=True)
+        subprocess.run(["pactl", "set-sink-mute", SB_NAME, "0"], check=True)
+        subprocess.run(["pactl", "set-sink-volume", SB_NAME, "85%"], check=True)
+        print("Audio fixed via Web Dashboard")
+    except Exception as e:
+        print(f"Web Audio Fix Failed: {e}")
+    
+    return redirect(url_for('index')) # This sends you back to the dashboard immediately
 
 if __name__ == '__main__':
     init_db()
