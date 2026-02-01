@@ -15,9 +15,9 @@ def tts(message, lang=None):
    elif sys.platform == 'linux2' or sys.platform == 'linux':
       #for Raspberry Pi / Linux
       if lang == 'es':
-         tts_engine = ['espeak', '-v', 'es', '-device', 'hw:2', message]
+         tts_engine = ['espeak','-v', 'es', message]
       else:
-         tts_engine = ['espeak', '-device', 'hw:2', message]
+         tts_engine = ['espeak', message]
    else:
       return
 
