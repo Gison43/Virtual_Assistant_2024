@@ -13,12 +13,14 @@ def tts(message, lang=None):
    if sys.platform == 'darwin':
       tts_engine = ['say', message]
    elif sys.platform.startswith('linux'):
-        if lang == 'es':
-            # Generate speech and pipe it directly to hardware card 2
-            command = f'espeak -v es "{message}" --stdout | aplay -D hw:2'
-        else:
-            # Default voice piped directly to hardware card 2
-            command = f'espeak "{message}" --stdout | aplay -D hw:2'
+        # This is the 'Force conversion' logic we just verified
+        # It converts espeak output to 16kHz Stereo for the ReSpeaker HAT
+        aplay_cmd = "sox -t wav - -r 16000 -c 2 -t wav - | aplay -D hw:2"
         
-        # Use shell=True because we are using a pipe (|)
+        if lang == 'es':
+            command = f'espeak -v es "{message}" --stdout | {aplay_cmd}'
+        else:
+            command = f'espeak "{message}" --stdout | {aplay_cmd}'
+        
+        # We use shell=True to allow the piping (|) between espeak, sox, and aplay
         subprocess.Popen(command, shell=True)
