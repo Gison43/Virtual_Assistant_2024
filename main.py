@@ -92,7 +92,7 @@ def main():
           sys.stderr.close()
           sys.stderr = stderr_backup
 
-      with m as source:
+      with m(device_index=2) as source:
           print("Adjusting for ambient noise...Please be quiet.")
           r.adjust_for_ambient_noise(source, duration=1)
           print("Set minimum energy threshold to {}".format(r.energy_threshold))
