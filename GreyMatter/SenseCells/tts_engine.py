@@ -4,6 +4,8 @@ import subprocess
 import sys
 
 def tts(message, lang=None):
+   #Initialize the variable as an empty list so it is always 'defined'
+   tts_engine = []
    """
    Converts message to speech using subprocess.  Popen to prevent blocking.
    """
