@@ -82,15 +82,12 @@ def main():
 
    else: #speech input mode
       r = sr.Recognizer()
-
-      #suppress ALSA/JACK noise during audio capture
-      stderr_backup = sys.stderr
-      sys.stderr = open(os.devnull, 'w')
+      
       try:
           m = sr.Microphone(device_index=2)
-      finally:
-          sys.stderr.close()
-          sys.stderr = stderr_backup
+      except Exception as e:
+            print(f"Hardware Error {e}")
+            return
 
       with m as source:
           print("Adjusting for ambient noise...Please be quiet.")
