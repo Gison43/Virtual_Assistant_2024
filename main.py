@@ -55,8 +55,8 @@ def process_command(speech_text):
 import subprocess
 
 def fix_audio_logic():
-    # Use your SoundBlaster's long name here
-    SB_NAME = "alsa_output.usb-Creative_Technology_Ltd_Sound_Blaster_Play__3_00311390-00.analog-stereo"
+    # Use your SoundBlaster's long name here, but now I changed it to the ReSpeaker
+    SB_NAME = "alsa_output.platform-soc_sound.stereo.fallback"
 
     try:
         # Force PulseAudio to switch to the SoundBlaster
