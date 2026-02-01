@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
 
-import os
+import subprocess
 import sys
 
 def tts(message, lang=None):
    """
-   this function takes a message as an argument and converts it to speech depending on the OS.
-   Optionally, a language code can be provided to specify the language of the speech
+   Converts message to speech using subprocess.  Popen to prevent blocking.
    """
 
    if sys.platform == 'darwin':
-      tts_engine = 'say'
-      return os.system(tts_engine + ' ' + message)
+      tts_engine = ['say', message]
    elif sys.platform == 'linux2' or sys.platform == 'linux':
+      #for Raspberry Pi / Linux
       if lang == 'es':
-         tts_engine = 'espeak -v es'
+         tts_engine = ['espeak', '-v', 'es', message]
       else:
-         tts_engine = 'espeak'
-         return os.system(tts_engine + ' "' + message + '"')
+         tts_engine = ['espeak', message]
+   else:
+      return
 
-#tts("Hi handsome, this is computer.")
+#Popen starts the process in the background
+subprocess.Popen(tts_engine)
