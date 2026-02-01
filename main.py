@@ -4,6 +4,7 @@
 
 import sys
 import os
+import time
 
 import yaml
 import speech_recognition as sr
