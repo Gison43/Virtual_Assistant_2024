@@ -12,14 +12,13 @@ def tts(message, lang=None):
 
    if sys.platform == 'darwin':
       tts_engine = ['say', message]
-   elif sys.platform == 'linux2' or sys.platform == 'linux':
-      #for Raspberry Pi / Linux
-      if lang == 'es':
-         tts_engine = ['espeak','-v', 'es', message]
-      else:
-         tts_engine = ['espeak', message]
-   else:
-      return
-
-   #Popen starts the process in the background
-   subprocess.Popen(tts_engine)
+   elif sys.platform.startswith('linux'):
+        if lang == 'es':
+            # Generate speech and pipe it directly to hardware card 2
+            command = f'espeak -v es "{message}" --stdout | aplay -D hw:2'
+        else:
+            # Default voice piped directly to hardware card 2
+            command = f'espeak "{message}" --stdout | aplay -D hw:2'
+        
+        # Use shell=True because we are using a pipe (|)
+        subprocess.Popen(command, shell=True)
