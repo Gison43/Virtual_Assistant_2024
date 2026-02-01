@@ -61,17 +61,18 @@
         <template>Sure, let's discuss books.</template>
         <topic>books</topic>
     </category>
-    <category>
-        <topic name="movies">
+    <topic name="movies">
+        <category>
             <pattern>FAVORITE MOVIE</pattern>
             <template>My favorite movie is The Matrix.</template>
         </category>
-    </category>  
+    
     <category>
-            <pattern>WHAT TYPE OF MOVIES DO YOU LIKE TO WATCHACTOR</pattern>
+            <pattern>WHAT TYPE OF MOVIES DO YOU LIKE TO WATCH ACTOR</pattern>
             <template>I prefer drama movies.</template>
         </category>
     </topic>
+    
     <topic name="books">
         <category>
             <pattern>FAVORITE BOOK</pattern>
