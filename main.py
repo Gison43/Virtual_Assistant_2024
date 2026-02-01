@@ -84,7 +84,7 @@ def main():
       r = sr.Recognizer()
       
       try:
-          m = sr.Microphone(device_index=2)
+          m = sr.Microphone(device_index=2, sample_rate = 16000)
       except Exception as e:
             print(f"Hardware Error {e}")
             return
@@ -97,16 +97,10 @@ def main():
           while True:
               print("Listening...") #print("stopwatch instance ", stopwatch_instance.is_running)
               r.pause_threshold = 1
-              #suppress ALSA/JACK noise during microphone setup
-              stderr_backup = sys.stderr
-              sys.stderr = open(os.devnull, 'w')
-              try:
-                  audio = r.listen(source, phrase_time_limit = 10.0)
-              finally:
-                  sys.stderr.close()
-                  sys.stderr = stderr_backup
-              speech_text = "" #Initialize the speech_text to prevent crashes if no speech.
-
+              
+              audio = r.listen(source, phrase_time_limit = 10.0)
+              speech_text =""
+              
               try:
                   speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
                   print("Recognizing and transcribing what you said...")
@@ -119,9 +113,7 @@ def main():
                       continue  # Jump back to the start of the loop
 
                   brain.process_command(speech_text, stopwatch_instance)
-                  import time
-                  time.sleep(1)
-
+                  
                   print("stopwatch instance ", stopwatch_instance.is_running)
               except sr.UnknownValueError:
                   print("Computer didn't understand.")
