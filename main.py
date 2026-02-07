@@ -46,6 +46,9 @@ elif 12 <= current_hour < 18:
     tts('Good afternoon ' + name + 'systems are now ready to run.  what is your command.')
 else:
     tts('Good evening ' + name + 'systems are now ready to run.  what is your command.')
+
+time.sleep(4)
+
 """
 def process_command(speech_text):
    global stopwatch_instance
@@ -83,6 +86,7 @@ def main():
 
    else: #speech input mode
       r = sr.Recognizer()
+      r.pause.threshold = 0.5
       
       try:
           m = sr.Microphone(device_index=2, sample_rate = 16000)
