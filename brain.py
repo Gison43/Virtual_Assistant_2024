@@ -41,6 +41,8 @@ def process_command(speech_text, stopwatch_instance):
    pass
 
 def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path):
+   words_of_message = set(speech_text.lower().split())
+   
    print(f"[DEBUG] Entering neural_network() - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
    print(f"[DEBUG] Received speech_text: '{speech_text}'")
    """
@@ -49,13 +51,8 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
    the user's speech.
    """
 
-   def check_message(check):
-      words_of_message = speech_text.split()
-      if set(check).issubset(set(words_of_message)):
-         print(f"Detected command: {check}")
-         return True
-      else:
-         return False
+   def check_message(check_list):
+      return set(check_list).issubset(words_of_message)
 
    def is_stopwatch_command(command):
       stopwatch_commands = ['start stopwatch', 'stop stopwatch', 'elapsed stopwatch', 'exit stopwatch', 'split stopwatch', 'reset stopwatch',
