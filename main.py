@@ -86,7 +86,7 @@ def main():
 
    else: #speech input mode
       r = sr.Recognizer()
-      r.pause.threshold = 0.5
+      r.pause_threshold = 0.5
       
       try:
           m = sr.Microphone(device_index=2, sample_rate = 16000)
