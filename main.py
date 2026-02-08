@@ -69,13 +69,13 @@ def main():
    stopwatch_instance = Stopwatch() #create a stopwatch instance so that we can use the Stopwatch class
 
     if 5 <= current_hour < 12:
-    tts('Good morning ' + name + ' systems are now ready to run.  what is your command.')
-elif 12 <= current_hour < 18:
-    tts('Good afternoon ' + name + 'systems are now ready to run.  what is your command.')
-else:
-    tts('Good evening ' + name + 'systems are now ready to run.  what is your command.')
+       tts('Good morning ' + name + ' systems are now ready to run.  what is your command.')
+    elif 12 <= current_hour < 18:
+       tts('Good afternoon ' + name + 'systems are now ready to run.  what is your command.')
+    else:
+       tts('Good evening ' + name + 'systems are now ready to run.  what is your command.')
 
-time.sleep(4)
+    time.sleep(4)
     
 if args.text: #text input mode
     while True:
