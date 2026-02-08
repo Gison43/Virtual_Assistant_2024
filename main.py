@@ -139,12 +139,36 @@ def main():
              
 if __name__ == "__main__":
     try:
+        # 1. FIX THE AUDIO ROUTING FIRST
+        print("[SYSTEM] Initializing audio routing...")
+        audio_status = fix_audio_logic()
+        print(f"[SYSTEM] {audio_status}")
+        
+        # 2. WAIT FOR HARDWARE TO SETTLE
+        time.sleep(2) 
+
+        # 3. DO THE GREETING (Moved from the top of the script)
+        current_hour = datetime.datetime.now().hour
+        if 5 <= current_hour < 12:
+            greeting = 'Good morning ' + name + ', systems are now ready. What is your command?'
+        elif 12 <= current_hour < 18:
+            greeting = 'Good afternoon ' + name + ', systems are now ready. What is your command?'
+        else:
+            greeting = 'Good evening ' + name + ', systems are now ready. What is your command?'
+        
+        print(f"[SYSTEM] Greet: {greeting}")
+        tts(greeting)
+        
+        # 4. WAIT FOR GREETING TO FINISH BEFORE OPENING MIC
+        # If we open the mic while TTS is playing, we get a "Device Busy" error.
+        time.sleep(5) 
+
+        # 5. START THE MAIN LOOP
         main()
+
+    except KeyboardInterrupt:
+        print("\n[SYSTEM] Manual shutdown detected.")
     except Exception as e:
-        print(f"[ERROR] Uncaught exception in main(): {e}")
-        # Only try to speak if audio might still be working
-        try:
-            tts("A critical error occurred. Restarting required.")
-        except:
-            pass
+        print(f"[ERROR] Uncaught exception: {e}")
+        tts("A critical error occurred. Restarting required.")
 
