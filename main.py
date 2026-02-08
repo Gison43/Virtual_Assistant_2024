@@ -67,16 +67,17 @@ def main():
    fix_audio_logic()  #this is like your plugging in the speakers to get audio working
    play_music.mp3gen(music_path)
    stopwatch_instance = Stopwatch() #create a stopwatch instance so that we can use the Stopwatch class
+   time.sleep(2)
 
-    if 5 <= current_hour < 12:
-       print("DEBUG: Attempting Morning Greeting")
-       tts('Good morning ' + name + ' systems are now ready to run.  what is your command.')
-    elif 12 <= current_hour < 18:
-       tts('Good afternoon ' + name + 'systems are now ready to run.  what is your command.')
-    else:
-       tts('Good evening ' + name + 'systems are now ready to run.  what is your command.')
+     if 5 <= current_hour < 12:
+        print("DEBUG: Attempting Morning Greeting")
+        tts('Good morning ' + name + ' systems are now ready to run.  what is your command.')
+     elif 12 <= current_hour < 18:
+        tts('Good afternoon ' + name + 'systems are now ready to run.  what is your command.')
+     else:
+        tts('Good evening ' + name + 'systems are now ready to run.  what is your command.')
 
-    time.sleep(4)
+     time.sleep(4)
     
 if args.text: #text input mode
     while True:
