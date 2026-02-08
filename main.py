@@ -96,7 +96,7 @@ else: #speech input mode
          print(f"Hardware Error {e}")
          return
 
-      with m as source:
+    with m as source:
           print("Adjusting for ambient noise...Please be quiet.")
           r.adjust_for_ambient_noise(source, duration=1)
           print("Set minimum energy threshold to {}".format(r.energy_threshold))
