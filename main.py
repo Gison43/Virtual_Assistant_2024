@@ -48,7 +48,7 @@ def process_command(speech_text):
 def fix_audio_logic():
     """Forces pulseAudio to use the ReSpeaker HAT as the default audio device"""
     # Use your SoundBlaster's long name here, but now I changed it to the ReSpeaker
-    SB_NAME = "alsa_output.platform-soc_sound.stereo.fallback"
+    SB_NAME = "alsa_output.platform-bcm2835_audio.analog-stereo"
 
     try:
         # Force PulseAudio to switch to the SoundBlaster
