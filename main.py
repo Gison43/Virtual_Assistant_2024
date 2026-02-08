@@ -38,16 +38,6 @@ city_code = profile_data['city_code']
 current_hour = datetime.datetime.now().hour
 music_path = profile_data['music_path']
 
-play_music.mp3gen(music_path)
-
-if 5 <= current_hour < 12:
-    tts('Good morning ' + name + ' systems are now ready to run.  what is your command.')
-elif 12 <= current_hour < 18:
-    tts('Good afternoon ' + name + 'systems are now ready to run.  what is your command.')
-else:
-    tts('Good evening ' + name + 'systems are now ready to run.  what is your command.')
-
-time.sleep(4)
 
 """
 def process_command(speech_text):
@@ -55,9 +45,8 @@ def process_command(speech_text):
    pass
 """
 
-import subprocess
-
 def fix_audio_logic():
+    """Forces pulseAudio to use the ReSpeaker HAT as the default audio device"""
     # Use your SoundBlaster's long name here, but now I changed it to the ReSpeaker
     SB_NAME = "alsa_output.platform-soc_sound.stereo.fallback"
 
@@ -66,7 +55,7 @@ def fix_audio_logic():
         subprocess.run(["pactl", "set-default-sink", SB_NAME], check=True)
         # Ensure it's not muted and volume is audible
         subprocess.run(["pactl", "set-sink-mute", SB_NAME, "0"], check=True)
-        subprocess.run(["pactl", "set-sink-volume", SB_NAME, "85%"], check=True)
+        subprocess.run(["pactl", "set-sink-volume", SB_NAME, "60%"], check=True)
 
         return "Audio routing fixed. I am now using the SoundBlaster."
     except Exception as e:
@@ -74,25 +63,36 @@ def fix_audio_logic():
 
 
 def main():
-
+   print("Initializing aduio routing...")
+   fix_audio_logic()  #this is like your plugging in the speakers to get audio working
+   play_music.mp3gen(music_path)
    stopwatch_instance = Stopwatch() #create a stopwatch instance so that we can use the Stopwatch class
 
-   if args.text: #text input mode
-      while True:
-         keyboard_input = input("Enter you command: ")
-         if keyboard_input.lower() == "exit":
-            break #exit loop when the user types 'exit'
-         brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path) #process text-based commands
+    if 5 <= current_hour < 12:
+    tts('Good morning ' + name + ' systems are now ready to run.  what is your command.')
+elif 12 <= current_hour < 18:
+    tts('Good afternoon ' + name + 'systems are now ready to run.  what is your command.')
+else:
+    tts('Good evening ' + name + 'systems are now ready to run.  what is your command.')
 
-   else: #speech input mode
-      r = sr.Recognizer()
-      r.pause_threshold = 0.5
+time.sleep(4)
+    
+if args.text: #text input mode
+    while True:
+        keyboard_input = input("Enter you command: ")
+        if keyboard_input.lower() == "exit":
+            break #exit loop when the user types 'exit'
+        brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path) #process text-based commands
+
+else: #speech input mode
+    r = sr.Recognizer()
+    r.pause_threshold = 0.5
       
-      try:
-          m = sr.Microphone(device_index=2, sample_rate = 16000)
-      except Exception as e:
-            print(f"Hardware Error {e}")
-            return
+    try:
+       m = sr.Microphone(device_index=2, sample_rate = 16000)
+    except Exception as e:
+         print(f"Hardware Error {e}")
+         return
 
       with m as source:
           print("Adjusting for ambient noise...Please be quiet.")
@@ -103,10 +103,9 @@ def main():
               print("Listening...") #print("stopwatch instance ", stopwatch_instance.is_running)
               r.pause_threshold = 1
               
-              audio = r.listen(source, phrase_time_limit = 10.0)
-              speech_text =""
-              
               try:
+                  audio = r.listen(source, phrase_time_limit = 10.0)
+                  speech_text =""
                   speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
                   print("Recognizing and transcribing what you said...")
                   print(f"Computer thinks you said: '{speech_text}'")
@@ -118,24 +117,31 @@ def main():
                       continue  # Jump back to the start of the loop
 
                   brain.process_command(speech_text, stopwatch_instance)
-                  
+
                   print("stopwatch instance ", stopwatch_instance.is_running)
+
+                  if speech_text.strip(): #only process if something is actually said
+                      brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
+                      time.sleep(1)
+                  
+                  else:
+                      print("No speech detected. Waiting for next command.")
+                  
               except sr.UnknownValueError:
                   print("Computer didn't understand.")
                   #tts("I do not understand")
 
               except sr.RequestError as e:
                   print("Could not request results from Google Speech Recognition service; {0}".format(e))
-
-              if speech_text.strip(): #only process if something is actually said
-                  brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
-                  time.sleep(1)
-              else:
-                  print("No speech detected. Waiting for next command.")
+             
 if __name__ == "__main__":
     try:
         main()
     except Exception as e:
         print(f"[ERROR] Uncaught exception in main(): {e}")
-        tts("A critical error occurred. Restarting required.")
+        # Only try to speak if audio might still be working
+        try:
+            tts("A critical error occurred. Restarting required.")
+        except:
+            pass
 
