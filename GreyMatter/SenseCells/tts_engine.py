@@ -16,6 +16,6 @@ def tts(message, lang=None):
    elif sys.platform.startswith('linux'):
     # We use 'plughw:2' to handle resampling and '-c 2' to force stereo
     # This removes the need for the slow 'sox' middleman
-    command = f'espeak "{message}" --stdout | aplay -D plughw:2 -c 2 -r 44100 -f S16_LE'
+    command = f'espeak "{message}" --stdout | aplay -D plughw:2'
 
     subprocess.Popen(command, shell=True)
