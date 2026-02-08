@@ -145,7 +145,7 @@ if __name__ == "__main__":
         print(f"[SYSTEM] {audio_status}")
         
         # 2. WAIT FOR HARDWARE TO SETTLE
-        time.sleep(2) 
+        time.sleep(4) 
 
         # 3. DO THE GREETING (Moved from the top of the script)
         current_hour = datetime.datetime.now().hour
@@ -161,7 +161,7 @@ if __name__ == "__main__":
         
         # 4. WAIT FOR GREETING TO FINISH BEFORE OPENING MIC
         # If we open the mic while TTS is playing, we get a "Device Busy" error.
-        time.sleep(5) 
+        time.sleep(6) 
 
         # 5. START THE MAIN LOOP
         main()
