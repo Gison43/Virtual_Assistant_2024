@@ -79,62 +79,62 @@ def main():
 
    time.sleep(4)
     
-if args.text: #text input mode
-    while True:
-        keyboard_input = input("Enter you command: ")
-        if keyboard_input.lower() == "exit":
-            break #exit loop when the user types 'exit'
-        brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path) #process text-based commands
-
-else: #speech input mode
-    r = sr.Recognizer()
-    r.pause_threshold = 0.5
-      
-    try:
-       m = sr.Microphone(device_index=2, sample_rate = 16000)
-    except Exception as e:
-         print(f"Hardware Error {e}")
-         return
-
-    with m as source:
-          print("Adjusting for ambient noise...Please be quiet.")
-          r.adjust_for_ambient_noise(source, duration=1)
-          print("Set minimum energy threshold to {}".format(r.energy_threshold))
-
-          while True:
-              print("Listening...") #print("stopwatch instance ", stopwatch_instance.is_running)
-              r.pause_threshold = 1
-              
-              try:
-                  audio = r.listen(source, phrase_time_limit = 10.0)
-                  speech_text =""
-                  speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
-                  print("Recognizing and transcribing what you said...")
-                  print(f"Computer thinks you said: '{speech_text}'")
-
-                  if "fix audio" in speech_text:
-                      print("Executing manual audio override...")
-                      result_message = fix_audio_logic()
-                      tts(result_message)
-                      continue  # Jump back to the start of the loop
-
-                  brain.process_command(speech_text, stopwatch_instance)
-
-                  print("stopwatch instance ", stopwatch_instance.is_running)
-
-                  if speech_text.strip(): #only process if something is actually said
-                      brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
-                      time.sleep(1)
-                  
-                  else:
-                      print("No speech detected. Waiting for next command.")
-                  
-              except sr.UnknownValueError:
-                  print("Computer didn't understand.")
-                  #tts("I do not understand")
-
-              except sr.RequestError as e:
-                  print("Could not request results from Google Speech Recognition service; {0}".format(e))
+   if args.text: #text input mode
+       while True:
+           keyboard_input = input("Enter you command: ")
+           if keyboard_input.lower() == "exit":
+               break #exit loop when the user types 'exit'
+           brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path) #process text-based commands
+   
+   else: #speech input mode
+       r = sr.Recognizer()
+       r.pause_threshold = 0.5
+         
+       try:
+          m = sr.Microphone(device_index=2, sample_rate = 16000)
+       except Exception as e:
+            print(f"Hardware Error {e}")
+            return
+   
+       with m as source:
+             print("Adjusting for ambient noise...Please be quiet.")
+             r.adjust_for_ambient_noise(source, duration=1)
+             print("Set minimum energy threshold to {}".format(r.energy_threshold))
+   
+             while True:
+                 print("Listening...") #print("stopwatch instance ", stopwatch_instance.is_running)
+                 r.pause_threshold = 1
+                 
+                 try:
+                     audio = r.listen(source, phrase_time_limit = 10.0)
+                     speech_text =""
+                     speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
+                     print("Recognizing and transcribing what you said...")
+                     print(f"Computer thinks you said: '{speech_text}'")
+   
+                     if "fix audio" in speech_text:
+                         print("Executing manual audio override...")
+                         result_message = fix_audio_logic()
+                         tts(result_message)
+                         continue  # Jump back to the start of the loop
+   
+                     brain.process_command(speech_text, stopwatch_instance)
+   
+                     print("stopwatch instance ", stopwatch_instance.is_running)
+   
+                     if speech_text.strip(): #only process if something is actually said
+                         brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
+                         time.sleep(1)
+                     
+                     else:
+                         print("No speech detected. Waiting for next command.")
+                     
+                 except sr.UnknownValueError:
+                     print("Computer didn't understand.")
+                     #tts("I do not understand")
+   
+                 except sr.RequestError as e:
+                     print("Could not request results from Google Speech Recognition service; {0}".format(e))
              
 if __name__ == "__main__":
     try:
