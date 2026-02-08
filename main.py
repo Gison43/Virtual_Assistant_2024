@@ -52,10 +52,10 @@ def fix_audio_logic():
 
     try:
         # Force PulseAudio to switch to the SoundBlaster
-        subprocess.run(["pactl", "set-default-sink", SB_NAME], check=True)
+        #subprocess.run(["pactl", "set-default-sink", SB_NAME], check=True)
         # Ensure it's not muted and volume is audible
-        subprocess.run(["pactl", "set-sink-mute", SB_NAME, "0"], check=True)
-        subprocess.run(["pactl", "set-sink-volume", SB_NAME, "60%"], check=True)
+        #subprocess.run(["pactl", "set-sink-mute", SB_NAME, "0"], check=True)
+        #subprocess.run(["pactl", "set-sink-volume", SB_NAME, "60%"], check=True)
 
         return "Audio routing fixed. I am now using the SoundBlaster."
     except Exception as e:
@@ -63,8 +63,9 @@ def fix_audio_logic():
 
 
 def main():
-   print("Initializing aduio routing...")
+   print("Initializing audio routing...")
    fix_audio_logic()  #this is like your plugging in the speakers to get audio working
+   time.sleep(2)
    play_music.mp3gen(music_path)
    stopwatch_instance = Stopwatch() #create a stopwatch instance so that we can use the Stopwatch class
    time.sleep(2)
