@@ -36,10 +36,6 @@ ELAPSED_PHRASES = {
    'what is the current time on the stopwatch'
    }
 
-def process_command(speech_text, stopwatch_instance):
-   print(stopwatch_instance.is_running)
-   pass
-
 def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path):
    words_of_message = set(speech_text.lower().split())
    
