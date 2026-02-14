@@ -167,7 +167,7 @@ def add_note_web():
 @app.route('/fix_audio_web')
 def fix_audio_web():
     import subprocess
-    SB_NAME = "alsa_output.usb-Creative_Technology_Ltd_Sound_Blaster_Play__3_00311390-00.analog-stereo"
+    SB_NAME = "alsa_output.platform-bcm2835_audio.analog-stereo"
     try:
         subprocess.run(["pactl", "set-default-sink", SB_NAME], check=True)
         subprocess.run(["pactl", "set-sink-mute", SB_NAME, "0"], check=True)
