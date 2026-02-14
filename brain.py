@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import datetime
-import aiml
 import re
 import time
 import requests
@@ -17,11 +16,6 @@ from user_input import get_user_input
 #from GreyMatter import french_translator
 
 #stopwatch_instance = Stopwatch()
-
-kernel = aiml.Kernel()
-
-#load AIML files
-kernel.bootstrap(learnFiles = "GreyMatter/yak.aiml")
 
 my_list = List()  #create an instance of the list class
 
