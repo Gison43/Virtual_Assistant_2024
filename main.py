@@ -63,20 +63,9 @@ def fix_audio_logic():
 
 
 def main():
-   print("Initializing audio routing...")
+   print("Initializing main systems...")
    play_music.mp3gen(music_path)
    stopwatch_instance = Stopwatch() #create a stopwatch instance so that we can use the Stopwatch class
-   time.sleep(2)
-
-   if 5 <= current_hour < 12:
-        print("DEBUG: Attempting Morning Greeting")
-        tts('Good morning ' + name + ' systems are now ready to run.  what is your command.')
-   elif 12 <= current_hour < 18:
-        tts('Good afternoon ' + name + 'systems are now ready to run.  what is your command.')
-   else:
-        tts('Good evening ' + name + 'systems are now ready to run.  what is your command.')
-
-   time.sleep(4)
     
    if args.text: #text input mode
        while True:
@@ -123,11 +112,7 @@ def main():
    
                      if speech_text.strip(): #only process if something is actually said
                          brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
-                         time.sleep(1)
-                     
-                     else:
-                         print("No speech detected. Waiting for next command.")
-                     
+   
                  except sr.UnknownValueError:
                      print("Computer didn't understand.")
                      #tts("I do not understand")
