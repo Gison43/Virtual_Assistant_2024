@@ -38,13 +38,6 @@ city_code = profile_data['city_code']
 current_hour = datetime.datetime.now().hour
 music_path = profile_data['music_path']
 
-
-"""
-def process_command(speech_text):
-   global stopwatch_instance
-   pass
-"""
-
 def fix_audio_logic():
     """Forces pulseAudio to use the ReSpeaker HAT as the default audio device"""
     # Use your SoundBlaster's long name here, but now I changed it to the ReSpeaker
@@ -105,8 +98,6 @@ def main():
                          result_message = fix_audio_logic()
                          tts(result_message)
                          continue  # Jump back to the start of the loop
-   
-                     brain.process_command(speech_text, stopwatch_instance)
    
                      print("stopwatch instance ", stopwatch_instance.is_running)
    
