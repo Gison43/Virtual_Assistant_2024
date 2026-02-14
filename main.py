@@ -46,7 +46,7 @@ def fix_audio_logic():
     try:
         Force PulseAudio to switch to the SoundBlaster
         subprocess.run(["pactl", "set-default-sink", SB_NAME], check=True)
-        Ensure it's not muted and volume is audible
+        #Ensure it's not muted and volume is audible
         subprocess.run(["pactl", "set-sink-mute", SB_NAME, "0"], check=True)
         subprocess.run(["pactl", "set-sink-volume", SB_NAME, "60%"], check=True)
 
