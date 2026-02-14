@@ -84,7 +84,7 @@ def main():
    
              while True:
                  print("Listening...") #print("stopwatch instance ", stopwatch_instance.is_running)
-                 r.pause_threshold = 1
+                 r.pause_threshold = 0.5
                  
                  try:
                      audio = r.listen(source, phrase_time_limit = 10.0)
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         print(f"[SYSTEM] {audio_status}")
         
         # 2. WAIT FOR HARDWARE TO SETTLE
-        time.sleep(4) 
+        time.sleep(0.5) 
 
         # 3. DO THE GREETING (Moved from the top of the script)
         current_hour = datetime.datetime.now().hour
@@ -135,7 +135,7 @@ if __name__ == "__main__":
         
         # 4. WAIT FOR GREETING TO FINISH BEFORE OPENING MIC
         # If we open the mic while TTS is playing, we get a "Device Busy" error.
-        time.sleep(6) 
+        time.sleep(0.5) 
 
         # 5. START THE MAIN LOOP
         main()
