@@ -140,9 +140,9 @@ if __name__ == "__main__":
         # 5. START THE MAIN LOOP
         main()
 
-    except KeyboardInterrupt:
-        print("\n[SYSTEM] Manual shutdown detected.")
+    except (KeyboardInterrupt, SystemExit):
+        # This allows 'Ctrl+C' or the 'sleep' command to close the program silently
+        print("\n[SYSTEM] Shutdown initiated. Goodbye.")
     except Exception as e:
         print(f"[ERROR] Uncaught exception: {e}")
         tts("A critical error occurred. Restarting required.")
-
