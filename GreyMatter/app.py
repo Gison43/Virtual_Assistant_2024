@@ -5,22 +5,21 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-LIST_DIR = "GreyMatter/Lists"
+#LIST_DIR = "GreyMatter/Lists"
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "memory.db")
 
 def init_db():
-    with sqlite3.connect("memory.db") as conn:
-        cursor = conn.cursor()
-        cursor.execute('''CREATE TABLE IF NOT EXISTS lists (
-                            id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            name TEXT UNIQUE NOT NULL,
-                            items TEXT NOT NULL)''')
-
-    with sqlite3.connect("memory.db") as conn:
-        conn.execute('''CREATE TABLE IF NOT EXISTS notes (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        notes TEXT,
-                        notes_date TEXT)''')
-        conn.commit()
+    conn = sqlite3.connect(db_path)
+    c = conn.cursor()
+    # Adding 'id' as the PRIMARY KEY fixes the "no column id" error
+    c.execute('''CREATE TABLE IF NOT EXISTS notes
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                  content TEXT, 
+                  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
+    conn.commit()
+    conn.close()
 
 # Helper to connect to the notes database
 def get_notes():
