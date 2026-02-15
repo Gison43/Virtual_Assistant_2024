@@ -3,8 +3,9 @@ from GreyMatter.SenseCells.tts_engine import tts
 
 def get_user_input():
    r = sr.Recognizer()
+   import time
    # Give the main loop half a second to release the hardware
-   time.sleep(0.5) 
+   time.sleep(0.5) #prevents microphone lockup
    
    try:
        # Match device_index=2 and sample_rate=16000 from your main.py
