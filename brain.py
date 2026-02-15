@@ -154,12 +154,28 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
        tell_time.current_year()
 
    elif check_message(['create', 'list']) or check_message(['start', 'list']):
-       tts("Sure. Let's create a new list. What would you like to name your new list.")
-       list_name = get_user_input()
+        tts("Sure. What would you like to name the new list?")
+        
+        # CHANGE 1: actually capture the variable returned by the microphone
+        list_name = get_user_input()
 
-       if list_name:
-          my_list.create_list(list_name) #call the create_list method and pass the list name to it
-          tts(f"Ok. I've created a list called {list_name}")
+        if list_name:
+            # Create the list in the database
+            my_list.create_list(list_name)
+            
+            # CHANGE 2: Chain the next question immediately
+            tts(f"I've created the {list_name} list. What would you like to add to it?")
+            
+            # CHANGE 3: Listen again for the items
+            items_input = get_user_input()
+            if items_input:
+                # Add the items immediately
+                my_list.add_item(items_input.split(" and "), list_name)
+            else:
+                tts("I didn't hear any items, but the empty list is saved.")
+        else:
+            # CHANGE 4: Handle silence (if you didn't say a name)
+            tts("I didn't hear a name, so I cancelled the list creation.")
        
    elif check_message(['add','to', 'list']):
        tts("What is the name of the list?")
