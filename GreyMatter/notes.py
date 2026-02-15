@@ -67,51 +67,60 @@ def handle_notes(speech_text):
       delete_notes(date)
 
 def delete_notes(date=None):
-  conn = sqlite3.connect(db_path)
-  cursor = conn.cursor()
-
-  if date is None:
-    tts("Are you sure you want to delete all notes?")
-    confirmation = input("Type 'yes' to confirm: ")
-    if confirmation.lower() != "yes":
-      tts("Cancelled")
-      conn.close()
-      return
-    cursor.execute("DELETE FROM notes")
-  else:
-    cursor.execute("DELETE FROM notes WHERE notes_date = ?", (date,))
-    tts(f"Notes for {date} deleted.")
-
-  conn.commit()
-  conn.close()
-  print(f"Notes for {date if date else 'ALL dates'} deleted.")
-  tts(f"Notes for  {date if date else 'ALL dates'} deleted.")
-
-def read_notes(date=None):
-    tts("Let me check your notes.  One moment please.")
-  
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     if date == "today":
-        date = datetime.now().strftime("%d-%m-%Y")
+        search_date = datetime.now().strftime("%Y-%m-%d")
     elif date == "yesterday":
-        date = (datetime.now() - timedelta(days=1)).strftime("%d-%m-%Y")
+        search_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     elif date == "tomorrow":
-        date = (datetime.now() + timedelta(days=1)).strftime("%d-%m-%Y")
+        search_date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+    else:
+        search_date = date
 
-    cursor.execute("SELECT notes FROM notes WHERE notes_date = ?", (date,))
+    if date is None:
+        tts("Deleting all notes from the database.")
+        cursor.execute("DELETE FROM notes")
+    else:
+        cursor.execute("DELETE FROM notes WHERE timestamp LIKE ?", (f"{search_date}%",))
+        tts(f"Notes for {date} deleted.")
+
+    conn.commit()
+    conn.close()
+
+def read_notes(date=None):
+    tts("Let me check your notes. One moment please.")
+    
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # Handle keywords for lab convenience
+    if date == "today" or not date:
+        search_date = datetime.now().strftime("%Y-%m-%d")
+    elif date == "yesterday":
+        search_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    elif date == "tomorrow":
+        search_date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+    else:
+        # If a specific date like "15-02-2026" was passed, convert it to "2026-02-15"
+        try:
+            search_date = datetime.strptime(date, "%d-%m-%Y").strftime("%Y-%m-%d")
+        except:
+            search_date = date
+
+    # Query using 'content' and 'timestamp' to match the website
+    cursor.execute("SELECT content FROM notes WHERE timestamp LIKE ?", (f"{search_date}%",))
     notes = cursor.fetchall()
-
     conn.close()
 
     if notes:
-        print(f"Notes for {date}:")
+        tts(f"Here are your notes for {date if date else 'today'}:")
         for note in notes:
             print(f"- {note[0]}")
             tts(note[0])
     else:
-        print(f"No notes found for {date}.")
+        tts(f"I found no notes for {date if date else 'today'}.")
 
 def show_all_notes():
     tts("Checking all saved notes.")
