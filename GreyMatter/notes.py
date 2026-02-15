@@ -70,19 +70,16 @@ def delete_notes(date=None):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    if date == "today":
-        search_date = datetime.now().strftime("%Y-%m-%d")
-    elif date == "yesterday":
-        search_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
-    elif date == "tomorrow":
-        search_date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
-    else:
-        search_date = date
-
     if date is None:
-        tts("Deleting all notes from the database.")
+        tts("Deleting all notes.")
         cursor.execute("DELETE FROM notes")
     else:
+        # Standardize the date format to YYYY-MM-DD
+        if date == "today": search_date = datetime.now().strftime("%Y-%m-%d")
+        elif date == "yesterday": search_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+        else: search_date = date
+        
+        # Corrected column name to 'timestamp'
         cursor.execute("DELETE FROM notes WHERE timestamp LIKE ?", (f"{search_date}%",))
         tts(f"Notes for {date} deleted.")
 
@@ -91,36 +88,35 @@ def delete_notes(date=None):
 
 def read_notes(date=None):
     tts("Let me check your notes. One moment please.")
-    
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    # Handle keywords for lab convenience
-    if date == "today" or not date:
+    # Convert keywords to the Database format: YYYY-MM-DD
+    if date == "today":
         search_date = datetime.now().strftime("%Y-%m-%d")
     elif date == "yesterday":
         search_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     elif date == "tomorrow":
         search_date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
     else:
-        # If a specific date like "15-02-2026" was passed, convert it to "2026-02-15"
+        # If a date like '15-02-2026' comes in, flip it to '2026-02-15'
         try:
             search_date = datetime.strptime(date, "%d-%m-%Y").strftime("%Y-%m-%d")
         except:
             search_date = date
 
-    # Query using 'content' and 'timestamp' to match the website
+    # IMPORTANT: Changed 'notes' and 'notes_date' to 'content' and 'timestamp'
     cursor.execute("SELECT content FROM notes WHERE timestamp LIKE ?", (f"{search_date}%",))
     notes = cursor.fetchall()
     conn.close()
 
     if notes:
-        tts(f"Here are your notes for {date if date else 'today'}:")
+        tts(f"Here are your notes.")
         for note in notes:
             print(f"- {note[0]}")
             tts(note[0])
     else:
-        tts(f"I found no notes for {date if date else 'today'}.")
+        tts(f"I found no notes for that date.")
 
 def show_all_notes():
     tts("Checking all saved notes.")
