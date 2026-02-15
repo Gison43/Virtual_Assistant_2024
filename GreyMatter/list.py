@@ -1,120 +1,102 @@
 #/usr/bin/python3
 #This is code for a grocery list or any kind of list
 
+import sqlite3
 import os
+from datetime import datetime
 from GreyMatter.SenseCells.tts_engine import tts
+
+# Standardize the database path to match notes.py
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "memory.db")
 
 class List:
     def __init__(self):
-        self.list_dir = os.path.expanduser("~/Virtual_Assistant_2024/GreyMatter/Lists")  #central storage directory
-        os.makedirs(self.list_dir, exist_ok=True)
+        # Ensure the table exists in memory.db
+        self.init_db()
 
-    def _get_file_path(self, list_name):
-        """Returns the full path of the list file."""
-        return os.path.join(self.list_dir, f"{list_name.replace(' ', '_')}.txt")
+    def init_db(self):
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS lists
+                         (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                          list_name TEXT, 
+                          item TEXT, 
+                          timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
+        conn.commit()
+        conn.close()
 
     def create_list(self, list_name):
-        file_name = self._get_file_path(list_name)
-        with open(file_name, 'w') as f:
-            f.write("") #ensure the file is properly initialized
-        tts(f"List '{list_name}' has been created and saved in {self.list_dir}")
-        print(f"Saving list to: {file_name}")  #debugging
-        if os.path.exists(file_name):
-            print(f"✅ List file created at: {file_name}")
-        else:
-            print(f"❌ ERROR: List file was NOT created at: {file_name}")
+        # In a database, we don't need to create an empty file. 
+        # We just confirm the name to the user.
+        tts(f"List {list_name} is ready. What would you like to add to it?")
 
-
-    def add_item(self,items, list_name):
-        file_path = self._get_file_path(list_name)
-        #load existing items from file
-        #Ensure items is always a list
+    def add_item(self, items, list_name):
         if isinstance(items, str):
-            items = [items] #converta a single item to a list
-        # Load existing itmes.
-        existing_items = []           
-        if os.path.exists(file_path):
-            with open(file_path, 'r') as f:
-                exiting_items = [line.strip() for line in f.readlines()]
-                
-        # Remove "and" and add only new items
-        items = [i.strip() for i in items if i.lower().strip() != "and"]
-        existing_items.extend(items)  # Add all new items at once
+            items = [items]
+        
+        # Clean the items (remove "and", etc.)
+        items = [i.strip() for i in items if i.lower().strip() != "and" and i.strip()]
 
-    # Save the updated list
-        with open(file_path, 'w') as f:
-            for i in existing_items:
-                f.write(f"{i}\n")
-
-    # Speak confirmation only once
-        if items:
-            tts(f"{', '.join(items)} added to the list called {list_name}")
-            print(f"✅ {', '.join(items)} added to {file_path}")
-        else:
-            print("⚠️ No valid items to add.")
-
-    def save_list(self, list_name):
-        directory = os.path.expanduser("~/GreyMatter/Lists")
-        os.makedirs(directory, exist_ok=True)
-        file_name = os.path.join(directory, f"{list_name.replace(' ', '_')}.txt")
-
-        items = []
-        if os.path.exists(file_name):
-            with open(file_name, 'r') as f:
-                items = [line.strip() for line in f.readlines()]
-    #write the items back to the file
-        with open(file_name, 'a') as f:
+        try:
+            conn = sqlite3.connect(db_path)
             for item in items:
-                f.write(f"{item}\n")
-                
-        if os.path.exists(file_name):
-            print(f"List successfully saved at: {file_name}")
-
-        else:
-            print(f"ERROR: List was not saved at: {file_name}")
+                conn.execute("INSERT INTO lists (list_name, item) VALUES (?, ?)", 
+                             (list_name.lower(), item))
+            conn.commit()
+            conn.close()
+            
+            tts(f"Added {', '.join(items)} to your {list_name} list.")
+            print(f"✅ Saved to DB: {items} in {list_name}")
+        except Exception as e:
+            print(f"Database Error: {e}")
+            tts("I had trouble saving those items to the database.")
 
     def remove_items(self, item, list_name):
-        file_path = self._get_file_path(list_name)
-
-        if not os.path.exists(file_path):
-            tts(f"Sorry, the list '{list_name}' does not exist.")
-            return
-
-        with open(file_path, 'r') as f:
-            items = [line.strip() for line in f.readlines()]
-            
-        if item in items:
-            items.remove(item)
-            with open(file_path, 'w') as f:
-                for i in items:
-                    f.write(f"{i}\n")
-            tts(f"{item} removed from the list called {list_name}")
-            print(f"{item} removed from the list called {list_name}")
-        else:
-            print(f"{item} is not in the list called {list_name}")
-            tts(f"{item} is not in the list called {list_name}")
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM lists WHERE list_name = ? AND item = ?", 
+                           (list_name.lower(), item))
+            if cursor.rowcount > 0:
+                tts(f"Removed {item} from {list_name}.")
+            else:
+                tts(f"{item} was not found in that list.")
+            conn.commit()
+            conn.close()
+        except Exception as e:
+            print(f"Database Error: {e}")
 
     def read_list(self, list_name):
-        file_path = self._get_file_path(list_name)
-
-        if os.path.exists(file_path):
-            with open(file_path, 'r') as f:
-                items = [line.strip() for line in f.readlines()]
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            cursor.execute("SELECT item FROM lists WHERE list_name = ?", (list_name.lower(),))
+            items = cursor.fetchall()
+            conn.close()
 
             if items:
-                tts(f"Here are the items in the list called '{list_name}':")
-                for item in items:
-                    tts(item)
+                tts(f"In your {list_name} list, you have:")
+                for row in items:
+                    tts(row[0])
             else:
-                tts(f"The list called '{list_name}' is empty")
-        else:
-            tts(f"Sorry the list called '{list_name}' does not exist")
-            
+                tts(f"The {list_name} list is currently empty.")
+        except Exception as e:
+            print(f"Database Error: {e}")
+
     def view_list(self):
-        lists = os.listdir(self.list_dir)
-        
-        if lists:
-            tts("Here are your available lists:")
-            for lst in lists:
-                list_name = lst.replace("_", " ").replace(".txt"," ")
-                tts(list_name)
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            cursor.execute("SELECT DISTINCT list_name FROM lists")
+            lists = cursor.fetchall()
+            conn.close()
+
+            if lists:
+                tts("You have the following lists:")
+                for lst in lists:
+                    tts(lst[0])
+            else:
+                tts("You don't have any lists saved yet.")
+        except Exception as e:
+            print(f"Database Error: {e}")
