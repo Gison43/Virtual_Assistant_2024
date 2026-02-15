@@ -4,13 +4,17 @@ from datetime import timedelta
 from GreyMatter.SenseCells.tts_engine import tts
 from user_input import get_user_input
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "memory.db")
+
 def note_something(speech_text):
-  conn = sqlite3.connect('memory.db')
+  conn = sqlite3.connect('db_path')
   words_of_message = speech_text.split ()
-  words_of_message.remove ('note')
+  if 'note' in words_of_message: words_of_message.remove ('note')
   cleaned_message = ' '.join (words_of_message)
   
-  conn.execute ("INSERT INTO notes (notes, notes_date) VALUES (?, ? )", (cleaned_message, datetime.strftime(datetime.now(), '%d-%m-%Y')))
+  conn.execute("INSERT INTO notes (content, timestamp) VALUES (?, ?)", 
+               (cleaned_message, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
   conn.commit()
   conn.close()
   tts('your note has been saved.')
@@ -63,7 +67,7 @@ def handle_notes(speech_text):
       delete_notes(date)
 
 def delete_notes(date=None):
-  conn = sqlite3.connect('memory.db')
+  conn = sqlite3.connect('db_path')
   cursor = conn.cursor()
 
   if date is None:
@@ -86,7 +90,7 @@ def delete_notes(date=None):
 def read_notes(date=None):
     tts("Let me check your notes.  One moment please.")
   
-    conn = sqlite3.connect("memory.db")
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     if date == "today":
@@ -110,7 +114,7 @@ def read_notes(date=None):
         print(f"No notes found for {date}.")
 
 def show_all_notes():
-  conn = sqlite3.connect('memory.db')
+  conn = sqlite3.connect('db_path')
   tts('Your notes are as follows:')
   
   cursor = conn.execute("SELECT notes, notes_date FROM notes")
