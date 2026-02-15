@@ -44,7 +44,7 @@ def fix_audio_logic():
     SB_NAME = "alsa_output.platform-bcm2835_audio.analog-stereo"
 
     try:
-        Force PulseAudio to switch to the SoundBlaster
+        #Force PulseAudio to switch to the SoundBlaster
         subprocess.run(["pactl", "set-default-sink", SB_NAME], check=True)
         #Ensure it's not muted and volume is audible
         subprocess.run(["pactl", "set-sink-mute", SB_NAME, "0"], check=True)
