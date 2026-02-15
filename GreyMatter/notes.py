@@ -8,16 +8,26 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "memory.db")
 
 def note_something(speech_text):
-  conn = sqlite3.connect(db_path)
-  words_of_message = speech_text.split ()
-  if 'note' in words_of_message: words_of_message.remove ('note')
-  cleaned_message = ' '.join (words_of_message)
-  
-  conn.execute("INSERT INTO notes (content, timestamp) VALUES (?, ?)", 
-               (cleaned_message, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-  conn.commit()
-  conn.close()
-  tts('your note has been saved.')
+    try:
+        conn = sqlite3.connect(db_path)
+        # SELF-HEALING: Create the table if it's missing
+        conn.execute('''CREATE TABLE IF NOT EXISTS notes
+                     (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                      content TEXT, 
+                      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
+        
+        words_of_message = speech_text.split()
+        if 'note' in words_of_message: words_of_message.remove('note')
+        cleaned_message = ' '.join(words_of_message)
+        
+        conn.execute("INSERT INTO notes (content, timestamp) VALUES (?, ?)", 
+                     (cleaned_message, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        conn.commit()
+        conn.close()
+        tts('your note has been saved.')
+    except Exception as e:
+        print(f"Database Error: {e}")
+        tts("I could not save the note due to a database error.")
 
 def handle_notes(speech_text):
     """
