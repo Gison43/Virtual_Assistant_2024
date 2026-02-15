@@ -3,6 +3,7 @@ from GreyMatter.SenseCells.tts_engine import tts
 
 def get_user_input():
    r = sr.Recognizer()
+   time.sleep(0.5)
    try:
       m = sr.Microphone(device_index=2, sample_rate=16000)
       with m as source:
