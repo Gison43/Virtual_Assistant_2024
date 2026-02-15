@@ -1,6 +1,6 @@
 import sqlite3
-from datetime import datetime
-from datetime import timedelta
+import os
+from datetime import datetime, timedelta
 from GreyMatter.SenseCells.tts_engine import tts
 from user_input import get_user_input
 
@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "memory.db")
 
 def note_something(speech_text):
-  conn = sqlite3.connect('db_path')
+  conn = sqlite3.connect(db_path)
   words_of_message = speech_text.split ()
   if 'note' in words_of_message: words_of_message.remove ('note')
   cleaned_message = ' '.join (words_of_message)
@@ -67,7 +67,7 @@ def handle_notes(speech_text):
       delete_notes(date)
 
 def delete_notes(date=None):
-  conn = sqlite3.connect('db_path')
+  conn = sqlite3.connect(db_path)
   cursor = conn.cursor()
 
   if date is None:
@@ -114,12 +114,24 @@ def read_notes(date=None):
         print(f"No notes found for {date}.")
 
 def show_all_notes():
-  conn = sqlite3.connect('db_path')
-  tts('Your notes are as follows:')
-  
-  cursor = conn.execute("SELECT notes, notes_date FROM notes")
+    tts("Checking all saved notes.")
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        # We use 'content' here to match the website's database structure
+        cursor.execute("SELECT content FROM notes ORDER BY timestamp DESC")
+        notes = cursor.fetchall()
+        conn.close()
 
-  for row in cursor:
-    tts(f"On {row[1]}: {row[0]}")
-
-  conn.close()
+        if notes:
+            tts(f"You have {len(notes)} notes saved.")
+            for note in notes:
+                print(f"- {note[0]}")
+                tts(note[0])
+        else:
+            tts("Your notebook is currently empty.")
+            
+    except sqlite3.Error as e:
+        print(f"Database Error: {e}")
+        tts("I encountered a problem reading the database.")
