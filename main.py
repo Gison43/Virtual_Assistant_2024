@@ -58,58 +58,70 @@ def fix_audio_logic():
 def main():
    print("Initializing main systems...")
    play_music.mp3gen(music_path)
-   stopwatch_instance = Stopwatch() #create a stopwatch instance so that we can use the Stopwatch class
+   stopwatch_instance = Stopwatch()
     
-   if args.text: #text input mode
+   if args.text:
        while True:
            keyboard_input = input("Enter you command: ")
            if keyboard_input.lower() == "exit":
-               break #exit loop when the user types 'exit'
-           brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path) #process text-based commands
+               break
+           brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path)
    
-   else: #speech input mode
+   else: # Speech mode
        r = sr.Recognizer()
        r.pause_threshold = 0.5
-         
+       
+       # Define the microphone ONCE
        try:
           m = sr.Microphone(device_index=2, sample_rate = 16000)
        except Exception as e:
             print(f"Hardware Error {e}")
             return
-   
+
+       # Calibrate for noise ONCE before starting the loop
        with m as source:
              print("Adjusting for ambient noise...Please be quiet.")
              r.adjust_for_ambient_noise(source, duration=1)
              print("Set minimum energy threshold to {}".format(r.energy_threshold))
-   
-             while True:
-                 print("Listening...") #print("stopwatch instance ", stopwatch_instance.is_running)
-                 r.pause_threshold = 0.5
-                 
-                 try:
+
+       # LOOP STARTS HERE - OUTSIDE THE MICROPHONE BLOCK
+       while True:
+             print("Listening...")
+             print("stopwatch instance ", stopwatch_instance.is_running)
+             
+             # 1. Open Mic, Listen, then CLOSE Mic immediately
+             try:
+                 with m as source:
+                     r.pause_threshold = 0.5
                      audio = r.listen(source, phrase_time_limit = 10.0)
-                     speech_text =""
-                     speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
-                     print("Recognizing and transcribing what you said...")
-                     print(f"Computer thinks you said: '{speech_text}'")
-   
-                     if "fix audio" in speech_text:
-                         print("Executing manual audio override...")
-                         result_message = fix_audio_logic()
-                         tts(result_message)
-                         continue  # Jump back to the start of the loop
-   
-                     print("stopwatch instance ", stopwatch_instance.is_running)
-   
-                     if speech_text.strip(): #only process if something is actually said
-                         brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
-   
-                 except sr.UnknownValueError:
-                     print("Computer didn't understand.")
-                     #tts("I do not understand")
-   
-                 except sr.RequestError as e:
-                     print("Could not request results from Google Speech Recognition service; {0}".format(e))
+             except sr.WaitTimeoutError:
+                 continue
+             except Exception as e:
+                 print(f"Listening error: {e}")
+                 continue
+             
+             # 2. Mic is now CLOSED. We can safely process data.
+             try:
+                 print("Recognizing and transcribing what you said...")
+                 speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
+                 print(f"Computer thinks you said: '{speech_text}'")
+
+                 if "fix audio" in speech_text:
+                     print("Executing manual audio override...")
+                     result_message = fix_audio_logic()
+                     tts(result_message)
+                     continue
+
+                 if speech_text.strip():
+                     # Now we can call the brain, and if it needs the mic, it's free!
+                     brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
+
+             except sr.UnknownValueError:
+                 print("Computer didn't understand.")
+             except sr.RequestError as e:
+                 print("Could not request results; {0}".format(e))
+             except Exception as e:
+                 print(f"Processing error: {e}")
              
 if __name__ == "__main__":
     try:
