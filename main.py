@@ -115,7 +115,7 @@ if __name__ == "__main__":
     try:
         # 1. FIX THE AUDIO ROUTING FIRST
         print("[SYSTEM] Initializing audio routing and starting Web dashboard...")
-        subprocess.Popen([sys.executable, "app.py"])
+        subprocess.Popen([sys.executable, "GreyMatter/app.py"])
         audio_status = fix_audio_logic()
         print(f"[SYSTEM] {audio_status}")
         
