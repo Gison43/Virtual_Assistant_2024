@@ -35,11 +35,62 @@ class List:
         
         # Clean the items
         items = [i.strip() for i in items if i.lower().strip() != "and" and i.strip()]
+        # 2. Use the new Database storage logic
+        items_string = ", ".join(items) # Turn ['milk', 'eggs'] into "milk, eggs"
 
-        conn = sqlite3.connect(db_path)
-        for item in items:
-            conn.execute("INSERT INTO lists (list_name, item) VALUES (?, ?)", 
-                         (list_name.lower(), item))
-        conn.commit()
-        conn.close()
-        tts(f"Added {', '.join(items)} to your {list_name} list.")
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            
+            # Check if list already exists
+            cursor.execute("SELECT items FROM lists WHERE name = ?", (list_name.lower(),))
+            result = cursor.fetchone()
+
+            if result:
+                # Update existing list
+                new_items = result[0] + ", " + items_string
+                cursor.execute("UPDATE lists SET items = ? WHERE name = ?", (new_items, list_name.lower()))
+            else:
+                # Create new list row
+                cursor.execute("INSERT INTO lists (name, items) VALUES (?, ?)", (list_name.lower(), items_string))
+            
+            conn.commit()
+            conn.close()
+            tts(f"Added {', '.join(items)} to your {list_name} list.")
+        except Exception as e:
+            print(f"Database Error: {e}")
+
+    def read_list(self, list_name):
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            # We look for the row where 'name' matches what you said
+            cursor.execute("SELECT items FROM lists WHERE name = ?", (list_name.lower(),))
+            row = cursor.fetchone()
+            conn.close()
+
+            if row:
+                # row[0] is the string of items (e.g., "apples, bananas")
+                tts(f"In your {list_name} list, you have: {row[0]}")
+            else:
+                tts(f"I couldn't find a list called {list_name}.")
+        except Exception as e:
+            print(f"Database Error: {e}")
+
+    def view_list(self):
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            # This gets the 'name' column for every row in the table
+            cursor.execute("SELECT name FROM lists")
+            rows = cursor.fetchall()
+            conn.close()
+
+            if rows:
+                tts("You have the following lists:")
+                for row in rows:
+                    tts(row[0]) # Reads each list name out loud
+            else:
+                tts("You don't have any lists saved yet.")
+        except Exception as e:
+            print(f"Database Error: {e}")
