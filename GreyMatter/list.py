@@ -25,9 +25,20 @@ class List:
         conn.close()
 
     def create_list(self, list_name):
-        # We don't need to create a file, the table handles it.
-        # This just confirms the name to the user.
-        return True 
+       """Actually saves the list to the database even if it's empty"""
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            # Check if it already exists so we don't duplicate
+            cursor.execute("SELECT name FROM lists WHERE name = ?", (list_name.lower(),))
+            if not cursor.fetchone():
+                cursor.execute("INSERT INTO lists (name, items) VALUES (?, ?)", (list_name.lower(), ""))
+                conn.commit()
+            conn.close()
+            return True
+        except Exception as e:
+            print(f"Error creating list: {e}")
+            return False
 
     def add_item(self, items, list_name):
         if isinstance(items, str):
