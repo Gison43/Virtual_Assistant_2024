@@ -81,16 +81,16 @@ def main():
              r.adjust_for_ambient_noise(source, duration=1)
              print("Set minimum energy threshold to {}".format(r.energy_threshold))
 
-       # LOOP STARTS HERE - OUTSIDE THE MICROPHONE BLOCK
+       # LOOP STARTS HERE - OUTSIDE THE MICROPHONE BLOCK - it's the heartbeat of your VA
        while True:
              print("Listening...")
              print("stopwatch instance ", stopwatch_instance.is_running)
              
              # 1. Open Mic, Listen, then CLOSE Mic immediately
              try:
-                 with m as source:
+                 with m as source: #opens the microphone
                      r.pause_threshold = 0.5
-                     audio = r.listen(source, phrase_time_limit = 10.0)
+                     audio = r.listen(source, phrase_time_limit = 10.0) #phrase time limit of 10 seconds.
              except sr.WaitTimeoutError:
                  continue
              except Exception as e:
