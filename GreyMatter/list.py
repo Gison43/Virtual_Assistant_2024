@@ -56,7 +56,6 @@ class List:
             
             conn.commit()
             conn.close()
-            tts(f"Added {', '.join(items)} to your {list_name} list.")
         except Exception as e:
             print(f"Database Error: {e}")
 
