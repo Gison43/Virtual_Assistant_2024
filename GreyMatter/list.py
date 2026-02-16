@@ -18,7 +18,7 @@ class List:
         conn = sqlite3.connect(db_path)
         conn.execute('''CREATE TABLE IF NOT EXISTS lists
                      (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                      list_name TEXT, 
+                      name TEXT, 
                       items TEXT, 
                       timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
         conn.commit()
