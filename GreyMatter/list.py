@@ -19,7 +19,7 @@ class List:
         conn.execute('''CREATE TABLE IF NOT EXISTS lists
                      (id INTEGER PRIMARY KEY AUTOINCREMENT, 
                       list_name TEXT, 
-                      item TEXT, 
+                      items TEXT, 
                       timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
         conn.commit()
         conn.close()
