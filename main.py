@@ -134,11 +134,11 @@ if __name__ == "__main__":
         # 3. DO THE GREETING (Moved from the top of the script)
         current_hour = datetime.datetime.now().hour
         if 5 <= current_hour < 12:
-            greeting = 'Good morning ' + name + ', systems are now ready. What is your command?'
+            greeting = 'Good morning ' + name + ', systems are now ready to run. What is your command?'
         elif 12 <= current_hour < 18:
-            greeting = 'Good afternoon ' + name + ', systems are now ready. What is your command?'
+            greeting = 'Good afternoon ' + name + ', systems are now ready to run. What is your command?'
         else:
-            greeting = 'Good evening ' + name + ', systems are now ready. What is your command?'
+            greeting = 'Good evening ' + name + ', systems are now ready to run. What is your command?'
         
         print(f"[SYSTEM] Greet: {greeting}")
         tts(greeting)
