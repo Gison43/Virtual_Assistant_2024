@@ -191,7 +191,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         tts("Which list would you like me to read?")
         list_name = get_user_input().lower()  # e.g., "grocery"
 
-        tif list_name:
+        if list_name:
             # Talk directly to list.py, which now talks to the DB
             my_list.read_list(list_name)
    
