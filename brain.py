@@ -182,7 +182,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
        list_name = get_user_input()
 
        tts("What item or items would you like to add to the list?")
-       items = get_user_input().split(",") #split by commas to handle multiple items
+       items = get_user_input().lower().replace(" and ", ",").split(",")
 
        my_list.add_item(items, list_name) #provide the list_name argument and add each item to the list
        tts(f"Added to your {list_name} list.")
@@ -191,20 +191,13 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         tts("Which list would you like me to read?")
         list_name = get_user_input().lower()  # e.g., "grocery"
 
-        try:
-            # This asks your Flask server for the list items
-            response = requests.get(f"http://127.0.0.1:5000/get_list/{list_name}")
-            
-            if response.status_code == 200:
-                data = response.json()
-                items = data['items'] # This is the list of items
-                item_string = ", ".join(items)
-                tts(f"Your {list_name} list contains: {item_string}")
-            else:
-                tts(f"I'm sorry, I couldn't find a list named {list_name}.")
-        except Exception as e:
-            print(f"Error fetching list: {e}")
-            tts("I had trouble accessing the database.")
+        tif list_name:
+            # Talk directly to list.py, which now talks to the DB
+            my_list.read_list(list_name)
+   
+   elif check_message(['show', 'lists']) or check_message(['my', 'lists']):
+        # This will list the names of all lists (e.g., "Grocery", "Todo")
+        my_list.view_list()
 
    elif check_message(['how', 'old', 'am', 'i']):
        tell_time.how_old()
