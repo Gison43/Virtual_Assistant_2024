@@ -13,9 +13,6 @@ import brain
 import argparse
 import subprocess
 
-from os import path  #possibly don't need this?
-from speech_recognition.recognizers import google
-
 from GreyMatter import play_music
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.stopwatch import Stopwatch
