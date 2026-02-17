@@ -21,7 +21,7 @@ def init_db():
     conn.execute('''CREATE TABLE IF NOT EXISTS lists
                  (id INTEGER PRIMARY KEY AUTOINCREMENT, 
                   name TEXT, 
-                  item TEXT, 
+                  items TEXT, 
                   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
     conn.commit()
     conn.close()
@@ -34,14 +34,13 @@ def index():
         with sqlite3.connect(db_path) as conn:
             cursor = conn.cursor()
             # Select distinct lists and their items
-            cursor.execute("SELECT list_name, item FROM lists ORDER BY timestamp DESC")
+            cursor.execute("SELECT name, items FROM lists ORDER BY timestamp DESC")
             rows = cursor.fetchall()
             
             # Group items: {'grocery': ['apples', 'bananas'], 'lab': ['beakers']}
-            for list_name, item in rows:
+            for list_name, items_string in rows:
                 if list_name not in lists_data:
-                    lists_data[list_name] = []
-                lists_data[list_name].append(item)
+                    lists_data[list_name] = items_string.split(", ")
     except Exception as e:
         print(f"DB Error (Lists): {e}")
 
@@ -90,7 +89,7 @@ def index():
                 <div class="card">
                     <strong style="color:#bb86fc; text-transform: capitalize;">{{ name }}</strong>
                     <br>
-                    {% for item in items %}
+                    {% for item in items_string.split(', ') %}
                         <span class="tag">{{ item }}</span>
                     {% endfor %}
                 </div>
@@ -123,7 +122,7 @@ def add_list_web():
 
     with sqlite3.connect(db_path) as conn:
         for item in items:
-            conn.execute("INSERT INTO lists (list_name, item) VALUES (?, ?)", (list_name, item))
+            conn.execute("INSERT INTO lists (name, items) VALUES (?, ?)", (list_name, item))
         conn.commit()
     return redirect(url_for('index'))
 
