@@ -41,34 +41,34 @@ class List:
             return False
 
     def add_item(self, items, list_name):
+        # 1. If we got one string like "gas and windows", split it into a list
         if isinstance(items, str):
-            items = [items]
+            # Replace ' and ' with a comma, then split by comma
+            # This turns "gas and windows" into ["gas", "windows"]
+            items = items.lower().replace(" and ", ",").split(",")
         
-        # Clean the items
-        items = [i.strip() for i in items if i.lower().strip() != "and" and i.strip()]
-        # 2. Use the new Database storage logic
-        items_string = ", ".join(items) # Turn ['milk', 'eggs'] into "milk, eggs"
+        # 2. Clean up each item (remove the word "add" if it's there)
+        cleaned_list = []
+        for i in items:
+            clean = i.strip().replace("add ", "")
+            if clean and clean != "and":
+                cleaned_list.append(clean)
+        
+        items_string = ", ".join(cleaned_list)
 
         try:
             conn = sqlite3.connect(db_path)
             cursor = conn.cursor()
-            
             cursor.execute("SELECT items FROM lists WHERE name = ?", (list_name.lower(),))
             result = cursor.fetchone()
 
             if result:
-                existing_items = result[0]
-                updated_items = (existing_items + ", " + items_string) if existing_items else items_string
-                cursor.execute("UPDATE lists SET items = ? WHERE name = ?", (updated_items, list_name.lower()))
+                existing = result[0]
+                updated = (existing + ", " + items_string) if existing else items_string
+                cursor.execute("UPDATE lists SET items = ? WHERE name = ?", (updated, list_name.lower()))
                 conn.commit()
-                # Confirm to the user
-                tts(f"I've added {items_string} to your {list_name} list.")
-            else:
-                # If for some reason create_list failed, we insert it here
-                cursor.execute("INSERT INTO lists (name, items) VALUES (?, ?)", (list_name.lower(), items_string))
-                conn.commit()
-                tts(f"I've created the {list_name} list and added {items_string}.")
-                
+                # Use the cleaned string for confirmation
+                tts(f"Added {items_string} to your {list_name} list.")
             conn.close()
         except Exception as e:
             print(f"Database Error: {e}")
