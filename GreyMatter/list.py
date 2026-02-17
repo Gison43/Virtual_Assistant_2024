@@ -49,23 +49,19 @@ class List:
         # 2. Use the new Database storage logic
         items_string = ", ".join(items) # Turn ['milk', 'eggs'] into "milk, eggs"
 
-        try:
-            conn = sqlite3.connect(db_path)
-            cursor = conn.cursor()
-            
-            # Check if list already exists
-            cursor.execute("SELECT items FROM lists WHERE name = ?", (list_name.lower(),))
-            result = cursor.fetchone()
-
-            if result:
-                # Update existing list
-                new_items = result[0] + ", " + items_string
-                cursor.execute("UPDATE lists SET items = ? WHERE name = ?", (new_items, list_name.lower()))
+        if result:
+                existing_items = result[0]
+                updated_items = (existing_items + ", " + items_string) if existing_items else items_string
+                cursor.execute("UPDATE lists SET items = ? WHERE name = ?", (updated_items, list_name.lower()))
+                conn.commit()
+                # Confirm to the user
+                tts(f"I've added {items_string} to your {list_name} list.")
             else:
-                # Create new list row
+                # If for some reason create_list failed, we insert it here
                 cursor.execute("INSERT INTO lists (name, items) VALUES (?, ?)", (list_name.lower(), items_string))
+                conn.commit()
+                tts(f"I've created the {list_name} list and added {items_string}.")
             
-            conn.commit()
             conn.close()
         except Exception as e:
             print(f"Database Error: {e}")
