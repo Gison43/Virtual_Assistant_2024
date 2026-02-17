@@ -56,15 +56,15 @@ class List:
                 conn.commit()
                 # Confirm to the user
                 tts(f"I've added {items_string} to your {list_name} list.")
-            else:
-                # If for some reason create_list failed, we insert it here
-                cursor.execute("INSERT INTO lists (name, items) VALUES (?, ?)", (list_name.lower(), items_string))
-                conn.commit()
-                tts(f"I've created the {list_name} list and added {items_string}.")
+        else:
+            # If for some reason create_list failed, we insert it here
+            cursor.execute("INSERT INTO lists (name, items) VALUES (?, ?)", (list_name.lower(), items_string))
+            conn.commit()
+            tts(f"I've created the {list_name} list and added {items_string}.")
                 
-            conn.close()
-        except Exception as e:
-            print(f"Database Error: {e}")
+        conn.close()
+    except Exception as e:
+        print(f"Database Error: {e}")
 
     def read_list(self, list_name):
         try:
