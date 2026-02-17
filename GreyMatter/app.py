@@ -20,7 +20,7 @@ def init_db():
     
     conn.execute('''CREATE TABLE IF NOT EXISTS lists
                  (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                  list_name TEXT, 
+                  name TEXT, 
                   item TEXT, 
                   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
     conn.commit()
