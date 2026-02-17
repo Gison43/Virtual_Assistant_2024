@@ -61,7 +61,7 @@ class List:
                 cursor.execute("INSERT INTO lists (name, items) VALUES (?, ?)", (list_name.lower(), items_string))
                 conn.commit()
                 tts(f"I've created the {list_name} list and added {items_string}.")
-            
+                
             conn.close()
         except Exception as e:
             print(f"Database Error: {e}")
