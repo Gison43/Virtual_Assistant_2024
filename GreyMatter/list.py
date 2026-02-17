@@ -64,10 +64,11 @@ class List:
 
             if result:
                 existing = result[0]
+                # If there's already stuff in the list, add a comma before the new stuff
                 updated = (existing + ", " + items_string) if existing else items_string
                 cursor.execute("UPDATE lists SET items = ? WHERE name = ?", (updated, list_name.lower()))
                 conn.commit()
-                # Use the cleaned string for confirmation
+                # The VA confirms what it actually saved
                 tts(f"Added {items_string} to your {list_name} list.")
             conn.close()
         except Exception as e:
