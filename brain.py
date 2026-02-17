@@ -177,15 +177,26 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
             # CHANGE 4: Handle silence (if you didn't say a name)
             tts("I didn't hear a name, so I cancelled the list creation.")
        
-   elif check_message(['add','to', 'list']):
-       tts("What is the name of the list?")
-       list_name = get_user_input()
+   elif check_message(['add', 'to', 'list']):
+    tts("What is the name of the list?")
+    list_name = get_user_input()
 
-       tts("What item or items would you like to add to the list?")
-       items = get_user_input().lower().replace(" and ", ",").split(",")
+    if list_name:
+        finished = False
+        while not finished:
+            tts(f"What would you like to add to {list_name}?")
+            user_speech = get_user_input().lower()
+            
+            # Use our improved add_item function
+            my_list.add_item(user_speech, list_name)
 
-       my_list.add_item(items, list_name) #provide the list_name argument and add each item to the list
-       tts(f"Added to your {list_name} list.")
+            # Ask if they are done
+            tts("Is there anything else?")
+            response = get_user_input().lower()
+
+            if 'no' in response or 'done' in response or 'that is all' in response:
+                tts(f"Okay, I've updated your {list_name} list.")
+                finished = True
        
    elif check_message(['what', 'on', 'list']) or check_message(['read', 'list']):
         tts("Which list would you like me to read?")
