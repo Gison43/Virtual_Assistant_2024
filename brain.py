@@ -187,16 +187,29 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
             tts(f"What would you like to add to {list_name}?")
             user_speech = get_user_input().lower()
             
-            # Use our improved add_item function
+            # Send to list.py to save
             my_list.add_item(user_speech, list_name)
 
-            # Ask if they are done
+            # The Follow-up Question
             tts("Is there anything else?")
             response = get_user_input().lower()
 
+            # LOGIC: 
+            # If you say "NO", we are DONE.
+            # If you say "YES", we stay in the loop.
             if 'no' in response or 'done' in response or 'that is all' in response:
                 tts(f"Okay, I've updated your {list_name} list.")
                 finished = True
+            elif 'yes' in response:
+                # We don't need to do anything here, 
+                # the loop will naturally start over.
+                continue 
+            else:
+                # If it didn't hear a clear yes/no
+                tts("I'm sorry, did you want to add more?")
+                confirm = get_user_input().lower()
+                if 'no' in confirm:
+                    finished = True
        
    elif check_message(['what', 'on', 'list']) or check_message(['read', 'list']):
         tts("Which list would you like me to read?")
