@@ -25,7 +25,7 @@ class List:
         conn.close()
 
     def create_list(self, list_name):
-       """Actually saves the list to the database even if it's empty"""
+        """Actually saves the list to the database even if it's empty"""
         try:
             conn = sqlite3.connect(db_path)
             cursor = conn.cursor()
