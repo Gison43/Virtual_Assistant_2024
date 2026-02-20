@@ -4,6 +4,7 @@ import datetime
 import re
 import time
 import requests
+import threading
 
 from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep, play_music, area, notes
 from GreyMatter.list import List
@@ -12,6 +13,7 @@ from GreyMatter.spanish_translator import language_selection
 from GreyMatter.stopwatch import Stopwatch
 #from swpy import Timer
 from user_input import get_user_input
+from ear_test import check_ncf_email
 
 #from GreyMatter import french_translator
 
@@ -340,3 +342,8 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
 if __name__ == "__main__":
    main()
+
+# Create a dedicated 'nerve' for email that runs alongside your voice ear
+email_thread = threading.Thread(target=check_ncf_email_loop) 
+email_thread.daemon = True
+email_thread.start()
