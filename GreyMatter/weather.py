@@ -35,8 +35,9 @@ def weather():
             tts(weather_result)
             return weather_result
     else:
-        tts("Failed to retrieve weather data.")
-        return("Failed to retrieve weather data.")
+        error_msg="Failed to retrieve weather data."
+        tts(error_msg)
+        return(error_msg)
 
 if __name__ == "__main__":
     weather()
