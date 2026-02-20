@@ -27,7 +27,7 @@ def weather():
             if pressure_tendency == "falling":
                 pressure_tendency_str = "falling"
             elif pressure_tendency == "rising":
-                pressure_tendency = "rising"
+                pressure_tendency_str = "rising"
 
             # create the weather_resulst string
 
