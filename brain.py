@@ -342,8 +342,3 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
 if __name__ == "__main__":
    main()
-
-# Create a dedicated 'nerve' for email that runs alongside your voice ear
-email_thread = threading.Thread(target=check_ncf_email_loop) 
-email_thread.daemon = True
-email_thread.start()
