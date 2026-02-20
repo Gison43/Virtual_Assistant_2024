@@ -23,8 +23,13 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 profile_path = os.path.join(dir_path, 'profile.yaml')
 
 # Now open it using the full path
-with open(profile_path, 'r') as profile:
-    profile_data = yaml.safe_load(profile)
+try:
+    with open(profile_path, 'r') as profile:
+        profile_data = yaml.safe_load(profile)
+except FileNotFoundError:
+    print(f"ERROR: Could not find profile.yaml at {profile_path}")
+    sys.exit(1)
+    
 
 #this is to initialize text commands to the VA
 parser = argparse.ArgumentParser(description="Virtual Assistant with text and voice input.")
