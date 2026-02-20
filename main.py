@@ -19,9 +19,12 @@ from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.stopwatch import Stopwatch
 from ear_test import check_ncf_email_loop
 
-profile = open('profile.yaml')
-profile_data = yaml.safe_load(profile)
-profile.close()
+dir_path = os.path.dirname(os.path.realpath(__file__))
+profile_path = os.path.join(dir_path, 'profile.yaml')
+
+# Now open it using the full path
+with open(profile_path, 'r') as profile:
+    profile_data = yaml.safe_load(profile)
 
 #this is to initialize text commands to the VA
 parser = argparse.ArgumentParser(description="Virtual Assistant with text and voice input.")
