@@ -65,14 +65,14 @@ def main():
     email_thread.start()
     print("VA: Remote Auditory Nerve (Email) is online.")
     
-   if args.text:
+    if args.text:
        while True:
            keyboard_input = input("Enter you command: ")
            if keyboard_input.lower() == "exit":
                break
            brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path)
    
-   else: # Speech mode
+    else: # Speech mode
        r = sr.Recognizer()
        r.pause_threshold = 0.5
        
