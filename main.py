@@ -12,10 +12,12 @@ import datetime
 import brain
 import argparse
 import subprocess
+import threading
 
 from GreyMatter import play_music
 from GreyMatter.SenseCells.tts_engine import tts
 from GreyMatter.stopwatch import Stopwatch
+from ear_test import check_ncf_email_loop
 
 profile = open('profile.yaml')
 profile_data = yaml.safe_load(profile)
@@ -53,9 +55,13 @@ def fix_audio_logic():
 
 
 def main():
-   print("Initializing main systems...")
-   play_music.mp3gen(music_path)
-   stopwatch_instance = Stopwatch()
+    print("Initializing main systems...")
+    play_music.mp3gen(music_path)
+    stopwatch_instance = Stopwatch()
+    email_thread = threading.Thread(target=check_ncf_email_loop)
+    email_thread.daemon = True
+    email_thread.start()
+    print("VA: Remote Auditory Nerve (Email) is online.")
     
    if args.text:
        while True:
