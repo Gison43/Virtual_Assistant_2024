@@ -58,6 +58,8 @@ def main():
     print("Initializing main systems...")
     play_music.mp3gen(music_path)
     stopwatch_instance = Stopwatch()
+
+    #this is the nerve!
     email_thread = threading.Thread(target=check_ncf_email_loop)
     email_thread.daemon = True
     email_thread.start()
