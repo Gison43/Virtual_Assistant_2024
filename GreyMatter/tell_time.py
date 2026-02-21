@@ -44,7 +44,7 @@ def how_old():
 
 def new_years_eve():
     current_year = dt.now().year
-    new_years = dt(current_year+1, 12, 31, 23, 59)
+    new_years = dt(target_year, 12, 31, 23, 59)
     time_until_new_years = new_years - dt.now()
     target_year = current_year + 1
     days_until_new_years = time_until_new_years.days
