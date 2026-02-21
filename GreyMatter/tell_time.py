@@ -44,12 +44,12 @@ def how_old():
 
 def new_years_eve():
     current_year = dt.now().year
-    new_years = dt(current_year, 12, 31, 23, 59)
+    new_years = dt(current_year+1, 12, 31, 23, 59)
     time_until_new_years = new_years - dt.now()
     days_until_new_years = time_until_new_years.days
     hours_until_new_years, remainder = divmod(time_until_new_years.seconds, 3600)
     minutes_until_new_years, _ = divmod(remainder, 60)
-    tts(f"It is {days_until_new_years} days, {hours_until_new_years} hours, and {minutes_until_new_years}mintues, until New Years Eve in the year {current_year}.")
+    tts(f"It is {days_until_new_years} days, {hours_until_new_years} hours, and {minutes_until_new_years}minutes, until New Years Eve in the year {current_year}.")
 
 def what_is_date():
    current_date = dt.now().date()
