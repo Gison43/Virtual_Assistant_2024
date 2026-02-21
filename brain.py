@@ -249,7 +249,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
    elif check_message(['when', 'new', 'years']) or check_message(['how', 'long', 'until', 'new', 'years', 'eve']):
       tell_time.new_years_eve()
 
-   elif check_message(['how', 'weather']) or check_message(['how', 'is', 'weather']) or check_message(['what', 'is', 'the', 'weather', 'like', 'outside']):
+   elif check_message(['how', 'weather']) or check_message(['how', 'is', 'weather']) or check_message(['how', 'is', 'weather', 'today'])or check_message(['what', 'is', 'weather', 'outside']):
        weather.weather()
 
    elif check_message(['when', 'created']):
