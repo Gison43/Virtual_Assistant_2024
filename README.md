@@ -8,3 +8,4 @@ and translate the word.  If they get it right, the VA will let them know.
 I've added a working stopwatch with splits (up to 5) and start, stop, reset.
 I've also created a note-taker, list-maker and the notes and list can be seen on a local site.  
 
+I also created a local dashboard that posts the lists and notes.  I can see them on the XX.XXX.XX:5000 site from my iPhone. 
