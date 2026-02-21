@@ -17,8 +17,6 @@ from ear_test import check_ncf_email
 
 #from GreyMatter import french_translator
 
-#stopwatch_instance = Stopwatch()
-
 my_list = List()  #create an instance of the list class
 
 ELAPSED_PHRASES = {
