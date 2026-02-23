@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import datetime
-import re
+#import re
 import time
 import requests
 import threading
