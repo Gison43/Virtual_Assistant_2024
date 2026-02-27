@@ -16,3 +16,5 @@ mpg123-1.32.5/
 memory.db
 ear_test.py
 signal_test.py
+.env
+profile.yaml
