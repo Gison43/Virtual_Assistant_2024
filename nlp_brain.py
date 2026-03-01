@@ -18,14 +18,30 @@ now = dt.now()
 def neural_network(name, text, city_name, city_code, stopwatch_instance, music_path):
     text = text.lower()
 
+    def get_joke():
+        return random.choice([
+            "what do you call a magical dog? A labracadabrador.",
+            "What do you call a pony with a cough? A little horse",
+            "Why was six scared of seven? Because seven ate nine.",
+            "What do you call a woman with one leg? Eileen",
+            "what did the pirate say when he turned 80? Aye matey."
+        ])
+
+    def get_intro():
+        return random.choice([
+            "I am computer, your dedicated and intelligent assistant.",
+            "computer, God dammit did I not tell you before",
+            "you keep asking me that, I am computer."
+        ])
+
     knowledge_base = {
 
         "who am i": f"You are {name}, my creator.",
-        "who are you": random.choice (["I am computer, your dedicated and intelligent assistant.", "computer, God dammit did I not tell you before", "you keeping methat, I am computer."]),
-        "tell me a joke": random.choice([ "what do you call a magical dog? A labracadabrador.", "What do you call a pony with a cough? A little horse", "Why was six scared of seven? Because seven ate nine.", "What do you call a woman with one leg? Eileen", "what did the pirate say when he turned 80? Aye matey."]),
+        "who are you": get_intro,
+        "tell me a joke": get_joke,
         "when is my birthday": "Your birthday is July 15.  You were born in 1978.",
         "when were you created": "I was created on February 12 2024",
-        "how are you": "I am doing well, and you?",
+        "how are you": "I am doing well, and you",
         "what is your name": "I dont have a name yet",
         "what are you": "I am a fully functional, artificially intelligent, state of the art virtual assistant, and I am all yours, baby.",
         "how old am i": tell_time.how_old,
@@ -45,7 +61,6 @@ def neural_network(name, text, city_name, city_code, stopwatch_instance, music_p
 
     if "time" in text:
         response = f"it's {dt.now().strftime('%I:%M %p')}"
-        tts(response)
-        return
+        return response
 
     return None
