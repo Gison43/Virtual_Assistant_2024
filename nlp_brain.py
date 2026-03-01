@@ -56,7 +56,10 @@ def neural_network(name, text, city_name, city_code, stopwatch_instance, music_p
     for key, response in knowledge_base.items():
          if key in text:
              if callable(response):
-                 return response()
+                 try:
+                     return response(name)
+                 except TypeError:
+                     return response()
              return response
 
     if "time" in text:
