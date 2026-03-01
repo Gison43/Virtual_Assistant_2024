@@ -16,8 +16,7 @@ def brain(text):
     knowledge_base = {
          
          "who are you": random.choice (["I am computer, your dedicated and intelligent assistant.", "computer, God dammit did I not tell you before", "you keeping methat, I am computer."]),
-         "tell me a joke": random.choice([ "what do you call a magical dog? A labracadabrador.", "What do you call a pony with a cough? A little horse", "Why was six scared of seven? Because seven ate nine.", "What do you call a woman with one leg? Eileen",
-   "what did the pirate say when he turned 80? Aye matey."]),
+         "tell me a joke": random.choice([ "what do you call a magical dog? A labracadabrador.", "What do you call a pony with a cough? A little horse", "Why was six scared of seven? Because seven ate nine.", "What do you call a woman with one leg? Eileen", "what did the pirate say when he turned 80? Aye matey."]),
          "how long until my birthday": "Your birthday is July 15.  You were born in 1978.",
          "when were you created": "I was created on February 12 2024",
          "how are you": "I am doing well, and you?",
@@ -31,14 +30,9 @@ def brain(text):
 
     if "time" in text:
        return f"it's {dt.now().strftime('%I:%M %p')}"
-        
+
     return None
-             
-                     
 
-   
-
-     
 
 
 # In[28]:
@@ -63,7 +57,3 @@ for query in test_questions:
 
 
 # In[ ]:
-
-
-
-
