@@ -78,7 +78,9 @@ def main():
            keyboard_input = input("Enter you command: ")
            if keyboard_input.lower() == "exit":
                break
-           brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path)
+           response = nlp_brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path)
+           if response:
+               tts(response)
    
     else: # Speech mode
        r = sr.Recognizer()
@@ -127,7 +129,9 @@ def main():
 
                  if speech_text.strip():
                      # Now we can call the brain, and if it needs the mic, it's free!
-                     brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
+                     response = nlp_brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
+                     if response:
+                         tts(response)                     
 
              except sr.UnknownValueError:
                  print("Computer didn't understand.")
