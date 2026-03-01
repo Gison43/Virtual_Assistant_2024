@@ -9,7 +9,7 @@ import time
 import yaml
 import speech_recognition as sr
 import datetime
-import brain
+import nlp_brain as brain
 import argparse
 import subprocess
 import threading
