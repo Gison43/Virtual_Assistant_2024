@@ -78,7 +78,7 @@ def main():
            keyboard_input = input("Enter you command: ")
            if keyboard_input.lower() == "exit":
                break
-           response = nlp_brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path)
+           response = brain.neural_network(name, keyboard_input, city_name, city_code, stopwatch_instance, music_path)
            if response:
                tts(response)
    
@@ -129,7 +129,7 @@ def main():
 
                  if speech_text.strip():
                      # Now we can call the brain, and if it needs the mic, it's free!
-                     response = nlp_brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
+                     response = brain.neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path)
                      if response:
                          tts(response)                     
 
