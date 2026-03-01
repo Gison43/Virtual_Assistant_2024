@@ -26,7 +26,7 @@ def neural_network(name, text, city_name, city_code, stopwatch_instance, music_p
         "when were you created": "I was created on February 12 2024",
         "how are you": "I am doing well, and you?",
         "what is your name": "I dont have a name yet",
-        "what are you": "I am a fully functional, artificially intelligent, state of the art virtual assistant, and I am all yours, baby."
+        "what are you": "I am a fully functional, artificially intelligent, state of the art virtual assistant, and I am all yours, baby.",
         "how old am i": tell_time.how_old(),
         "calculate the area of a rectangle":area.calculate_rectangle_area(),
         "when is new years":tell_time.new_years_eve(),
