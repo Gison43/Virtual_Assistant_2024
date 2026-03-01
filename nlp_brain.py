@@ -2,6 +2,7 @@
 
 from datetime  import datetime as dt, date
 import random
+import os
 
 from GreyMatter import tell_time, general_conversations, spanish_translator, weather, define_subject, timer, sleep, play_music, area, notes
 from GreyMatter.list import List
@@ -65,7 +66,9 @@ def neural_network(name, text, city_name, city_code, stopwatch_instance, music_p
     if "time" in text:
         response = f"it's {dt.now().strftime('%I:%M %p')}"
         return response
-
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    log_path = os.path.join(dir_path, "missing_commands.txt")
+    
     with open("missing_commands.txt", "a") as f:
         #get the current timestamp so you know when you asked it.
         timestamp = dt.now().strftime('%Y-%m-%d %H:%M:%S')
