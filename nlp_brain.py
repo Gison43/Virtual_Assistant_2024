@@ -69,7 +69,7 @@ def neural_network(name, text, city_name, city_code, stopwatch_instance, music_p
     dir_path = os.path.dirname(os.path.realpath(__file__))
     log_path = os.path.join(dir_path, "missing_commands.txt")
     
-    with open("missing_commands.txt", "a") as f:
+    with open(log_path, "a") as f:
         #get the current timestamp so you know when you asked it.
         timestamp = dt.now().strftime('%Y-%m-%d %H:%M:%S')
         f.write(f"[{timestamp}] Unknown command: {text}\n")
