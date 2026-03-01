@@ -8,6 +8,7 @@ from datetime  import datetime as dt, date
 import random
 from GreyMatter.SenseCells.tts_engine import tts
 
+
 today = dt.now().date()
 now = dt.now()
 
@@ -28,33 +29,11 @@ def neural_network(name, text, city_name, city_code, stopwatch_instance, music_p
     for key, response in knowledge_base.items():
          if key in text:
              tts(response)
-              return
+             return
 
     if "time" in text:
         response = f"it's {dt.now().strftime('%I:%M %p')}"
         tts(response)
+        return
 
     return None
-
-# In[28]:
-
-
-test_questions = [
-    "who am i",
-    "what are you",
-    "tell me a joke",
-    "what is the time",
-    "something random i haven't taught you"
-]
-
-print("--- GreyMatter Brain Test ---")
-for query in test_questions:
-    # Call the brain function you defined in Cell 1
-    response = brain(query) 
-    
-    print(f"YOU: {query}")
-    print(f"GREYMATTER: {response}")
-    print("-" * 30)
-
-
-# In[ ]:
