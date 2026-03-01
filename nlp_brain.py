@@ -6,15 +6,16 @@
 
 from datetime  import datetime as dt, date
 import random
+from GreyMatter.SenseCells.tts_engine import tts
 
 today = dt.now().date()
 now = dt.now()
 
-def brain(text):
+def neural_network(name, text, city_name, city_code, stopwatch_instance, music_path):
     text = text.lower()
-    
+
     knowledge_base = {
-         
+
          "who are you": random.choice (["I am computer, your dedicated and intelligent assistant.", "computer, God dammit did I not tell you before", "you keeping methat, I am computer."]),
          "tell me a joke": random.choice([ "what do you call a magical dog? A labracadabrador.", "What do you call a pony with a cough? A little horse", "Why was six scared of seven? Because seven ate nine.", "What do you call a woman with one leg? Eileen", "what did the pirate say when he turned 80? Aye matey."]),
          "how long until my birthday": "Your birthday is July 15.  You were born in 1978.",
@@ -26,14 +27,14 @@ def brain(text):
 
     for key, response in knowledge_base.items():
          if key in text:
-              return response
+             tts(response)
+              return
 
     if "time" in text:
-       return f"it's {dt.now().strftime('%I:%M %p')}"
+        response = f"it's {dt.now().strftime('%I:%M %p')}"
+        tts(response)
 
     return None
-
-
 
 # In[28]:
 
