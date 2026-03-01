@@ -66,4 +66,10 @@ def neural_network(name, text, city_name, city_code, stopwatch_instance, music_p
         response = f"it's {dt.now().strftime('%I:%M %p')}"
         return response
 
-    return None
+    with open("missing_commands.txt", "a") as f:
+        #get the current timestamp so you know when you asked it.
+        timestamp = dt.now().strftime('%Y-%m-%d %H:%M:%S')
+        f.write(f"[{timestamp}] Unknown command: {text}\n")
+
+    print(f"DEBUG: Unknown command logged: {text}")
+    return "i'm sorry, I haven't learned how to respond to that yet, but I'll save it for later."
