@@ -6,11 +6,12 @@
 
 from datetime  import datetime as dt, date
 import random
+from GreyMatter.SenseCells.tts_engine import tts
 
 today = dt.now().date()
 now = dt.now()
 
-def brain(text):
+def neural_network(name, text, city_name, city_code, stopwatch_instance, music_path):
     text = text.lower()
     
     knowledge_base = {
@@ -27,10 +28,12 @@ def brain(text):
 
     for key, response in knowledge_base.items():
          if key in text:
-              return response
+             tts(response)
+              return
 
     if "time" in text:
-       return f"it's {dt.now().strftime('%I:%M %p')}"
+        response = f"it's {dt.now().strftime('%I:%M %p')}"
+        tts(response)
         
     return None
              
