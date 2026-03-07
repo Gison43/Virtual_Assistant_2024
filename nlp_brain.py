@@ -35,6 +35,12 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
             "you keep asking me that, I am computer."
         ])
 
+    def language_practice():
+      tts("What language would you like to practice? Spanish or French?")
+
+      #listen for the user's response
+      user_response = get_user_input()
+
     knowledge_base = {
 
         "who am i": f"You are {name}, my creator.",
