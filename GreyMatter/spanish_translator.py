@@ -53,6 +53,7 @@ def spanish_practice(translator):
                 my_input = "" #Set default value if audio not understood
             #check if the user wants to stop
             if my_input.lower() == "stop":
+                tts("Ending language practice")
                 break  #break out of the loop
 
 #do the actual translation
@@ -133,6 +134,7 @@ def french_practice(translator):
 
         #check if user wants to stop
             if my_input.lower() == "stop":
+                tts("Ending language practice")
                 break
 
             if my_input:
