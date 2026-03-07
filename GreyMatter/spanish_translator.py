@@ -80,6 +80,7 @@ def spanish_practice(translator):
 
         #check if user wants to stop
             if my_input.lower() == "stop":
+                tts("Ending language practice")
                 break
 
             if my_input:
@@ -108,6 +109,7 @@ def french_practice(translator):
                 my_input = "" #Set default value if audio not understood
             #check if the user wants to stop
             if my_input.lower() == "stop":
+                tts("Ending language practice")
                 break  #break out of the loop
 
 #do the actual translation
@@ -122,7 +124,7 @@ def french_practice(translator):
         tts("Say something in french")
         print("Listening...")
 
-#capture spoken spanish
+#capture spoken french
         with sr.Microphone() as source:
             speech.adjust_for_ambient_noise(source)
             try:
