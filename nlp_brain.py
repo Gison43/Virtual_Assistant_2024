@@ -51,6 +51,12 @@ def neural_network(name, text, city_name, city_code, stopwatch_instance, music_p
         "how is the weather":weather.weather,
         "what is the weather like today":weather.weather,
         "when were you born":"I was created on February 12 2024",
+        "note":notes.note_something(speech_text),
+        "read notes":notes.handle_notes(speech_text),
+        "delete notes":notes.handle_notes(speech_text),
+        "delete note":notes.handle_notes(speech_text),
+        "delete all notes":notes.delete_notes(None),
+        "take note":notes.note_something(speech_text),
 
     }
 
