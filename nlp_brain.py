@@ -47,6 +47,75 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         else:
             return "Sorry, only spanish and french are currently supported."
 
+    def create_list():
+        tts("Sure. What would you like to name the new list?")
+        # CHANGE 1: actually capture the variable returned by the microphone
+        list_name = get_user_input()
+
+        if list_name:
+            # Create the list in the database
+            my_list.create_list(list_name)
+            
+            # CHANGE 2: Chain the next question immediately
+            tts(f"I've created the {list_name} list. What would you like to add to it?")
+            
+            # CHANGE 3: Listen again for the items
+            items_input = get_user_input()
+            if items_input:
+                # Add the items immediately
+                my_list.add_item(items_input.split(" and "), list_name)
+            else:
+                tts("I didn't hear any items, but the empty list is saved.")
+        else:
+            # CHANGE 4: Handle silence (if you didn't say a name)
+            tts("I didn't hear a name, so I cancelled the list creation.")
+       
+    def add_to_list():
+        tts("What is the name of the list?")
+        list_name = get_user_input()
+
+        if list_name:
+            finished = False
+            while not finished:
+                tts(f"What would you like to add to {list_name}?")
+                user_speech = get_user_input().lower()
+            
+                # Send to list.py to save
+                my_list.add_item(user_speech, list_name)
+
+                # The Follow-up Question
+                tts("Is there anything else?")
+                response = get_user_input().lower()
+
+                # LOGIC: 
+                # If you say "NO", we are DONE.
+                # If you say "YES", we stay in the loop.
+                if 'no' in response or 'done' in response or 'that is all' in response:
+                    tts(f"Okay, I've updated your {list_name} list.")
+                    finished = True
+                elif 'yes' in response:
+                    # We don't need to do anything here, 
+                    # the loop will naturally start over.
+                    continue 
+                else:
+                    # If it didn't hear a clear yes/no
+                    tts("I'm sorry, did you want to add more?")
+                    confirm = get_user_input().lower()
+                    if 'no' in confirm:
+                        finished = True
+
+    def read_specific_list():
+        tts("Which list would you like me to read?")
+        list_name = get_user_input().lower()  # e.g., "grocery"
+
+        if list_name:
+            # Talk directly to list.py, which now talks to the DB
+            my_list.read_list(list_name)
+   
+    def show_lists():
+        # This will list the names of all lists (e.g., "Grocery", "Todo")
+        my_list.view_list()
+
     knowledge_base = {
 
         "who am i": f"You are {name}, my creator.",
@@ -75,6 +144,15 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         "practice a language": language_practice,
         "language practice": language_practice,
         "let's practice a language": language_practice,
+        "create a list": create_list,
+        "start a list": create_list,
+        "start a new list": create_list,
+        "create a new list": create_list,
+        "what's on my list": read_specific_list,
+        "list my lists": show_lists,
+        "add to my list": add_to_list,
+        "add to list": add_to_list,
+        "view lists": show_lists,
     }
     #this is the loop
     for key, response in knowledge_base.items():
