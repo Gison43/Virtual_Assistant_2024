@@ -2,8 +2,6 @@
 #This is from 'Make Python Talk: Build apps with voice control and speech recognition' chapter 16
 
 #You will need to install pip install translate for this code to work
-#current bugs: the VA repeats 'ok we will practice spanish' and it only runs thru the code once.
-
 from io import BytesIO
 
 import speech_recognition as sr
@@ -24,9 +22,6 @@ lang_abbr = {"english":"en",
     "spanish": "es",
     "french": "fr"
 }
-
-#tts("What language do you want to practice? You can choose spanish or french.")
-
 
 def language_selection(language):
     translator = Translator(from_lang='en', to_lang=lang_abbr[language])
@@ -90,7 +85,7 @@ def spanish_practice(translator):
                 translator = Translator(from_lang = 'es', to_lang = 'en')
                 translation = translator.translate(my_input)
                 print(f"The translation is {translation}")
-                tts_english = tts(translation, lang = 'en')
+                
                 tts(translation, lang = 'en')
             else:
                 tts("Please try again.")
