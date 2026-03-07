@@ -50,6 +50,9 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
     knowledge_base = {
 
         "who am i": f"You are {name}, my creator.",
+        "go to sleep":sleep.go_to_sleep,
+        "goodbye":sleep.go_to_sleep,
+        "sleep":sleep.go_to_sleep,
         "who are you": get_intro,
         "tell me a joke": get_joke,
         "when is my birthday": "Your birthday is July 15.  You were born in 1978.",
@@ -72,10 +75,6 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         "practice a language": language_practice,
         "language practice": language_practice,
         "let's practice a language": language_practice,
-        "go to sleep":sleep.go_to_sleep,
-        "goodbye":sleep.go_to_sleep,
-        "sleep":sleep.go_to_sleep,
-
     }
     #this is the loop
     for key, response in knowledge_base.items():
