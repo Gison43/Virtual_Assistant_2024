@@ -41,7 +41,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
       #listen for the user's response
         user_response = get_user_input()
         if 'spanish' in user_response:
-            return language_selection()
+            return language_selection('spanish')
         elif 'french' in user_response:
             return "I am sorry, I only know spanish right now"
         else:
