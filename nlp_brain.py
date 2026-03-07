@@ -72,6 +72,9 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         "practice a language": language_practice,
         "language practice": language_practice,
         "let's practice a language": language_practice,
+        "go to sleep":sleep.go_to_sleep,
+        "goodbye":sleep.go_to_sleep,
+        "sleep":sleep.go_to_sleep,
 
     }
     #this is the loop
