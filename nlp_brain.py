@@ -105,12 +105,25 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
                         finished = True
 
     def read_specific_list():
-        tts("Which list would you like me to read?")
-        list_name = get_user_input().lower()  # e.g., "grocery"
+        #this is so that lists and notes don't get confused
+        if "notes" in speech_text:
+            return None
+            
+        filter_words = ["read", "me", "my", "what", "is", "on", "the", "list", "check"]
+        words = speech_text.split()
+        name_parts = [w for w in words if w not in filter_words]
 
-        if list_name:
+        found_name = " ".join(name_parts)
+
+        if found_name:
+            print(f"DEBUG: Looking for list name: {found_name}")
+            return my_list.read_list(found_name)
+        else:
+            tts("Which list would you like me to read?")
+            list_name = get_user_input().lower()  # e.g., "grocery"
+            if list_name:
             # Talk directly to list.py, which now talks to the DB
-            my_list.read_list(list_name)
+                return my_list.read_list(list_name)
    
     def show_lists():
         # This will list the names of all lists (e.g., "Grocery", "Todo")
@@ -153,6 +166,9 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         "add to my list": add_to_list,
         "add to list": add_to_list,
         "view lists": show_lists,
+        "read me my lists":read_specific_list,
+        "what is on": read_specific_list,
+        "check my": read_specific_list,
     }
     #this is the loop
     for key, response in knowledge_base.items():
