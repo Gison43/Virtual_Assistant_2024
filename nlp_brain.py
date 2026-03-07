@@ -163,6 +163,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         "let's practice a language": language_practice,
         #LISTS
         "read me my lists":read_specific_list,
+        "tell me my lists":read_specific_list,
         "read my":read_specific_list,
         "check my": read_specific_list,
         "create a new list": create_list,
