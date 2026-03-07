@@ -2,7 +2,7 @@ import speech_recognition as sr
 from GreyMatter.SenseCells.tts_engine import tts
 import time
 
-def get_user_input():
+def get_user_input(silence_timeout=0.5):
    r = sr.Recognizer()
    # Wait for main.py to fully release the hardware
    time.sleep(1.0) 
@@ -13,9 +13,9 @@ def get_user_input():
            # Match device_index=2 from your main.py
            with sr.Microphone(device_index=2, sample_rate=16000) as source:
               print(f"Listening for follow-up (Attempt {attempt+1})...")
-              r.pause_threshold = 0.5
+              r.pause_threshold = silence_timeout
               # Increased timeout slightly for better usability
-              audio = r.listen(source, phrase_time_limit=5)
+              audio = r.listen(source, phrase_time_limit=20)
               
            speech_text = r.recognize_google(audio, language='en-US').lower().replace("'","")
            return speech_text
