@@ -36,7 +36,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         ])
 
     def language_practice():
-      tts("What language would you like to practice? Spanish or French?")
+        tts("What language would you like to practice? Spanish or French?")
 
       #listen for the user's response
         user_response = get_user_input()
