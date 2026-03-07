@@ -17,7 +17,7 @@ today = dt.now().date()
 now = dt.now()
 
 def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path):
-    speech_text = text.lower().replace("?", "").strip()
+    speech_text = speech_text.lower().replace("?", "").strip()
 
     def get_joke():
         return random.choice([
