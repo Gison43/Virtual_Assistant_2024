@@ -89,3 +89,57 @@ def spanish_practice(translator):
                 tts(translation, lang = 'en')
             else:
                 tts("Please try again.")
+
+def french_practice(translator):
+    while True:
+        tts("Say something in english")
+        print("Listening....")
+
+        with sr.Microphone() as source:
+            speech.adjust_for_ambient_noise(source)
+
+            try:
+                audio = speech.listen(source, phrase_time_limit = 3.5)
+                my_input = speech.recognize_google(audio, language="en")
+                print(f"You said {my_input}")
+            except sr.UnknownValueError:
+                print("Could not understand audio.")
+                my_input = "" #Set default value if audio not understood
+            #check if the user wants to stop
+            if my_input.lower() == "stop":
+                break  #break out of the loop
+
+#do the actual translation
+            if my_input:
+                translator = Translator(from_lang = 'en', to_lang = 'fr')
+                translation = translator.translate(my_input)
+                print(f"The translation is: {translation}")
+                tts(translation)
+            else:
+                tts("Please try again.")
+
+        tts("Say something in french")
+        print("Listening...")
+
+#capture spoken spanish
+        with sr.Microphone() as source:
+            speech.adjust_for_ambient_noise(source)
+            try:
+                audio = speech.listen(source, phrase_time_limit = 3.5)
+                my_input = speech.recognize_google(audio, language='fr')
+                print(f"You said {my_input}")
+            except sr.UnknownValueError:
+                pass
+
+        #check if user wants to stop
+            if my_input.lower() == "stop":
+                break
+
+            if my_input:
+                translator = Translator(from_lang = 'fr', to_lang = 'en')
+                translation = translator.translate(my_input)
+                print(f"The translation is {translation}")
+                
+                tts(translation, lang = 'en')
+            else:
+                tts("Please try again.")
