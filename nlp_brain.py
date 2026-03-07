@@ -16,7 +16,7 @@ my_list = List()
 today = dt.now().date()
 now = dt.now()
 
-def neural_network(name, text, city_name, city_code, stopwatch_instance, music_path):
+def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path):
     text = text.lower().replace("?", "").strip()
 
     def get_joke():
@@ -61,7 +61,7 @@ def neural_network(name, text, city_name, city_code, stopwatch_instance, music_p
     }
 
     for key, response in knowledge_base.items():
-         if key in text:
+         if key in speech_text:
              if callable(response):
                  try:
                      return response(name)
@@ -69,7 +69,7 @@ def neural_network(name, text, city_name, city_code, stopwatch_instance, music_p
                      return response()
              return response
 
-    if "time" in text:
+    if "time" in speech_text:
         response = f"it's {dt.now().strftime('%I:%M %p')}"
         return response
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -78,7 +78,7 @@ def neural_network(name, text, city_name, city_code, stopwatch_instance, music_p
     with open(log_path, "a") as f:
         #get the current timestamp so you know when you asked it.
         timestamp = dt.now().strftime('%Y-%m-%d %H:%M:%S')
-        f.write(f"[{timestamp}] Unknown command: {text}\n")
+        f.write(f"[{timestamp}] Unknown command: {speech_text}\n")
 
-    print(f"DEBUG: Unknown command logged: {text}")
+    print(f"DEBUG: Unknown command logged: {speech_text}")
     return "i'm sorry, I haven't learned how to respond to that yet, but I'll save it for later."
