@@ -109,7 +109,7 @@ def french_practice(translator):
                 my_input = "" #Set default value if audio not understood
             #check if the user wants to stop
             if my_input.lower() == "stop":
-                tts("Ending language practice")
+                tts("Au revoir, nous finissions la pratique de langue")
                 break  #break out of the loop
 
 #do the actual translation
@@ -119,9 +119,9 @@ def french_practice(translator):
                 print(f"The translation is: {translation}")
                 tts(translation)
             else:
-                tts("Please try again.")
+                tts("Essayer encore.")
 
-        tts("Say something in french")
+        tts("Did quelque chose en français")
         print("Listening...")
 
 #capture spoken french
@@ -136,7 +136,7 @@ def french_practice(translator):
 
         #check if user wants to stop
             if my_input.lower() == "stop":
-                tts("Ending language practice")
+                tts("Au revoir, nous finissions la pratique de langue")
                 break
 
             if my_input:
@@ -146,4 +146,4 @@ def french_practice(translator):
                 
                 tts(translation, lang = 'en')
             else:
-                tts("Please try again.")
+                tts("Essayer encore.")
