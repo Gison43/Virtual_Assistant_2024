@@ -7,10 +7,11 @@ from user_input import get_user_input
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "memory.db")
 
-def note_something(speech_text):
+def note_something(speech_text=None):
     tts("What would you like your note to say?")
 
     note_content = get_user_input(silence_timeout=5.0)
+    
     if note_content:
         try:
             conn = sqlite3.connect(db_path)
@@ -20,18 +21,17 @@ def note_something(speech_text):
                           content TEXT, 
                           timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
         
-            words_of_message = speech_text.split()
-            if 'note' in words_of_message: words_of_message.remove('note')
-            cleaned_message = ' '.join(words_of_message)
-        
             conn.execute("INSERT INTO notes (content, timestamp) VALUES (?, ?)", 
-                         (cleaned_message, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+                        (note_content, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             conn.commit()
             conn.close()
             tts('your note has been saved.')
+            print(f"DEBUG: Saved Note: {note_content}")
         except Exception as e:
             print(f"Database Error: {e}")
             tts("I could not save the note due to a database error.")
+    else:
+         tts("I didn't hear anything, so I didn't save the note.")   
 
 def handle_notes(speech_text):
     """
