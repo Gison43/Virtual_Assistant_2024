@@ -43,9 +43,9 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         if 'spanish' in user_response:
             return language_selection('spanish')
         elif 'french' in user_response:
-            return "I am sorry, I only know spanish right now"
+            return language_selection('french')
         else:
-            return "Sorry, only spanish is currently supported."
+            return "Sorry, only spanish and french are currently supported."
 
     knowledge_base = {
 
