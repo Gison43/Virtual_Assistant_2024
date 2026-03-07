@@ -17,7 +17,7 @@ today = dt.now().date()
 now = dt.now()
 
 def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, music_path):
-    text = text.lower().replace("?", "").strip()
+    speech_text = text.lower().replace("?", "").strip()
 
     def get_joke():
         return random.choice([
@@ -39,7 +39,13 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
       tts("What language would you like to practice? Spanish or French?")
 
       #listen for the user's response
-      user_response = get_user_input()
+        user_response = get_user_input()
+        if 'spanish' in user_response:
+            return language_selection()
+        elif 'french' in user_response:
+            return "I am sorry, I only know spanish right now"
+        else:
+            return "Sorry, only spanish is currently supported."
 
     knowledge_base = {
 
@@ -63,9 +69,12 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         "delete note":lambda:notes.handle_notes(speech_text),
         "delete all notes":lambda:notes.delete_notes(None),
         "take note":lambda:notes.note_something(speech_text),
+        "practice a language": language_practice,
+        "language practice": language_practice,
+        "let's practice a language": language_practice,
 
     }
-
+    #this is the loop
     for key, response in knowledge_base.items():
          if key in speech_text:
              if callable(response):
