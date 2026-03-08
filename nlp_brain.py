@@ -275,7 +275,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
                     
     }
     for phrase in ELAPSED_PHRASES:
-            knowledge_base[phrase.lower()] = status_stopwatch
+        knowledge_base[phrase.lower()] = status_stopwatch
     #this is the loop
     for key, response in knowledge_base.items():
          if key in speech_text:
