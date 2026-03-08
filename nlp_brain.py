@@ -14,14 +14,19 @@ from GreyMatter.SenseCells.tts_engine import tts
 my_list = List()
 
 ELAPSED_PHRASES = {
-   'elapsed stopwatch',
-   'time elapsed on stopwatch',
-   'current stopwatch time',
-   'what is the time on the stopwatch',
-   'how much time has passed on the stopwatch',
-   'what time is on the stopwatch',
-   'whats the time elapsed on the stopwatch',
-   'what is the current time on the stopwatch'
+    'elapsed stopwatch',
+    'time elapsed on stopwatch',
+    'elapsed time on stopwatch',
+    'current stopwatch time',
+    'what is the time on the stopwatch',
+    'how much time has passed on the stopwatch',
+    'what time is on the stopwatch',
+    'what is the current time on the stopwatch',
+    'whats the time elapsed on the stopwatch',
+    'stopwatch status',
+    'check stopwatch',
+    'what is the status on the stopwatch',
+    'whats the status on the stopwatch',    
    }
 
 today = dt.now().date()
@@ -216,7 +221,24 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
 
     knowledge_base = {
 
+        #STOPWATCH COMMANDS
+        "start stopwatch":start_stopwatch,
+        "start the stopwatch":start_stopwatch,
+        "stopwatch time":status_stopwatch,
+        "stop stopwatch":stop_stopwatch,
+        "stop the stopwatch":stop_stopwatch,
+        "reset stopwatch":reset_stopwatch,
+        "split stopwatch":split_stopwatch,
+        "what are the splits on the stopwatch":list_splits,
+        "list splits on stopwatch": list_splits,
+        "show splits": list_splits,
+        "how many splits on the stopwatch":list_splits,
+        "exit stopwatch": exit_stopwatch,
+        "cancel stopwatch": exit_stopwatch,
+        
         "go to sleep":sleep.go_to_sleep,
+        "what time is it": lambda: f"It's {dt.now().strftime('%I:%M %p')}", # General match last
+        "what is the current time": lambda: f"It's {dt.now().strftime('%I:%M %p')}",
         "goodbye":sleep.go_to_sleep,
         "sleep":sleep.go_to_sleep,
         "who am i": f"You are {name}, my creator.",
@@ -265,25 +287,7 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         "add to list": add_to_list,
         "view lists": show_lists,
         "view my lists": show_lists,
-       #STOPWATCH COMMANDS
-        "start stopwatch":start_stopwatch,
-        "start the stopwatch":start_stopwatch,
-        "stop stopwatch":stop_stopwatch,
-        "stop the stopwatch":stop_stopwatch,
-        "reset stopwatch":reset_stopwatch,
-        "split stopwatch":split_stopwatch,
-        "stopwatch status":status_stopwatch,
-        "check stopwatch":status_stopwatch,
-        "what is the status on the stopwatch":status_stopwatch,
-        "what's the status on the stopwatch":status_stopwatch,
-        "elapased time on stopwatch":status_stopwatch,
-        "what are the splits on the stopwatch":list_splits,
-        "list splits on stopwatch": list_splits,
-        "show splits": list_splits,
-        "how many splits on the stopwatch":list_splits,
-        "exit stopwatch": exit_stopwatch,
-        "cancel stopwatch": exit_stopwatch,
-                    
+                          
     }
     for phrase in ELAPSED_PHRASES:
         knowledge_base[phrase.lower()] = status_stopwatch
@@ -297,9 +301,6 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
                      return response()
              return response
 
-    if "time" in speech_text:
-        response = f"it's {dt.now().strftime('%I:%M %p')}"
-        return response
     dir_path = os.path.dirname(os.path.realpath(__file__))
     log_path = os.path.join(dir_path, "missing_commands.txt")
     
