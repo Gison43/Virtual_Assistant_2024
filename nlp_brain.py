@@ -24,6 +24,7 @@ ELAPSED_PHRASES = {
     'what is the current time on the stopwatch',
     'whats the time elapsed on the stopwatch',
     'stopwatch status',
+    'stop watch status',
     'check stopwatch',
     'what is the status on the stopwatch',
     'whats the status on the stopwatch',    
