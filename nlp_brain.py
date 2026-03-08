@@ -13,17 +13,6 @@ from GreyMatter.SenseCells.tts_engine import tts
 
 my_list = List()
 
-ELAPSED_PHRASES = {
-   'elapsed stopwatch',
-   'time elapsed on stopwatch',
-   'current stopwatch time',
-   'what is the time on the stopwatch',
-   'how much time has passed on the stopwatch',
-   'what time is on the stopwatch',
-   'whats the time elapsed on the stopwatch',
-   'what is the current time on the stopwatch'
-   }
-
 today = dt.now().date()
 now = dt.now()
 
@@ -138,7 +127,83 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
    
     def show_lists():
         # This will list the names of all lists (e.g., "Grocery", "Todo")
-        my_list.view_list()
+       my_list.view_list()
+
+    def start_stopwatch():
+         if not stopwatch_instance.is_running:
+            stopwatch_instance.start()
+            tts("We are starting the stopwatch. Let's go.")
+            print(f"[DEBUG] After start - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
+            print("The stopwatch is running.",stopwatch_instance.is_running)
+         else:
+            tts("The stopwatch is already running.")
+
+    def stop_stopwatch():
+         print(f"[DEBUG] Stop requested - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
+         if stopwatch_instance.is_running:
+             stopwatch_instance.stop()
+             stopwatch_instance.is_running = False
+         else:
+             tts("The stopwatch is not running.")
+
+    def status_stopwatch():
+         if stopwatch_instance.is_running:
+             current_time_delta, formatted_elapsed_time = stopwatch_instance.elapsed()  # Get the current elapsed time on the stopwatch
+             tts(f"The current time elapsed on the stopwatch is {formatted_elapsed_time}.")
+             print("The stopwatch elapsed time is ", current_time_delta)
+         elif stopwatch_instance.start_time is None:
+             tts("The stopwatch has not been started")
+         else:
+             total_time_delta, formatted_total_time = stopwatch_instance.elapsed() #Get the total elpased time when the stopwatch is stopped
+             tts(f"The stopwatch is stopped.  The total elapsed time is {formatted_total_time}.")
+             print("The stopwatch is stopped.  The total elapsed time is ", total_time_delta)
+
+         splits = stopwatch_instance.get_splits()
+
+         if splits:
+            tts("Here are the split times.")
+            for split_entry in splits:
+               tts(f"{split_entry['title']}: {split_entry['formatted']}")
+
+    def reset_stopwatch():
+         if stopwatch_instance.start_time is None:
+            tts("Please start the stopwatch.")
+         else:
+            try:
+               stopwatch_instance.reset()
+               tts("I have reset the stopwatch.")
+            except Exception as e:
+               tts("An error occured while resetting the stopwatch.")
+               print("Error resetting the stopwatch:", e)
+
+    def split_stopwatch():
+         print(f"[DEBUG] Split requested - stopwatch_instance.is_running = {stopwatch_instance.is_running}")
+         if stopwatch_instance.is_running:
+            stopwatch_instance.split()
+            tts("The stopwatch has been split.")
+         else:
+            tts("The stopwatch is not running.  Start it first.")
+
+    def list_splits():
+         splits = stopwatch_instance.get_splits()
+
+         if splits:
+            tts("Here are the current splits.")
+            for i, split_entry in enumerate(stopwatch_instance.get_splits(), start=1):
+               tts(f"{split_entry['title']} - {split_entry['formatted']}")
+         else:
+            tts("There are no splits recorded.")
+
+    def exit_stopwatch():
+         if stopwatch_instance.is_running:
+            total_time = stopwatch_instance.stop()
+            formatted_time = stopwatch_instance.format_time(total_time)
+            tts(f"The stopwatch has been stopped and the total time is {formatted_time}.  Exiting the stopwatch program.")
+         else:
+            tts("Exiting the stopwatch program.")
+         stopwatch_instance.reset_splits()
+
+      return
 
     knowledge_base = {
 
@@ -191,8 +256,28 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         "add to list": add_to_list,
         "view lists": show_lists,
         "view my lists": show_lists,
-        
+       #STOPWATCH COMMANDS
+        "start stopwatch":start_stopwatch,
+        "start the stopwatch":start_stopwatch,
+        "stop stopwatch":stop_stopwatch,
+        "stop the stopwatch":stop_stopwatch,
+        "reset stopwatch":reset_stopwatch,
+        "split stopwatch":split_stopwatch,
+        "stopwatch status":status_stopwatch,
+        "check stopwatch":status_stopwatch,
+        "what is the status on the stopwatch":status_stopwatch,
+        "what's the status on the stopwatch":status_stopwatch,
+        "elapased time on stopwatch":status_stopwatch,
+        "what are the splits on the stopwatch":list_splits,
+        "list splits on stopwatch": list_splits,
+        "show splits": list_splits,
+        "how many splits on the stopwatch":list_splits,
+        "exit stopwatch": exit_stopwatch,
+        "cancel stopwatch": exit_stopwatch,
+                    
     }
+    for phrase in ELAPSED_PHRASES:
+            knowledge_base[phrase.lower()] = status_stopwatch
     #this is the loop
     for key, response in knowledge_base.items():
          if key in speech_text:
