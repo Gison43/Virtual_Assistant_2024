@@ -220,6 +220,31 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
             tts("Exiting the stopwatch program.")
          stopwatch_instance.reset_splits()
 
+    def days_until_event():
+        # speech_text is already lowercased and cleaned in neural_network
+        words = speech_text.split()
+        
+        if 'until' in words:
+            until_index = words.index('until')
+            # Look at everything after the word "until"
+            date_parts = words[until_index + 1:]
+            
+            if len(date_parts) >= 3:
+                try:
+                    # Expects input like "until 12 25 2026"
+                    month = int(date_parts[0])
+                    day = int(date_parts[1])
+                    year = int(date_parts[2])
+                    
+                    # This calls your existing function in tell_time.py
+                    tell_time.days_from_now(year, month, day)
+                except (ValueError, IndexError):
+                    tts("I'm sorry, I need the date in month, day, and year numbers to calculate that.")
+            else:
+                tts("Please provide the date as month, day, and year after the word until.")
+        else:
+            tts("I didn't hear a date. Try saying how many days until 12 25 2026.")
+
     knowledge_base = {
 
         #STOPWATCH COMMANDS
@@ -245,6 +270,9 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
         "what day is it":tell_time.what_is_day,
         "what day is it today":tell_time.what_is_day,
         "what month is it":tell_time.what_month,
+        "how many days until": days_until_event,
+        "days remaining until": days_until_event,
+        "countdown to":days_until_event,
         "what are you":general_conversations.what_are_you,
         "what is your name":general_conversations.what_is_your_name,
         "what is the date today":tell_time.what_is_date,
