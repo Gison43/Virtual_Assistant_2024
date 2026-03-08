@@ -203,8 +203,6 @@ def neural_network(name, speech_text, city_name, city_code, stopwatch_instance, 
             tts("Exiting the stopwatch program.")
          stopwatch_instance.reset_splits()
 
-    return
-
     knowledge_base = {
 
         "go to sleep":sleep.go_to_sleep,
