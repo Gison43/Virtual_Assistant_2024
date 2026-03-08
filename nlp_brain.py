@@ -13,7 +13,7 @@ from GreyMatter.SenseCells.tts_engine import tts
 
 my_list = List()
 
-ELAPSED_PHRASES = {
+ELAPSED_PHRASES = [
     'elapsed stopwatch',
     'time elapsed on stopwatch',
     'elapsed time on stopwatch',
@@ -28,7 +28,7 @@ ELAPSED_PHRASES = {
     'check stopwatch',
     'what is the status on the stopwatch',
     'whats the status on the stopwatch',    
-   }
+]
 
 today = dt.now().date()
 now = dt.now()
